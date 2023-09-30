@@ -1,0 +1,57 @@
+    .brand {
+            color: #2c6a39;
+        }
+
+        .sign-container {
+            max-width: 470px;
+        }
+
+
+        
+        .icon-height {
+            height: 24px;
+            width: 24px;
+        }
+
+        .right-box {
+            background-image: url(../images/sign3.jpg);
+            background-repeat: no-repeat;
+        
+            background-size: cover;
+            
+
+        }
+
+        .inputbox {
+            border: 1px solid #2c6a39;
+            outline: none;
+        }
+
+        .inputbox:focus {
+            border: 2px solid #2c6a39;
+        }
+
+        .input-label {
+            top: -12px;
+            left: 3%;
+        }
+
+        .sign-up {
+            background: #2c6a39;
+            color: #2c6a39;
+        }
+
+        .sign-up:hover {
+            background: #2c6a39;
+            color: #2c6a39;
+            border: 1px solid #2c6a39;
+        }
+
+        .signin-border {
+            width: 60px;
+            border: 2px solid #2c6a39;
+          
+        }
+
+
+      
