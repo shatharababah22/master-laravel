@@ -58,278 +58,49 @@
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div class="container">
+                @foreach ($allProductsCollection->chunk(3) as $productChunk)
+                    <div class="row row-cols-1 row-cols-md-3 g-3 mt-4">
+                        @foreach ($productChunk as $product)
+                        <!-- Start a new column for each product -->
+                        <div class="col product m-3">
+                            <div class="product-grid">
+                                <div class="product-image">
+                                    <a href="#" class="image mt-3">
+                                        <img class="img-1" src="{{ asset('images/' . $product->image1) }}">
+                                        <img class="img-2 mt-2" src="{{ asset('images/' . $product->image2) }}">
+                                    </a>
+                                    <ul class="product-links">
+                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                        <li><a href="Produc-details.html"><i class="fa fa-random"></i></a></li>
+                                        <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                    </ul>
+                                    <a href="{{ route('productdetail', ['id' => $product->id]) }}" class="product-view"><i class="fa fa-search"></i></a>
+                                </div>
+                                <div class="product-content">
+                                    <ul class="rating">
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star disable"></li>
+                                        <li class="disable">(1 review)</li>
+                                    </ul>
+                                    <h3 class="title"><a href="#">{{ $product->Name }}</a></h3>
+                                    <div class="price">{{ $product->Price }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of the column for each product -->
+                    @endforeach
+                </div>
+                <!-- End of the row for every three products -->
+            @endforeach
+        </div>
         
- <div class="container">
-        <div class="row row-cols-1 row-cols-md-3 g-3 mt-4  ">
-            <div class="col product  m-3 ">
-            <div class="product-grid">
-                <div class="product-image">
-                    <a href="#" class="image mt-3">
-                        <img class="img-1" src="images/b5.png">
-                        <img class="img-2 mt-2" src="images/b18.PNG">
-                    </a>
-                    <ul class="product-links">
-                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                        <li><a href="Produc-details.html"><i class="fa fa-random"></i></a></li>
-                        <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                    <a href="#" class="product-view"><i class="fa fa-search"></i></a>
-                </div>
-                <div class="product-content">
-                    <ul class="rating">
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star disable"></li>
-                        <li class="disable">(1 reviews)</li>
-                    </ul>
-                    <h3 class="title"><a href="#"> Glass Solar Pumpkin Stake </a></h3>
-                    <div class="price">JOD50</div>
-                </div>
-            </div>
-        </div>
-        <div class="col product m-3">
-            <div class="product-grid ">
-                <div class="product-image mt-3">
-                    <a href="#" class="image">
-                        <img class="img-1" src="images/b6.PNG">
-                        <img class="img-2" src="images/b21.PNG">
-                    </a>
-                    <span class="product-hot-label">hot</span>
-                    <ul class="product-links">
-                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                        <li><a href="Produc-details.html"><i class="fa fa-random"></i></a></li>
-                        <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                    <a href="#" class="product-view"><i class="fa fa-search"></i></a>
-                </div>
-                <div class="product-content">
-                    <ul class="rating">
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star disable"></li>
-                        <li class="fas fa-star disable"></li>
-                        <li class="disable">(3 reviews)</li>
-                    </ul>
-                    <h3 class="title"><a href="#">As We Grow Anniversary Milestone Tree</a></h3>
-                    <div class="price "> <span class="del">JOD15</span>JOD20 </div>
-                </div>
-            </div>
-        </div>
-        <div class="col product m-3">
-            <div class="product-grid">
-                <div class="product-image">
-                    <a href="#" class="image mt-3">
-                        <img class="img-1" src="images/b4.PNG">
-                        <img class="img-2 mt-2" src="images/b19.PNG">
-                    </a>
-                    <ul class="product-links">
-                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                        <li><a href="Produc-details.html"><i class="fa fa-random"></i></a></li>
-                        <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                    <a href="#" class="product-view"><i class="fa fa-search"></i></a>
-                </div>
-                <div class="product-content">
-                    <ul class="rating">
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star"></li>
-                        <li class="fas fa-star disable"></li>
-                        <li class="disable">(1 reviews)</li>
-                    </ul>
-                    <h3 class="title"><a href="#">Reclaimed Wood Serving Board & Cloche</a></h3>
-                    <div class="price">JOD30</div>
-                </div>
-            </div>
-        </div>
-    </div>
-                      
-   
+        
 
-                        <div class="row row-cols-1 row-cols-md-3 g-3 mt-4 ">
-                            <div class="col product m-3">
-                            <div class="product-grid">
-                                <div class="product-image">
-                                    <a href="#" class="image mt-3">
-                                        
-                                      <img class="img-1" src="images/b7.PNG">
-                                     <img class="img-2 mt-2" src="images//b16.PNG">
-                                    </a>
-                                    <ul class="product-links">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-random"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                    <a href="#" class="product-view"><i class="fa fa-search"></i></a>
-                                </div>
-                                <div class="product-content">
-                                    <ul class="rating">
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star disable"></li>
-                                        <li class="disable">(1 reviews)</li>
-                                    </ul>
-                                    <h3 class="title"><a href="#"> Glass Solar Pumpkin Stake </a></h3>
-                                    <div class="price">JOD50</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col product m-3">
-                            <div class="product-grid ">
-                                <div class="product-image mt-3">
-                                    <a href="#" class="image">
-                                    
-                                          <img class="img-1" src="images/b8.PNG">
-                                        <img class="img-2 mt-2" src="images//b17.PNG">
-
-                                    </a>
-                                    <span class="product-hot-label">hot</span>
-                                    <ul class="product-links">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-random"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                    <a href="#" class="product-view"><i class="fa fa-search"></i></a>
-                                </div>
-                                <div class="product-content">
-                                    <ul class="rating">
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star disable"></li>
-                                        <li class="fas fa-star disable"></li>
-                                        <li class="disable">(3 reviews)</li>
-                                    </ul>
-                                    <h3 class="title"><a href="#">As We Grow Anniversary Milestone Tree</a></h3>
-                                    <div class="price "> <span class="del">JOD15</span>JOD20 </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col product m-3">
-                            <div class="product-grid">
-                                <div class="product-image">
-                                    <a href="#" class="image mt-3">
-                                        <img class="img-1" src="images/b9.PNG">
-                        <img class="img-2 mt-2" src="images//b15.PNG">
-                                    </a>
-                                    <ul class="product-links">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-random"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                    <a href="#" class="product-view"><i class="fa fa-search"></i></a>
-                                </div>
-                                <div class="product-content">
-                                    <ul class="rating">
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star disable"></li>
-                                        <li class="disable">(1 reviews)</li>
-                                    </ul>
-                                    <h3 class="title"><a href="#">Reclaimed Wood Serving Board & Cloche</a></h3>
-                                    <div class="price">JOD30</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="row row-cols-1 row-cols-md-3 g-3 mt-4 ">
-                        <div class="col product m-3">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image mt-3">
-                                    <img class="img-1" src="images/b5.png">
-                                    <img class="img-2 mt-2" src="images/b18.PNG">
-                                </a>
-                                <ul class="product-links">
-                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-random"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                                <a href="#" class="product-view"><i class="fa fa-search"></i></a>
-                            </div>
-                            <div class="product-content">
-                                <ul class="rating">
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star disable"></li>
-                                    <li class="disable">(1 reviews)</li>
-                                </ul>
-                                <h3 class="title"><a href="#"> Glass Solar Pumpkin Stake </a></h3>
-                                <div class="price">JOD50</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col product m-3">
-                        <div class="product-grid ">
-                            <div class="product-image mt-3">
-                                <a href="#" class="image">
-                                    <img class="img-1" src="images/b6.PNG">
-                                    <img class="img-2" src="images/b21.PNG">
-                                </a>
-                                <span class="product-hot-label">hot</span>
-                                <ul class="product-links">
-                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-random"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                                <a href="#" class="product-view"><i class="fa fa-search"></i></a>
-                            </div>
-                            <div class="product-content">
-                                <ul class="rating">
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star disable"></li>
-                                    <li class="fas fa-star disable"></li>
-                                    <li class="disable">(3 reviews)</li>
-                                </ul>
-                                <h3 class="title"><a href="#">As We Grow Anniversary Milestone Tree</a></h3>
-                                <div class="price "> <span class="del">JOD15</span>JOD20 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col product m-3">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image mt-3">
-                                    <img class="img-1" src="images/b4.PNG">
-                                    <img class="img-2 mt-2" src="images/b19.PNG">
-                                </a>
-                                <ul class="product-links">
-                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-random"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                                <a href="#" class="product-view"><i class="fa fa-search"></i></a>
-                            </div>
-                            <div class="product-content">
-                                <ul class="rating">
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star disable"></li>
-                                    <li class="disable">(1 reviews)</li>
-                                </ul>
-                                <h3 class="title"><a href="#">Reclaimed Wood Serving Board & Cloche</a></h3>
-                                <div class="price">JOD30</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 </div>
 </div>
 

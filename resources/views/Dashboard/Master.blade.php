@@ -19,6 +19,7 @@
     <!-- sweet alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
  
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -75,24 +76,27 @@
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <div class="nav-item dropdown">
+                    {{-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user me-2"></i>Profile</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="signin.html" class="dropdown-item">Sign In</a>
                             <a href="signup.html" class="dropdown-item">Sign Up</a>
                         </div>
-                    </div>
-                    <a href="category" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Category</a>
-                    <a href="productadmin" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Product</a>
-                    <a href="user_admin" class="nav-item nav-link"><i class="fa fa-th me-2"></i>User</a>
-                    <a href="admin" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Admin</a>
-                    <a href="discount" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Discount</a>
-                    <a href="comments" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Comments</a>
-
+                    </div> --}}
+                    <a href="category" class="nav-item nav-link"><i class="bi bi-diagram-3 me-2"></i>Category</a>
+                    <a href="productadmin" class="nav-item nav-link"><i class="bi bi-box me-2"></i>Product</a>
+                    <a href="user_admin" class="nav-item nav-link"><i class="bi bi-person me-2"></i>User</a>
+                    <a href="admin" class="nav-item nav-link"><i class="fas fa-user me-2"></i>Admin</a>
+                    <a href="test" class="nav-item nav-link"><i class="fas fa-quote-left me-2"></i>Testimonial</a>
+                    <a href="comments" class="nav-item nav-link"><i class="bi bi-chat-quote me-2"></i>Comments</a>
+                    <a href="discount" class="nav-item nav-link"><i class="fas fa-tags me-2"></i>Discount</a>
+                    <a href="order" class="nav-item nav-link"><i class="bi bi-border-all me-2"></i>Orders</a>
+                    <a href="{{ route('admin.logout') }}" class="nav-item nav-link"><i class="fa fa-sign-out me-2"></i>LogOut</a>
+{{-- 
                     <a href="Profile.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Profile Setting</a>
-                    <a href="order.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Orders</a>
+                   
                     <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                    <a href="signin.html" class="nav-item nav-link"><i class="fa fa-sign-out me-2"></i>LogOut</a>
+                     --}}
               
                 </div>
             </nav>

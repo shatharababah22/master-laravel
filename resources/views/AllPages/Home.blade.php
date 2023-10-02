@@ -174,11 +174,11 @@
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
-                <h1 class="display-4 text-white" data-toggle="counter-up">5000</h1>
+                <h1 class="display-4 text-white" data-toggle="counter-up">{{$users}}</h1>
                 <span class="fs-5 fw-semi-bold text-light">Customer satisfaction</span>
             </div>
             <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
-                <h1 class="display-4 text-white" data-toggle="counter-up">1000</h1>
+                <h1 class="display-4 text-white" data-toggle="counter-up">{{$totalQuantity}}</h1>
                 <span class="fs-5 fw-semi-bold text-light">Recycled Items Sold</span>
             </div>
             <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
@@ -212,55 +212,23 @@
             </div>
         </div>
         <div class="row g-4 portfolio-container">
+            @foreach ($categories as $category)
+                
+           
             <div class="col-lg-3 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.3s">
                 <div class="portfolio-inner  rotating-border">
-                    <img class="img-fluid" src="images/image (30).png" alt="">
+                    <img class="img-fluid" src="/images/{{ $category->Image }}" alt="">
                     <div class="portfolio-text">
-                        <h4 class="text-white mb-4">Plastic</h4>
+                        <h4 class="text-white mb-4">{{$category->Name}}</h4>
                         <div class="d-flex">
-                            <a class="btn btn-lg-square rounded-circle mx-2" href="img/service-3.jpg" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
+                            <a class="btn btn-lg-square rounded-circle mx-2" href="{{ route('allproduct', ['Category_ID' => $category->id]) }}"><i class="fa fa-eye"></i></a>
                             <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.3s">
-                <div class="portfolio-inner  rotating-border">
-                    <img class="img-fluid" src="images/image (31).png" alt="">
-                    <div class="portfolio-text">
-                        <h4 class="text-white mb-4">Glass</h4>
-                        <div class="d-flex">
-                            <a class="btn btn-lg-square rounded-circle mx-2" href="./All-product.html" ><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square rounded-circle mx-2" href="./All-product.html"><i class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.3s">
-                <div class="portfolio-inner  rotating-border">
-                    <img class="img-fluid" src="images/image (43).png" alt="">
-                    <div class="portfolio-text">
-                        <h4 class="text-white mb-4">Organic</h4>
-                        <div class="d-flex">
-                            <a class="btn btn-lg-square rounded-circle mx-2" href="img/service-3.jpg" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.3s">
-                <div class="portfolio-inner  rotating-border">
-                    <img class="img-fluid" src="images/image (33).png" alt="">
-                    <div class="portfolio-text">
-                        <h4 class="text-white mb-4">Clothes</h4>
-                        <div class="d-flex">
-                            <a class="btn btn-lg-square rounded-circle mx-2" href="img/service-4.jpg" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-         
+            @endforeach
+
         </div>
     </div>
 </div>
@@ -270,6 +238,7 @@
 
 
 
+{{-- <p>Debug: {{ route('allproduct', ['category_id' => $category->id]) }}</p> --}}
 
 
     <!-- Service Start -->
@@ -411,38 +380,43 @@
   <!-- best-seller -->
 
   <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-    <p class="fs-5 fw-bold text-primary">Best sellers</p>
-    <h1 class="display-5 mb-5">Top performers in terms of sales</h1>
+    <p class="fs-5 fw-bold text-primary">New Arrivals</p>
+    <h1 class="display-5 mb-5">Recently Received Products</h1>
 </div>
 
 
   <div class="container row mx-auto mt-4">
-    
+    @foreach ($products as $product)
+        
+ 
     <div class="col-md-3 col-sm-6">
 
         <div class="product-grid">
             <div class="product-image">
                 <a href="#" class="image">
-                    <img class="pic-1" src="images/b10.PNG">
-                    <img class="pic-2" src="images/b10.PNG">
+                    <img class="pic-1" src="{{ asset('images/' . $product->image1) }}">
+                    <img class="pic-2" src="{{ asset('images/' . $product->image2) }}">
                 </a>
                 <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
                     <i class="far fa-heart"></i>
                 </a>
                 <ul class="product-links">
-                    <li><a href="Produc-details.html" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: green;"></i></a></li>
+                    <li><a href="{{ route('productdetail', ['id' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: green;"></i></a></li>
                     <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: green;"></i></a></li>
                     <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: green;"></i></a></li>
                 </ul>
                 
             </div>
             <div class="product-content">
-                <h3 class="title"><a href="#">A glass of juice</a></h3>
-                <div class="price">JOD 5.75</div>
+                <h3 class="title"><a href="#">{{ $product->MADEFROM}}</a></h3>
+                <div class="price"> {{ $product->Price}}</div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 col-sm-6">
+
+    @endforeach
+
+    {{-- <div class="col-md-3 col-sm-6">
         <div class="product-grid">
             <div class="product-image">
                 <a href="#" class="image">
@@ -509,7 +483,7 @@
             </div>
         </div>
         
-    </div>
+    </div> --}}
     
 
 </div>
@@ -775,81 +749,29 @@
                 </div>
            <div id="carouselExample3Controls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">
-                 <div class="carousel-item active">
-                    <div class="box col-lg-10 mx-auto">
-                       <div class="img_container">
-                          <div class="img-box">
-                             <div class="img_box-inner">
-                                <img src="images/shatha.jpg" alt="">
-                             </div>
-                          </div>
-                       </div>
-                       <div class="detail-box">
-                          <h5>
-                             Shatha Rababah
-                          </h5>
-                          <h6>
-                             Telecommunication Engineer
-                          </h6>
-                          <p>
-                             I'm so glad I stumbled upon this website. It's not just a marketplace; 
-                       it's a movement towards a greener future. Every purchase I make from here is a step towards 
-                       sustainability.
-                        The products are top-notch, and the ethos behind them is even more inspiring.
-                          </p>
-                       </div>
-                    </div>
-                 </div>
-                 <div class="carousel-item">
-                    <div class="box col-lg-10 mx-auto">
-                       <div class="img_container">
-                          <div class="img-box">
-                             <div class="img_box-inner">
-                                <img src="images/sohieb.jpg" alt="">
-                             </div>
-                          </div>
-                       </div>
-                       <div class="detail-box">
-                          <h5>
-                             Sohieb Rababa
-                          </h5>
-                          <h6>
-                             Dintist
-                          </h6>
-                          <p>
-                             As an environmentally conscious consumer, I've been searching for a platform that aligns with my values.
-                        This e-commerce website offers a curated selection of recycled items that are both stylish and 
-                        eco-friendly. 
-                       It's my go-to destination for guilt-free shopping!
-                          </p>
-                       </div>
-                    </div>
-                 </div>
-                 <div class="carousel-item">
-                    <div class="box col-lg-10 mx-auto">
-                       <div class="img_container">
-                          <div class="img-box">
-                             <div class="img_box-inner">
-                                <img src="images/sereen.jpg" alt="">
-                             </div>
-                          </div>
-                       </div>
-                       <div class="detail-box">
-                          <h5>
-                             Sereen Kamhieh
-                          </h5>
-                          <h6>
-                             Full Stack Developer
-                          </h6>
-                          <p>
-                             As an environmentally conscious consumer, I've been searching for a platform that aligns with my values.
-                             This e-commerce website offers a curated selection of recycled items that are both stylish and 
-                             eco-friendly. 
-                            It's my go-to destination for guilt-free shopping!
-                          </p>
-                       </div>
-                    </div>
-                 </div>
+                <div class="carousel">
+                    @foreach ($Testimonials as $key => $Testimonial)
+                        <div class="carousel-item @if ($key === 0) active @endif">
+                            <div class="box col-lg-10 mx-auto">
+                                <div class="img_container">
+                                    <div class="img-box">
+                                        <div class="img_box-inner">
+                                            <img src="/images/{{ $Testimonial->Image }}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="detail-box">
+                                    <h5>{{ $Testimonial->Name }}</h5>
+                                    <h6>{{ $Testimonial->Major }}</h6>
+                                    <p>{{ $Testimonial->comments }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                
+             
+
               </div>
               <div class="carousel_btn_box">
                  <a class="carousel-control-prev" href="#carouselExample3Controls" role="button" data-slide="prev">

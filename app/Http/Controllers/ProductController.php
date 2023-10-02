@@ -39,26 +39,49 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $imagePaths = [];
+       
     
-        // Loop through each uploaded file and save them
+        $imageNames = [];
+
         for ($i = 1; $i <= 5; $i++) {
-            $imageKey = "image$i";
+            $image = $request->file("image{$i}");
     
-            if ($image = $request->file($imageKey)) {
-                $destinationPath = 'images/';
-                $profileImage = date('YmdHis') . "_$i." . $image->getClientOriginalExtension();
-                $image->move($destinationPath, $profileImage);
-                $imagePaths[] = "$destinationPath$profileImage";
+            if ($image) {
+                $imageName = time() . "_{$i}." . $image->getClientOriginalExtension();
+                $image->move(public_path('images/'), $imageName);
+    
+                // Store the image name in the array with the loop index as the key
+                $imageNames[] = $imageName;
             }
         }
-  
     
-        Product::create($input);
+        // Create the product with the provided data including image names
+        Product::create([
+            // 'id' => $input['id'],
+            'Name' => $input['Name'],
+            'Price' => $input['Price'],
+            'description' => $input['description'],
+            'Stockquantity' => $input['Stockquantity'],
+            'image1' => isset($imageNames[0]) ? $imageNames[0] : null,
+            'image2' => isset($imageNames[1]) ? $imageNames[1] : null,
+            'image3' => isset($imageNames[2]) ? $imageNames[2] : null,
+            'image4' => isset($imageNames[3]) ? $imageNames[3] : null,
+            'image5' => isset($imageNames[4]) ? $imageNames[4] : null,
+            'MADEFROM' => $input['MADEFROM'],
+            'Brand' => $input['Brand'],
+            'ItemId' => $input['ItemId'],
+            'NOTES' => $input['NOTES'],
+            'status' => $input['status'],
+            'CategoryID' => $input['CategoryID'],
+        ]);
     
         return redirect()->route('productadmin.index')
                         ->with('success', 'Product created successfully.');
     }
+    
+    
+    
+    
     
     /**
      * Display the specified resource.
@@ -70,6 +93,9 @@ class ProductController extends Controller
     {
         //
     }
+
+  
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -93,9 +119,51 @@ return view('Dashboard.Product.Edit', compact('productadmin', 'categories'));
      */
     public function update(Request $request, Product $product)
     {
-        //
+        // Get all the input data from the request
+        $input = $request->all();
+    
+        // Update each column one by one based on the input data
+        $product->update([
+            'Name' => $input['Name'],
+            'Price' => $input['Price'],
+            'description' => $input['description'],
+            'Stockquantity' => $input['Stockquantity'],
+            'MADEFROM' => $input['MADEFROM'],
+            'Brand' => $input['Brand'],
+            'ItemId' => $input['ItemId'],
+            'NOTES' => $input['NOTES'],
+            'status' => $input['status'],
+            'CategoryID' => $input['CategoryID'],
+        ]);
+    
+        // Handle image uploads
+        $imageNames = [];
+    
+        for ($i = 1; $i <= 5; $i++) {
+            $image = $request->file("image{$i}");
+    
+            if ($image) {
+                $imageName = time() . "_{$i}." . $image->getClientOriginalExtension();
+                $image->move(public_path('images/'), $imageName);
+    
+                // Store the image name in the array with the loop index as the key
+                $imageNames[] = $imageName;
+            }
+        }
+    
+        // Update image columns separately
+        $imageColumns = ['image1', 'image2', 'image3', 'image4', 'image5'];
+    
+        foreach ($imageColumns as $key => $column) {
+            if (isset($imageNames[$key])) {
+                $product->update([$column => $imageNames[$key]]);
+            }
+        }
+    
+        return redirect()->route('productadmin.index')
+                        ->with('success', 'Product updated successfully.');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *

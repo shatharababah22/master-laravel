@@ -19,11 +19,11 @@ return new class extends Migration
             $table->id();
             $table->date('OrderDate');
             $table->bigInteger('TotalAmount');
-            $table->string('Status');
+            $table->boolean('Status');
             $table->unsignedBigInteger('UserID');
             $table->foreign('UserID')->references('id')->on('users');
             $table->unsignedBigInteger('billingsId');
-            $table->foreign('billingsId')->references('id')->on('billingaddress');
+            $table->foreign('billingsId')->references('id')->on('addresses');
             $table->timestamps();
         });
 

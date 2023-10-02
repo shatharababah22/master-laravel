@@ -17,11 +17,11 @@ return new class extends Migration
 
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
+           
             $table->date('date');
             $table->longText('comments');
             $table->integer('Rating');
-            $table->string('Major')->nullable();
+        
             $table->unsignedBigInteger('UserID');
             $table->foreign('UserID')->references('id')->on('users');
             $table->unsignedBigInteger('ProductID');

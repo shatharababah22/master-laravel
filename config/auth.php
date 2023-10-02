@@ -40,7 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session', // You can choose a driver based on your authentication method (e.g., 'session', 'passport', 'jwt')
+            'provider' => 'admins', // This should correspond to your authentication provider
+        ],
     ],
+
+  
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -69,6 +76,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        'admins' => [
+            'driver' => 'eloquent', // Use 'eloquent' if you're using Eloquent ORM
+            'model' => App\Models\Admin::class, // Specify the Admin model class
+        ],
     ],
 
     /*

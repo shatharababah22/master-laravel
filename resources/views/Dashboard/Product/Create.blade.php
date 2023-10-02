@@ -104,6 +104,8 @@ Category
                 <input class="form-control inputadmin" name="image1" value="{{ old('image1') }}" type="file" data-sb-validations="required" />
             </div>
         </div>
+
+  
         
         <button type="button" id="addFileInput" class="btn btn-success mt-2">Add another photo</button>
         

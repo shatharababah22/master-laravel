@@ -36,8 +36,13 @@ Category
           <thead>
               <th >&nbsp;</th>
               <th >#</th>
-              <th>Images</th>
               <th>Name</th>
+              <th>Images1</th>
+              <th>Images2</th>
+              <th>Images3</th>
+              <th>Images4</th>
+              <th>Images5</th>
+              
               <th>Description</th>
               <th>Price</th>
               <th>Stockquantity</th>
@@ -58,26 +63,23 @@ Category
                       <input type="checkbox" id="check" style="border: 1px solid black">
                   </td>
                   <td >{{ $product->id}}</td>
+                  <td>
+                  <div>
+                          
+                    <p class="m-0 fw-bold text-muted">{{ $product->Name}} </p>
+                </div> </td>
                   <td >
                       <img class="pic"
-                      src="{{ asset('images/' . $product->image1) }}" alt="">
-                      <img class="pic"
-                      src="{{ asset('images/' . $product->image2) }}" alt="">
-                      <img class="pic"
-                      src="{{ asset('images/' . $product->image3) }}" alt="">
-                      <img class="pic"
-                      src="{{ asset('images/' . $product->image4) }}" alt="">
-                      <img class="pic"
-                      src="{{ asset('images/' . $product->image5) }}" alt="">
-                  </td>
-                  <td>
-                      <div>
-                          
-                          <p class="m-0 fw-bold text-muted">{{ $product->Name}} </p>
-                      </div>
-                  </td>
-                
-                  <td class="d- text-muted" >
+                      src="{{ asset('images/' . $product->image1) }}" alt=""></td>
+                      <td><img class="pic"
+                      src="{{ asset('images/' . $product->image2) }}" alt=""></td>
+                      <td><img class="pic"
+                      src="{{ asset('images/' . $product->image3) }}" alt=""></td>
+                      <td><img class="pic"
+                      src="{{ asset('images/' . $product->image4) }}" alt=""></td>
+                      <td><img class="pic"
+                      src="{{ asset('images/' . $product->image5) }}" alt=""></td>
+        <td class="d- text-muted" >
                     {{ $product->description}}
                   </td>
                   <td class="d- text-muted">

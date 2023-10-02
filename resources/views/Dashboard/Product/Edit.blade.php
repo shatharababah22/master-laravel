@@ -19,7 +19,7 @@ Category
             <form method="post" action="{{route('productadmin.update', $productadmin->id )}}" enctype="multipart/form-data" id="signup-form" class="signup-form " >
                 @method('PUT')
                 @csrf
-                <h2 class="form-title mb-3" >Add Product</h2>
+                <h2 class="form-title mb-3" >Edit Product</h2>
                 {{-- <div class="form-floating mb-3 ">
                     <input class="form-control inputadmin" id="decription" name="id" type="text" placeholder="Decription" data-sb-validations="required" />
                     <label for="decription">ID</label>
@@ -104,15 +104,42 @@ Category
         <div id="fileInputsContainer">
             <div>
                 <input class="form-control inputadmin" name="image1" value="{{$productadmin->image1}}" type="file" data-sb-validations="required" />
+                <img src="/images/{{ $productadmin->image1 }}" width="200px" class="mt-3 mb-2">
+
+            </div>
+        </div>
+
+        <div id="fileInputsContainer">
+            <div>
+                <input class="form-control inputadmin" name="image2" value="{{$productadmin->image2}}" type="file" data-sb-validations="required" />
+                <img src="/images/{{ $productadmin->image2 }}" width="200px" class="mt-3 mb-2">
+            </div>
+        </div>
+        <div id="fileInputsContainer">
+            <div>
+                <input class="form-control inputadmin" name="image3" value="{{$productadmin->image3}}" type="file" data-sb-validations="required" />
+                <img src="/images/{{ $productadmin->image3 }}" width="200px" class="mt-3 mb-2">
+            </div>
+        </div>
+        <div id="fileInputsContainer">
+            <div>
+                <input class="form-control inputadmin" name="image4" value="{{$productadmin->image4}}" type="file" data-sb-validations="required" />
+                <img src="/images/{{ $productadmin->image4 }}" width="200px" class="mt-3 mb-2">
+            </div>
+        </div>
+        <div id="fileInputsContainer">
+            <div>
+                <input class="form-control inputadmin" name="image5" value="{{$productadmin->image5}}" type="file" data-sb-validations="required" />
+                <img src="/images/{{ $productadmin->image5 }}" width="200px" class="mt-3 mb-2">
             </div>
         </div>
         
-        <button type="button" id="addFileInput" class="btn btn-success mt-2">Add another photo</button>
+        {{-- <button type="button" id="addFileInput" class="btn btn-success mt-2">Add another photo</button> --}}
         
 
         
         <div class="d-flex justify-content-center">
-            <button type="submit" name="submit" class="btn btn-success btn-rounded " data-mdb-ripple-color="#ffffff">Add<i class="fas fa-add ms-1"></i></button>
+            <button type="submit" name="submit" class="btn btn-success btn-rounded " data-mdb-ripple-color="#ffffff">Edit<i class="fas fa-edit ms-1"></i></button>
           </div>
              
         </form>
@@ -130,7 +157,7 @@ Category
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
     let fileInputCount = 1; // Initial file input count
@@ -145,7 +172,7 @@ $(document).ready(function() {
         $('#fileInputsContainer').append(newFileInput);
     });
 });
-</script>
+</script> --}}
 
 
 

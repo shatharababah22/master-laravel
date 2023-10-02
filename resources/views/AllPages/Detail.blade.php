@@ -31,29 +31,32 @@
       <!-- content -->
       <section class="py-5">
         <div class="container">
+          @foreach ($products as  $product)
+          @if (is_object($product))
           <div class="row gx-5">
+     
             <aside class="col-lg-6">
               <div class="border rounded-4 mb-3 d-flex justify-content-center">
                 <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp">
-                  <img style="max-width: 100%; max-height: 95vh; margin: auto;" class="rounded-4 fit" src="./images/s1.PNG" />
+                  <img style="max-width: 100%; max-height: 95vh; margin: auto;" class="rounded-4 fit" src="{{ asset('images/' . $product->image1) }}" />
                 </a>
               </div>
               <div class="d-flex justify-content-center mb-3">
                 <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp" class="item-thumb">
-                  <img width="60" height="60" class="rounded-2" src="./images/s2.PNG"/>
+                  <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image2) }}"/>
                 </a>
                 <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big2.webp" class="item-thumb">
-                    <img width="60" height="60" class="rounded-2" src="./images/s3.PNG"/></a>
+                    <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image3) }}"/></a>
                 </a>
                 <a data-fslightbox="mygalley" class="border mx-1 rounded-2" data-type="image" href="./images/s7.PNG" class="item-thumb">
-                    <img width="60" height="60" class="rounded-2" src="./images/s4.PNG"/></a>
+                    <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image4) }}"/></a>
                 <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big4.webp" class="item-thumb">
-                    <img width="60" height="60" class="rounded-2" src="./images/s9.PNG"/></a>
+                    <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image5) }}"/></a>
                 </a>
 
                 </a>
                 <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp" class="item-thumb">
-                    <img width="60" height="60" class="rounded-2" src="./images/s5.PNG"/></a>
+                    <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image5) }}"/></a>
                 </a>
               </div>
               <!-- thumbs-wrap.// -->
@@ -63,7 +66,7 @@
             <main class="col-lg-6 mt-4">
               <div class="ps-lg-3">
                 <h4 class="title header">
-                    Recycled Patchwork Scarf 
+                  {{ $product->Name}}
                 
                 </h4>
                 <div class="d-flex flex-row my-3">
@@ -77,12 +80,12 @@
                       4.5
                     </span>
                   </div>
-                  <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>154 orders</span>
+                  <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>{{ $product->Stockquantity}}</span>
                   <span class="text-success ms-2">In stock</span>
                 </div>
       
                 <div class="mb-3">
-                  <span class="h5"><span class="del">JOD10</span>  </span>
+                  <span class="h5"><span class="del">{{ $product->Price}}</span>  </span>
                   <span class="text-muted">JOD5.75</span>
                 </div>
       
@@ -92,16 +95,16 @@
       
                 <div class="row">
                   <dt class="col-3"  style="color: green;">MADE FROM:</dt>
-                  <dd class="col-9">recycled acrylic, cotton, polyester</dd>
+                  <dd class="col-9">{{ $product->MADEFROM}}</dd>
       
                   <dt class="col-3"  style="color: green;">NOTES</dt>
-                  <dd class="col-9">55% Recycled Acrylic 37% Cotton 8% Polyester</dd>
+                  <dd class="col-9"> {{ $product->NOTES}}	</dd>
       
                   <dt class="col-3"  style="color: green;">ITEM ID</dt>
-                  <dd class="col-9">51808</dd>
+                  <dd class="col-9">{{ $product->ItemId}}</dd>
       
                   <dt class="col-3"  style="color: green;">Brand</dt>
-                  <dd class="col-9">Reebook</dd>
+                  <dd class="col-9">{{ $product->Brand}}</dd>
                 </div>
       
                 <hr />
@@ -135,160 +138,13 @@
               </div>
             </main>
           </div>
+          @else
+          <p>No product data available.</p>
+      @endif
+          @endforeach
         </div>
       </section>
       <!-- content -->
-      
-      <!-- <section class="  py-4">
-        <div class="container">
-          <div class="row gx-4">
-            <div class="col-lg-10 mb-4">
-              <div class="border rounded-2 px-3 py-2 bg-white">
-             
-                <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-                  <li class="nav-item d-flex" role="presentation">
-                    <a class="nav-link d-flex align-items-center justify-content-center w-100 active" id="ex1-tab-1" data-mdb-toggle="pill" href="#ex1-pills-1" role="tab" aria-controls="ex1-pills-1" aria-selected="true">Specification</a>
-                  </li>
-                  <li class="nav-item d-flex" role="presentation">
-                    <a class="nav-link d-flex align-items-center justify-content-center w-100" id="ex1-tab-2" data-mdb-toggle="pill" href="#ex1-pills-2" role="tab" aria-controls="ex1-pills-2" aria-selected="false">Warranty info</a>
-                  </li>
-                  <li class="nav-item d-flex" role="presentation">
-                    <a class="nav-link d-flex align-items-center justify-content-center w-100" id="ex1-tab-3" data-mdb-toggle="pill" href="#ex1-pills-3" role="tab" aria-controls="ex1-pills-3" aria-selected="false">Shipping info</a>
-                  </li>
-                 
-                </ul>
-          
-      
-  
-                <div class="tab-content" id="ex1-content">
-                  <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
-                    <p>
-                        
-                        When the first few leaves fall, and a cool breeze greets us each morning,
-                         we reach for our favorite scarf. You know, the one that cheers us up the second we put it on.
-                          We predict this one, with its mix of muted pastel colors and playful, quilt-inspired pattern, will be your new go-to.
-                           Its polyester-cotton-acrylic blend is not only made partly from recycled plastic bottles, it's a cruelty-free alternative to cashmere that's just as soft
-                            as the real thing. You won't want to leave home without it.
-                    </p>
-                    <div class="row mb-2">
-                      <div class="col-12 col-md-6">
-                        <ul class="list-unstyled mb-0">
-                          <li><i class="fas fa-check text-success me-2"></i>Sustainable Material</li>
-                          <li><i class="fas fa-check text-success me-2"></i>Softness and Comfort</li>
-                          <li><i class="fas fa-check text-success me-2"></i>
-                            Conscious Fashion Choice</li>
-                    
-                        </ul>
-                      </div>
-                      <div class="col-12 col-md-6 mb-0">
-                        <ul class="list-unstyled">
-                          <li><i class="fas fa-check text-success me-2"></i>Artisanal Craftsmanship</li>
-                          <li><i class="fas fa-check text-success me-2"></i>Styling Versatility</li>
-                        
-                        </ul>
-                      </div>
-                    </div>
-                    <table class="table border mt-3 mb-3">
-                      <tr>
-                        <th class="py-2">MEASUREMENTS:</th>
-                        <td class="py-2">72" L x 12" W</td>
-                      </tr>
-                      <tr>
-                        <th class="py-2">CARE:</th>
-                        <td class="py-2">Hand wash cold, lay flat to dry, use only non chlorine bleach if needed, cool iron if needed.</td>
-                      </tr>
-                      <tr>
-                        <th class="py-2">NOTES:</th>
-                        <td class="py-2">55% Recycled Acrylic 35% Cotton 8% Polyester 2% Other</td>
-                      </tr>
-                      
-                      <tr>
-                        <th class="py-2">Color:</th>
-                        <td class="py-2">-</td>
-                      </tr>
-                    </table>
-                  </div>
-                <div class="tab-pane fade mb-2" id="ex1-pills-2" role="tabpanel" aria-labelledby="ex1-tab-2">
-                    Tab content or sample information now <br />
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                    officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  </div>
-                  <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-                    Another tab content or sample information now <br />
-                    Dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                    mollit anim id est laborum.
-                  </div>
-                  <div class="tab-pane fade mb-2" id="ex1-pills-4" role="tabpanel" aria-labelledby="ex1-tab-4">
-                    Some other tab content or sample information now <br />
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                    officia deserunt mollit anim id est laborum.
-                  </div>
-                </div>
-        
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="px-0 border rounded-2 shadow-0">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Similar items</h5>
-                    <div class="d-flex mb-3">
-                      <a href="#" class="me-3">
-                        <img src="./images/s11.PNG" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                      </a>
-                      <div class="info">
-                        <a href="#" class="nav-link mb-1">
-                            Butterfly Journey Scarf
-                        
-                        </a>
-                        <strong class="text-dark">JOD22.5</strong>
-                      </div>
-                    </div>
-      
-                    <div class="d-flex mb-3">
-                      <a href="#" class="me-3">
-                        <img src="./images/s12.PNG" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                      </a>
-                      <div class="info">
-                        <a href="#" class="nav-link mb-1">
-                            Maya Angelou Still I Rise Scarf
-                         
-                        </a>
-                        <strong class="text-dark">JOD5.25</strong>
-                      </div>
-                    </div>
-      
-                    <div class="d-flex mb-3">
-                      <a href="#" class="me-3">
-                        <img src="./images/s13.PNG" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                      </a>
-                      <div class="info">
-                        <a href="#" class="nav-link mb-1">Genetics & DNA Scarf</a>
-                        <strong class="text-dark">JOD7.85</strong>
-                      </div>
-                    </div>
-      
-                    <div class="d-flex">
-                      <a href="#" class="me-3">
-                        <img src="./images/s14.PNG" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                      </a>
-                      <div class="info">
-                        <a href="#" class="nav-link mb-1">Repurposed Silk Sari Infinity Scarf</a>
-                        <strong class="text-dark">JOD4.75</strong>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> -->
-   
       
       
 

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
+use App\Models\Address;
+use App\Models\Orderitem;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -13,8 +16,13 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {  
+        $orders = Order::select('orders.OrderDate','orders.id','orders.TotalAmount',
+        'orders.Status','users.Email','addresses.address1')
+        ->join('users', 'orders.UserID', '=', 'users.id')
+        ->join('addresses', 'orders.billingsId', '=', 'addresses.id')
+        ->get();
+        return view("Dashboard.orders.order")->with("orders",$orders);
     }
 
     /**
@@ -22,9 +30,11 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function create()
     {
-        //
+      // 
     }
 
     /**
@@ -35,7 +45,14 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $input = $request->all();
+
+       
+
+        // Order::create($input);
+
+        // return redirect()->route('order.index')
+        //                 ->with('success','Order created successfully.');
     }
 
     /**
@@ -44,9 +61,24 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($order)
     {
-        //
+        $user = User::where('Email', $order)->first();
+
+    if ($user) {
+        // Find the user's orders
+        $userOrders = Order::where('UserID', $user->id)->get();
+
+        // Find the order items related to the user's orders
+       
+        $orderItems = Orderitem::whereIn('OrderID', $userOrders->pluck('id'))
+        ->with('products') // Assuming you have a relationship named 'product' in your OrderItem model
+        ->get();
+        return view('Dashboard.orders.show', compact('orderItems', 'user'));
+    } else {
+        // Handle the case where the user with the specified email is not found.
+        return redirect()->route('order.index')->with('error', 'User not found.');
+    }
     }
 
     /**
@@ -56,9 +88,10 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Order $order)
-    {
-        //
-    }
+{
+    return view('Dashboard.orders.edit', compact('order'));
+}
+
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +102,29 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $input = $request->all();
+
+    // Update the order record
+    $order->update([
+        'OrderDate' => $input['OrderDate'],
+        'TotalAmount' => $input['TotalAmount'],
+        'Status' => $input['Status'],
+    ]);
+
+    // Find the user associated with this order and update their email
+    $user = User::find($order->UserID);
+    $user->update([
+        'Email' => $input['Email'],
+    ]);
+
+    // Find the address associated with this order and update address1
+    $address = Address::find($order->billingsId);
+    $address->update([
+        'address1' => $input['address1'],
+    ]);
+
+    return redirect()->route('order.index')
+                    ->with('success','Order updated successfully');
     }
 
     /**
@@ -78,8 +133,20 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
-        //
+        $products = Orderitem::select('*')
+        ->where('OrderID', $id)
+        ->get();
+        if ($products->count()!= 0) {
+          ;
+
+            // Redirect to the 'category.index' route
+            return redirect()->route('order.index')->with(['cancel' => 'You have items under this order']);
+           
+        }
+        Order::destroy($id);
+     
+        return redirect()->route('order.index')->with(['deleted' => 'Deleted successfully']);
     }
 }

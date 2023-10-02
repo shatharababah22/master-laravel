@@ -43,13 +43,13 @@ Discount
         
         <div class="form-group row mb-3">
             <div class="col-md-6">
-                <input class="form-control inputadd" id="decription" name="StartDate" value="{{$discount->StartDate }}" type="text" placeholder="Start Date" data-sb-validations="required" />
+                <input class="form-control inputadd" id="decription" name="StartDate" value="{{$discount->StartDate }}" type="date" placeholder="Start Date" data-sb-validations="required" />
             
             </div>
             
             <!-- Add another input field here -->
             <div class="col-md-6">
-                <input class="form-control inputadd" name="EndDate" value="{{$discount->EndDate}}" type="text" placeholder="End Date" data-sb-validations="required" />
+                <input class="form-control inputadd" name="EndDate" value="{{$discount->EndDate}}" type="date" placeholder="End Date" data-sb-validations="required" />
            
             </div>
         </div>
