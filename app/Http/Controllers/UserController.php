@@ -37,8 +37,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        if ($request->has('Password')) {
-            $input['Password'] = bcrypt($request->input('Password'));
+        if ($request->has('password')) {
+            $input['password'] = bcrypt($request->input('password'));
         }
         if ($image = $request->file('Image')) {
             $destinationPath = 'images/';

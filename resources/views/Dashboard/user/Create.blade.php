@@ -28,7 +28,7 @@ User
         <div class="form-floating mb-3 ">
             {{-- <span style="color:red">@error('name'){{ $message }} @enderror</span><br><br> --}}
 
-            <input class="form-control inputadmin " id="name" name="Username" value='{{ old('Username') }}' type="text" placeholder="Username" data-sb-validations="required" />
+            <input class="form-control inputadmin " id="name" name="name" value='{{ old('name') }}' type="text" placeholder="Username" data-sb-validations="required" />
 
             <label for="name">Username</label>
 
@@ -47,12 +47,12 @@ User
             </div>
         </div>
         <div class="form-floating mb-3 ">
-            <input class="form-control inputadmin" id="decription" name="Email" value='{{ old('Email') }}' type="email" placeholder="Email" data-sb-validations="required" />
+            <input class="form-control inputadmin" id="decription" name="email" value='{{ old('email') }}' type="email" placeholder="Email" data-sb-validations="required" />
             <label for="decription">Email</label>
         
         </div>
         <div class="form-floating mb-3 ">
-            <input class="form-control inputadmin" id="decription" name="Password" value='{{ old('Password') }}' type="password" placeholder="Password" data-sb-validations="required" />
+            <input class="form-control inputadmin" id="decription" name="password" value='{{ old('password') }}' type="password" placeholder="Password" data-sb-validations="required" />
             <label for="decription">Password</label>
         
         </div>

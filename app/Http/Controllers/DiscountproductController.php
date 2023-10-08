@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Discountproduct;
 use App\Models\Category;
 use App\Models\Orderitem;
@@ -85,18 +85,35 @@ $totalQuantity = Orderitem::sum('Quantity');
 
     public function product_detail($id)
     {
-      
-        $products = Product::find($id);
-    
+        $product = Product::find($id);
+          
         // Check if the product exists
-        if (!$products) {
+        if (!$product) {
             // Handle the case where the product does not exist, e.g., return a 404 response
             abort(404);
         }
-        // dd($products);
+        
+        // Retrieve reviews related to the product
+        $reviews = DB::table('reviews')
+        ->join('users', 'reviews.UserID', '=', 'users.id')
+        ->select('reviews.*', 'users.Firstname as userName')
+        ->where('ProductID', $id)
+        ->get();
 
-        return view('AllPages.Detail', ['products' => $products]);
-    }
+        // Wrap the product in a collection to make it iterable in the view
+        $products = collect([$product]);
+    
+  
+    // Fetch products with the same category_id
+    $relatedProducts = Product::where('CategoryID', $product->CategoryID)
+    ->where('id', '<>', $id) // Exclude the current product
+    ->inRandomOrder() // Randomly order the results
+    ->take(4) // Limit the result to 4 products
+    ->get();
+
+
+    return view('AllPages.Detail', ['products' => $products, 'relatedProducts' => $relatedProducts, 'reviews' => $reviews]);
+}
     
 
 

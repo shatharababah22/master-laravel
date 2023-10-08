@@ -15,16 +15,22 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::create('users', function (Blueprint $table) {
-
+            
+            
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+     
+            $table->rememberToken();
+      
             $table->id();
-            $table->string('Username');
-            $table->string('Email');
-            $table->string('Password');
-            $table->string('Firstname');
-            $table->string('Lastname');
-            $table->bigInteger('Phone');
-            $table->string('Image');
-            $table->date('Birthday');
+            $table->string('name');
+         
+            $table->string('password');
+            $table->string('Firstname')->nullable();
+            $table->string('Lastname')->nullable();
+            $table->bigInteger('Phone')->nullable();
+            $table->string('Image')->nullable();
+            $table->date('Birthday')->nullable();
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

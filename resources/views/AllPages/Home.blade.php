@@ -168,7 +168,7 @@
     </div>
     <!-- About End -->
 
-
+    
     <!-- Facts Start -->
 <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="images/imp1.jpg">
     <div class="container py-5">
@@ -194,6 +194,8 @@
 </div>
 
     <!-- Facts End -->
+
+
 
  <!-- Catgories Start -->
  <div class="container-xxl py-5 ">

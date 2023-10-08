@@ -148,32 +148,45 @@
       
       
 
-
+    
   
     <!-- Main Body -->
+
     <section class="mt-2 mb-4">
         <div class="container">
             <div class="row">
                 <div class="col-sm-5 col-md-6 col-12 pb-4">
                     <h1>Comments</h1>
+                    @foreach ($reviews as $review)
                     <div class="comment mt-4 text-justify float-left">
                         <img src="./images/shatha.jpg" alt="" class="rounded-circle" width="60" height="60">
-                        <h4>Shatha Rababah</h4>
-                       
-                        <span>21 October, 2023</span>
-                       
-                        <div class=" mb-1 me-3" style="color: green; font-size: 15px;">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                           
-                          </div>
-                        
-                        <p class="mt-1"> "Absolutely in love with my Recycled Patchwork Scarf! The blend of colors and textures is stunning, and it's unbelievably soft. It's become my go-to accessory for both style and sustainability."</p>
+                        <h4>{{ $review->userName }}</h4>
+                        <span>{{ $review->date }}</span>
+                
+                        <div class="mb-1 me-3" style="color: green; font-size: 15px;">
+                            @php
+                                $rating = $review->Rating;
+                                $fullStars = floor($rating);
+                                $halfStar = ceil($rating - $fullStars) === 0.5;
+                            @endphp
+                
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $fullStars)
+                                    <i class="fa fa-star"></i>
+                                @elseif ($i - $fullStars === 0.5 && $halfStar)
+                                    <i class="fas fa-star-half-alt"></i>
+                                @else
+                                    <i class="far fa-star"></i>
+                                @endif
+                            @endfor
+                        </div>
+                
+                        <p class="mt-1">{{ $review->comments }}</p>
                     </div>
-                    <div class="text-justify darker mt-4 float-right">
+                @endforeach
+                
+                
+                    {{-- <div class="text-justify darker mt-4 float-right">
                         <img src="./images/sohieb.jpg" alt="" class="rounded-circle" width="60" height="60">
                         <h4>Sohieb Rababa</h4>
                         <span>20 December, 2022</span>
@@ -195,7 +208,7 @@
                         <span>- 20 June, 2023</span>
                         <br>
                         <p class="mt-1">"Not only is this scarf visually appealing with its patchwork design, but it also feels amazing against my skin.</p>
-                    </div>
+                    </div> --}}
                   
                 </div>
                 <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
@@ -248,7 +261,9 @@
 
 
 
-    <div class="container mt-4">
+
+
+   <div class="container mt-4">
       <h1 class="mb-3">Similar Items</h1>
   
       <div id="similar-items-carousel" class="carousel slide" data-ride="carousel">
@@ -257,78 +272,29 @@
               <!-- First Item -->
               <div class="carousel-item active">
                   <div class="row">
+                    @foreach ($relatedProducts as $product)
+                        
+                
                       <div class="col-md-3 col-sm-6">
                           <div class="product-grid">
                               <div class="product-image">
                                   <a href="#" class="image">
-                                    <img class="pic-1 rounded-3" src="images/s11.PNG">
-                                    <img class="pic-2 rounded-3" src="images/s11.PNG">
+                                    <img class="pic-1 rounded-3" src="{{ asset('images/' . $product->image1) }}">
+                                    <img class="pic-2 rounded-3" src="{{ asset('images/' . $product->image2) }}">
                                   </a>
                                   <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
                                       <i class="far fa-heart"></i>
                                   </a>
                                   <ul class="product-links">
-                                      <li><a href="Produc-details.html" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
+                                      <li><a href="{{ route('productdetail', ['id' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
                                       <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
                                       <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
                                   </ul>
                               </div>
                           </div>
                       </div>
-                      <div class="col-md-3 col-sm-6">
-                        <div class="product-grid">
-                            <div class="product-image">
-                                <a href="#" class="image">
-                                  <img class="pic-1 rounded-3" src="images/s11.PNG">
-                                  <img class="pic-2 rounded-3" src="images/s11.PNG">
-                                </a>
-                                <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
-                                    <i class="far fa-heart"></i>
-                                </a>
-                                <ul class="product-links">
-                                  <li><a href="Produc-details.html" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
-                                  <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
-                                  <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
-                              </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                      <div class="product-grid">
-                          <div class="product-image">
-                              <a href="#" class="image">
-                                <img class="pic-1 rounded-3" src="images/s11.PNG">
-                                <img class="pic-2 rounded-3" src="images/s11.PNG">
-                              </a>
-                              <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
-                                  <i class="far fa-heart"></i>
-                              </a>
-                              <ul class="product-links">
-                                <li><a href="Produc-details.html" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
-                                <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
-                                <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
-                            </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-3 col-sm-6">
-                    <div class="product-grid">
-                        <div class="product-image">
-                            <a href="#" class="image">
-                              <img class="pic-1 rounded-3" src="images/s11.PNG">
-                                      <img class="pic-2 rounded-3" src="images/s11.PNG">
-                            </a>
-                            <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
-                                <i class="far fa-heart"></i>
-                            </a>
-                            <ul class="product-links">
-                              <li><a href="Produc-details.html" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
-                              <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
-                              <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
-                          </ul>
-                        </div>
-                    </div>
-                </div>
+                      
+                      @endforeach
                       <!-- Add other items similarly -->
                   </div>
               </div>
@@ -347,7 +313,7 @@
               <span class="sr-only">Next</span>
           </a>
       </div>
-  </div>
+  </div> 
   
 
 

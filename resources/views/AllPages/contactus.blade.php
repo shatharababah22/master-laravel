@@ -24,7 +24,17 @@
     </div>
     <!-- Page Header End -->
 
+    <div class="volunteer-form">
+        @if (Session::get('message_sent'))
+            <script>
+                Swal.fire("Message", "{{ Session::get('message_sent') }}", 'success', {
+                    showConfirmButton: true,
+                    confirmButtonText: "OK",
+                });
+            </script>
 
+    </div>
+    @endif
     <!-- Contact Start -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -35,35 +45,64 @@
                     <p class="mb-4">If you have any inquiries or questions, please do not hesitate to get in touch with us. 
                         We are here to assist you and provide the information you need. Whether you're seeking clarification, additional details, or assistance with a particular matter, our dedicated team is ready to help.
                        </p>
-                    <form>
-                        <div class="row g-3">
+                   
+                       <form method="POST" action="{{ route('contact.us.store') }}" id="contactUSForm">
+                        {{ csrf_field() }}
+                          
+                        <div class="row">
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                    <label for="name">Your Name</label>
+                                <div class="form-group">
+                                    <strong>Name:</strong>
+                                    <input type="text" name="name" class="form-control"  value="{{ old('name') }}">
+                                    @if ($errors->has('name'))
+                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                    <label for="email">Your Email</label>
+                                <div class="form-group">
+                                    <strong>Email:</strong>
+                                    <input type="text" name="email" class="form-control"  value="{{ old('email') }}">
+                                    @if ($errors->has('email'))
+                                        <span class="text-danger">{{ $errors->first('email') }}</span>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    <label for="subject">Subject</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Phone:</strong>
+                                    <input type="text" name="phone" class="form-control"  value="{{ old('phone') }}">
+                                    @if ($errors->has('phone'))
+                                        <span class="text-danger">{{ $errors->first('phone') }}</span>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 100px"></textarea>
-                                    <label for="message">Message</label>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <strong>Subject:</strong>
+                                    <input type="text" name="subject" class="form-control"  value="{{ old('subject') }}">
+                                    @if ($errors->has('subject'))
+                                        <span class="text-danger">{{ $errors->first('subject') }}</span>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary py-3 px-4" type="submit">Send Message</button>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>Message:</strong>
+                                    <textarea name="message" rows="3" class="form-control">{{ old('message') }}</textarea>
+                                    @if ($errors->has('message'))
+                                        <span class="text-danger">{{ $errors->first('message') }}</span>
+                                    @endif
+                                </div>  
                             </div>
+                        </div>
+                 
+                        <div class="form-group text-center mt-2">
+                            <button class="btn btn-success btn-submit">Submit</button>
                         </div>
                     </form>
                 </div>

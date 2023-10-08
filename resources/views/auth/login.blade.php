@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <title>Gardener - Gardening Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+
     <meta content="" name="keywords">
     <meta content="" name="description">
 
@@ -50,21 +52,56 @@
 
 
 
-    {{-- <form method="POST" action="{{ route('login') }}">
+
+
+
+
+
+
+
+<section>
+<div class="row vh-100 signup" id="signupSection" >
+    <div class="col-md-7 col-12">
+        <div class="fw-medium p-2"><span class="brand fw-bold"><a href="index.html"><img src="./images/3.PNG" width="100px" ></a></div>
+        <div class=" sign-container mx-auto">
+            <div class="text-center ">
+                <h2 class="brand fs-1 my-4">Sign up for an Account</h2>
+                <div class="mb-2 mx-auto signin-border"></div>
+                <div class="d-flex justify-content-center align-items-center mt-3">
+                    <div>
+                        <a class="btn btn-square btn-lg rounded-circle me-2" style="width: 3rem; height: 3rem; border-color: rgb(236, 223, 125);" href=""><i class="fab fa-facebook-f fa-2x" style="color: rgb(236, 223, 125)"></i></a>
+                    </div>
+                    <div>
+                        <a class="btn btn-square rounded-circle me-2" style="width: 3rem; height: 3rem; border-color: rgb(236, 223, 125);" href=""><i class="fab fa-twitter fa-2x" style="color: rgb(236, 223, 125)"></i></a>
+                    </div>
+                    <div>
+                        <a class="btn btn-square btn-5x rounded-circle me-2" style="width: 3rem; height: 3rem; border-color: rgb(236, 223, 125);" href=""><i class="fab fa-linkedin-in fa-2x" style="color: rgb(236, 223, 125)"></i></a>
+                    </div>
+                    <div>
+                        <a class="btn btn-square rounded-circle me-2" style="width: 3rem; height: 3rem; border-color: rgb(236, 223, 125);" href=""><i class="fab fa-google fa-2x" style="color:rgb(236, 223, 125)"></i></a>
+                    </div>
+                </div>
+                <div class="pt-4">
+                    or sign up using your information
+                </div>
+               <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <form method="POST" action="{{ route('login') }}">
         @csrf
 
         <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+        <div class="position-relative my-4">
+            <x-input-label for="email" :value="__('Email')" class="input-label position-absolute px-2 bg-white z-1" />
+            <x-text-input id="email" class="form-control inputbox shadow-none p-3" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <div class="position-relative my-4">
+            <x-input-label for="password" :value="__('Password')" class="input-label position-absolute px-2 bg-white z-1"/>
 
-            <x-text-input id="password" class="block mt-1 w-full"
+            <x-text-input id="password" class="form-control inputbox shadow-none p-3"
                             type="password"
                             name="password"
                             required autocomplete="current-password" />
@@ -72,136 +109,58 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
+     
+         <div  class="d-flex justify-content-between align-items-center mt-2">
+          
+
+               <!-- Remember Me -->
+        <div class="block ">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
+                <input id="remember_me" type="checkbox" style="color: rgba(0, 255, 60, 0.155)" class=" fa fa-square bg-light" name="remember">
                 <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        @if (Route::has('password.request'))
+        <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+            {{ __('Forgot your password?') }}
+        </a>
+    @endif
 
-            <x-primary-button class="ml-3">
+    
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+            <x-primary-button class="btn btn-primary btn-box py-sm-2 px-sm-5 mt-2">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
-    </form> --}}
-
-    <section class="container-fluid" >
-        <div class="row vh-100" id="loginSection" style="border: 2px black;">
-            <div class="col-md-7 col-12">
-                <div class="fw-medium p-2"><span class="brand fw-bold"><a href="index.html"><img  src="{{asset('images/3.png')}}" width="100px"></a></div>
-                <div class="px-4 sign-container mx-auto">
-                    <div class="text-center mt-5  ">
-                        <h2 class="brand fs-1 my-4">Sign in to Account</h2>
-                        <div class="mb-2 mx-auto signin-border "></div>
-                        <div class="d-flex justify-content-center align-items-center mt-3">
-                            <div>
-								<a class="btn btn-square btn-lg  rounded-circle me-2" style="width: 3rem; height: 3rem;  border-color: rgb(236, 223, 125); " href=""><i class="fab fa-facebook-f fa-2x" style="color: rgb(236, 223, 125)"></i></a>
-                            </div>
-                            <div>
-									<a class="btn btn-square   rounded-circle me-2 " style="width: 3rem; height: 3rem;  border-color: rgb(236, 223, 125);" href=""><i class="fab fa-twitter fa-2x" style="color: rgb(236, 223, 125)" ></i></a>
-                            </div>
-                            <div >
-								<a class="btn btn-square  btn-5x  rounded-circle me-2 " style="width: 3rem; height: 3rem;  border-color: rgb(236, 223, 125);" href=""><i class="fab fa-linkedin-in fa-2x" style="color: rgb(236, 223, 125)"></i></a>
-                            </div>
-							<div>
-								<a class="btn btn-square  rounded-circle me-2" style="width: 3rem; height: 3rem;  border-color: rgb(236, 223, 125);" href=""><i class="fab fa-google fa-2x" style="color:rgb(236, 223, 125)"></i></a>
-                            </div>
-                        </div>
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-
-                            
-                        <div class="pt-4">or use your email account</div>
-                           <!-- Email Address -->
-                           <div class="position-relative my-4">
-                            <div class="input-label position-absolute  px-2 bg-white z-1">
-                                <x-input-label class="control-label" for="email" :value="__('Email')" />
-                            </div>
-            <x-text-input id="email" class="form-control inputbox shadow-none p-3" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="form-control inputbox shadow-none p-2" />
-        </div>
-
-
-        <!-- Password -->
-        <div class="position-relative my-4">
-            <div class="input-label position-absolute  px-2 bg-white z-1">
-
-            <x-input-label  class="control-label " for="password" :value="__('Password')" />
-            </div>
-            <x-text-input id="password" class="form-control inputbox shadow-none p-3"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="form-control inputbox shadow-none p-2" />
-        </div>
-
-
-                <!-- Remember Me -->
-                <div  class="d-flex justify-content-between align-items-center mt-2">
-                    <label for="remember_me" class="inline-flex items-center">
-                        <input id="remember_me" type="checkbox" style="color: rgba(0, 255, 60, 0.155)" class=" fa fa-square bg-light" name="remember">
-                        <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-                    </label>
-                    @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-                </div>
-
-        
-                <div class="flex items-center justify-end mt-4">
-                   
-                    <x-primary-button class="btn btn-primary btn-box py-sm-2 px-sm-5 mt-2">
-                        {{ __('Log in') }}
-                    </x-primary-button>
-                </div>
-                     
-                    </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 col-12 right-box d-flex">
-                <div class=" text-center m-auto m-5 p-5" style="background-color: rgba(240, 248, 255, 0.795);">
-                    <h2 class="fw-bolder fs-1 my-4">Hello, Friend!</h2>
-                    <div class="signin-border border border-2 mx-auto mb-1" style="color:#2c6a39;"></div>
-                    <span class="mt-3">If you don't have account? Sign up Now</span><br>
-                    <a href="signup.html" class="btn btn-primary btn-box py-sm-2 px-sm-5 mt-3" >SignUp</a>
-
-					
-                </div>
+    </form>
+                
             </div>
         </div>
+   
+
+    </div> 
+    
+    <div class="col-md-5 col-12 right-box d-flex" id="rightBox">
+        <div class="text-center m-auto m-5 p-5" style="background-color: rgba(240, 248, 255, 0.795);">
+            <h2 class="fw-bolder fs-1 my-4">Hello, Friend!</h2>
+            <div class="signin-border border border-2 mx-auto mb-1" style="color:#2c6a39;"></div>
+            <span class="mt-3">If you don't have account?Register Now</span><br>
+            <a href="{{ route('register') }}" class="btn btn-primary btn-box py-sm-2 px-sm-5 mt-3" >Login</a>
+        </div>
+    </div>
+
+    
+    </div>
+
+
 
 
     
 
-
-            
-
-    </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
+</section>
 
 
 
@@ -229,10 +188,5 @@
 </body>
 
 </html>
-
-
-
-
-
 
 

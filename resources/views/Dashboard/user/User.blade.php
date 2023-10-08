@@ -53,7 +53,7 @@ Category
               <th >&nbsp;</th>
               <th>#</th>
               <th>Image</th>
-              <th>Username</th>
+              <th>Name</th>
               <th>Firstname</th>
               <th>Lastname</th>
               <th>Email</th>
@@ -78,7 +78,7 @@ Category
                   <td>
                       <div>
                           
-                          <p class="m-0 fw-bold text-muted">{{ $user->Username}} </p>
+                          <p class="m-0 fw-bold text-muted">{{ $user->name}} </p>
                       </div>
                   </td>
                 
@@ -89,7 +89,7 @@ Category
                     {{ $user->Lastname}}
                   </td>
                   <td class="d- text-muted">
-                    {{ $user->Email}}
+                    {{ $user->email}}
                   </td>
                   <td class="d- text-muted">
                     {{ $user->Phone}}

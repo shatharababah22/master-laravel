@@ -10,6 +10,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\ContactController;
 
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController;
 use App\Http\Controllers\DiscountproductController;
@@ -28,8 +29,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
-
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,11 +45,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-// Route::get('/home', function () {
-//     return view('Allpages.Home');
-// });
 
-Route::get('/home', [DiscountproductController::class, 'index']);
+
+Route::get('/', [DiscountproductController::class, 'index']);
 
 
 Route::get('/allproduct/{Category_ID}', [DiscountproductController::class, 'Allproduct'])->name('allproduct');
@@ -79,6 +83,17 @@ Route::get('/dash/login', [AdminLoginController::class, 'login'])->name("admin.l
 Route::get('/dash/home', [AdminLoginController::class, 'showLoginForm'])->name("admin.lolo");
 Route::post('/dash/check', [AdminLoginController::class, 'check'])->name("admin.check");
 Route::get('/adminlogout', [AdminLoginController::class, 'logout'])->name("admin.logout");
+
+// ...............contact us ..................
+
+Route::get('contact-us', [ContactController::class, 'index']);
+Route::post('contact-us', [ContactController::class, 'store'])->name('contact.us.store');
+
+
+
+
+
+
 
 
 
