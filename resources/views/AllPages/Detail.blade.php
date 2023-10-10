@@ -109,18 +109,18 @@
       
                 <hr />
       
-                <div class="row mb-4">
+                <div class="row ">
                   <div class="col-md-4 col-6 ">
-                    <label class="mb-2 ">Length</label>
-                    <select class="form-select border border-secondary" style="height: 35px;">
+                    {{-- <label class="mb-2 ">Length</label> --}}
+                    {{-- <select class="form-select border border-secondary" style="height: 35px;">
                       <option>200cm</option>
                       <option>150m</option>
                       <option>0.5m</option>
-                    </select>
+                    </select> --}}
                   </div>
                   <!-- col.// -->
-                  <div class="col-md-4 col-6 mb-3">
-                    <label class="mb-2 d-block">Quantity</label>
+                  <div class="col-md-4 col-6 ">
+                    {{-- <label class="mb-2 d-block">Quantity</label>
                     <div class="input-group mb-2" style="width: 170px;">
                       <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon1" data-mdb-ripple-color="dark">
                         <i class="fas fa-minus"></i>
@@ -129,11 +129,11 @@
                       <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon2" data-mdb-ripple-color="dark">
                         <i class="fas fa-plus"></i>
                       </button>
-                    </div>
+                    </div> --}}
                   </div>
                 </div>
                 <a href="checkout.html" class="btn btn-warning shadow-0"> Buy now </a>
-                <a href="cart.html" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+                <a href="{{ route('addcart', ['id_cart' => $product->id]) }}" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
                 <a href="#" class="btn btn-light  icon-hover px-3"><i class="me-1 fa fa-heart fa-lg " style="color: green;"></i> Save </a>
               </div>
             </main>
@@ -157,9 +157,10 @@
             <div class="row">
                 <div class="col-sm-5 col-md-6 col-12 pb-4">
                     <h1>Comments</h1>
+                    <div class="comment-container" >
                     @foreach ($reviews as $review)
                     <div class="comment mt-4 text-justify float-left">
-                        <img src="./images/shatha.jpg" alt="" class="rounded-circle" width="60" height="60">
+                        <img src="/images/{{ $review->Image}}" alt="" class="rounded-circle" width="60" height="60">
                         <h4>{{ $review->userName }}</h4>
                         <span>{{ $review->date }}</span>
                 
@@ -184,74 +185,47 @@
                         <p class="mt-1">{{ $review->comments }}</p>
                     </div>
                 @endforeach
+              </div>
                 
-                
-                    {{-- <div class="text-justify darker mt-4 float-right">
-                        <img src="./images/sohieb.jpg" alt="" class="rounded-circle" width="60" height="60">
-                        <h4>Sohieb Rababa</h4>
-                        <span>20 December, 2022</span>
-                        <br>
-                        <div class=" mb-1 me-3" style="color: green; font-size: 15px;">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="far fa-star fa-sm"></i>
-                            <i class="far fa-star fa-sm"></i>
-                 
-                           
-                          </div>
-                        <p class="mt-1"> "I adore how versatile this scarf is. I can dress it up for formal events or use it to add flair to a casual outfit. Its recycled composition makes it a guilt-free indulgence that I'm proud to wear."</p>
-                    </div>
-                    <div class="comment mt-4 text-justify">
-                        <img src="./images/sereen.jpg" alt="" class="rounded-circle" width="60" height="60">
-                        <h4>Sereen Qamhieh</h4>
-                        <span>- 20 June, 2023</span>
-                        <br>
-                        <p class="mt-1">"Not only is this scarf visually appealing with its patchwork design, but it also feels amazing against my skin.</p>
-                    </div> --}}
                   
                 </div>
                 <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
-                    <form id="algin-form">
-                        <div class="form-group">
-                            <h4>Leave a comment</h4>
-                            <div class="d-flex align-items-center">
-                            <ul class="rating mb-3 d-flex list-unstyled">
-                                <li>
-                                  <i class="far fa-star fa-sm " style="color: green; font-size: 17px;" title="Bad"></i>
-                                </li>
-                                <li>
-                                  <i class="far fa-star fa-sm " style="color: green; font-size: 17px;" title="Poor"></i>
-                                </li>
-                                <li>
-                                  <i class="far fa-star fa-sm " style="color: green; font-size: 17px;" title="OK"></i>
-                                </li>
-                                <li>
-                                  <i class="far fa-star fa-sm " style="color: green; font-size: 17px;" title="Good"></i>
-                                </li>
-                                <li>
-                                  <i class="far fa-star fa-sm " style="color: green; font-size: 17px;" title="Excellent"></i>
-                                </li>
-                              </ul>
+                  <form id="algin-form" action="{{ route('productcomment', ['id' => $product->id]) }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <h4>Leave a comment</h4>
+                        <div class="d-flex align-items-center">
+                          <div class="form-group">
+                            <label for="Rating">Rating:</label>
+                            <div class="rating mt-2">
+                                <i class="fas fa-star" data-rating="5"></i>
+                                <i class="fas fa-star" data-rating="4"></i>
+                                <i class="fas fa-star" data-rating="3"></i>
+                                <i class="fas fa-star" data-rating="2"></i>
+                                <i class="fas fa-star" data-rating="1"></i>
                             </div>
-                            <label for="message">Message</label>
-                            <textarea name="msg" id=""msg cols="30" rows="5" class="form-control" ></textarea>
+                            <input type="hidden" name="Rating" value='{{ old('Rating') }}' id="rating-input" value="0">
                         </div>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" name="name" id="fullname" class="form-control">
+                        
+                          
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="text" name="email" id="email" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <p class="text-secondary mt-2">If you have a <a href="#" class="alert-link">gravatar account</a> your address will be used to display your profile picture.</p>
-                        </div>
-                       
-                          <div id="post1" > 
-                            <a href="" class="btn btn-primary py-sm-3 px-sm-4 mt-4">Submit</a>
-                    </form>
+                        {{-- <div class="d-flex align-items-center">
+                          <ul class="rating mb-3 d-flex list-unstyled">
+                              <!-- Add input field for rating -->
+                              <input type="date" name="date" class="form-control"  required>
+                          </ul>
+                      </div> --}}
+                        {{-- <label for="comments" class="mt-2">Message</label> --}}
+                        <textarea name="comments" id="comments" cols="30" rows="5" class="form-control mt-2" value='{{ old('comments') }}' placeholder="Your comment" required></textarea>
+                      </div>
+                    <div class="form-group">
+                        <p class="text-secondary mt-2">If you have a <a href="#" class="alert-link">gravatar account</a> your address will be used to display your profile picture.</p>
+                    </div>
+                    <div id="post1">
+                        <button type="submit" class="btn btn-primary py-sm-3 px-sm-4 mt-2">Submit</button>
+                    </div>
+                </form>
+                
                 </div>
             </div>
         </div>
@@ -320,7 +294,9 @@
 
 
 
-
+    
+  
+  
 
 
 
@@ -332,3 +308,9 @@
 
 
 @endsection
+
+
+
+
+
+  

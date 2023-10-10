@@ -147,8 +147,8 @@
         <div class="text-center m-auto m-5 p-5" style="background-color: rgba(240, 248, 255, 0.795);">
             <h2 class="fw-bolder fs-1 my-4">Hello, Friend!</h2>
             <div class="signin-border border border-2 mx-auto mb-1" style="color:#2c6a39;"></div>
-            <span class="mt-3">If you don't have account?Register Now</span><br>
-            <a href="{{ route('register') }}" class="btn btn-primary btn-box py-sm-2 px-sm-5 mt-3" >Login</a>
+            <span class="mt-3">If you don't have account? Register Now</span><br>
+            <a href="{{ route('register') }}" class="btn btn-primary btn-box py-sm-2 px-sm-5 mt-3" >Register</a>
         </div>
     </div>
 

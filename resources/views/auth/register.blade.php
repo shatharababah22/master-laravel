@@ -95,12 +95,12 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <!-- Email Address -->
+        {{-- <!-- Email Address -->
         <div class="position-relative my-4">
-            <x-input-label for="email" :value="__('Email')" class="input-label position-absolute px-2 bg-white z-1"/>
-            <x-text-input id="email"  class="form-control inputbox shadow-none p-2" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+            <x-input-label for="Image" :value="__('Image')" class="input-label position-absolute px-2 bg-white z-1"/>
+            <x-text-input id="Image"  class="form-control inputbox shadow-none p-2" type="file" name="Image" :value="old('Image')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('Image')" class="mt-2" />
+        </div> --}}
 
         <!-- Password -->
         <div class="position-relative my-4">
@@ -123,6 +123,12 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="position-relative my-4">
+            <x-input-label for="email" :value="__('Email')" class="input-label position-absolute px-2 bg-white z-1"/>
+            <x-text-input id="email"  class="form-control inputbox shadow-none p-2" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <div class="d-flex justfiy-start mt-4">

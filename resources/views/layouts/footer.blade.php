@@ -95,13 +95,36 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
-        $(document).ready(function () {
-          $('#carouselExample3Controls').carousel();
-        });
+       
+        $(document).ready(function() {
+            $('#carouselExample3Controls').carousel();
+      // Initialize the rating based on the hidden input value
+      var initialRating = $("#rating-input").val();
+      $(".rating i").each(function() {
+          if ($(this).data("rating") <= initialRating) {
+              $(this).addClass("selected");
+          }
+      });
+  
+      // Handle click events on star icons
+      $(".rating i").click(function() {
+          var rating = $(this).data("rating");
+  
+          // Update the hidden input field with the selected rating
+          $("#rating-input").val(rating);
+  
+          // Highlight the selected star and unhighlight others
+          $(this).addClass("selected");
+          $(this).prevAll().addClass("selected");
+          $(this).nextAll().removeClass("selected");
+      });
+  });
       </script>
+  
       
 </body>
 

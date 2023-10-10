@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Cartitem;
 use Illuminate\Http\Request;
 
@@ -16,6 +16,18 @@ class CartitemController extends Controller
     {
         //
     }
+
+
+    public function add_cart($id)
+    {
+        if (Auth::check()) {
+            
+        }
+        else {
+            # code...
+        }
+    }
+
 
     /**
      * Show the form for creating a new resource.

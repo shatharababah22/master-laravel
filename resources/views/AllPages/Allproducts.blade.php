@@ -99,7 +99,7 @@
             @endforeach
         </div>
         
-        
+        {{-- {{ $allProductsCollection->links() }} --}}
 
 </div>
 </div>

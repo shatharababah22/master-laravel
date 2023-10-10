@@ -13,6 +13,7 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ContactController;
 
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController;
+use App\Http\Controllers\CartitemController;
 use App\Http\Controllers\DiscountproductController;
 use App\Models\Discountproduct;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('AllPages.Home');
+});
+Route::get('/cart', function () {
+    return view('AllPages.cart');
 });
 
 Route::get('/dashboard', function () {
@@ -52,6 +56,8 @@ Route::get('/', [DiscountproductController::class, 'index']);
 
 Route::get('/allproduct/{Category_ID}', [DiscountproductController::class, 'Allproduct'])->name('allproduct');
 Route::get('/productdetail/{id}', [DiscountproductController::class, 'product_detail'])->name('productdetail');
+Route::post('/productdetail/comment/{id}', [DiscountproductController::class, 'product_comment'])->name('productcomment');
+Route::get('/cart/{id_cart}', [CartitemController::class, 'add_cart'])->name('addcart');
 
 
 
@@ -66,6 +72,7 @@ Route::resource('discount',DiscountController::class);
 Route::resource('comments',ReviewController::class);
 Route::resource('order',OrderController::class);
 Route::resource('test',TestimonialController::class);
+Route::resource('review',DiscountproductController::class);
 
 
 // ...................admin_login.................

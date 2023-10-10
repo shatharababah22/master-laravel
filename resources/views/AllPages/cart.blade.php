@@ -198,9 +198,9 @@
                 <h5>JOD 47.65</h5>
               </div>
 
+
+              
               <a href="checkout.html" class="btn btn-primary mx-auto py-3 px-4 mt-4" style="float: right;">Checkout</a>
-
-
             </div>
           </div>
           </div>

@@ -9,13 +9,17 @@ class Review extends Model
 {
     use HasFactory;
     protected $fillable = [
+   
 
-        "Name",
-        "date",
+        "comments",
         "Rating",
-        "active",
-        "StartDate",
-        "EndDate"
+        "date",
+        "UserID",
+        "ProductID",
+     
+    
+
+
         
 ];
 

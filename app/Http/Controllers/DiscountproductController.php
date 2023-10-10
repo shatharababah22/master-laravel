@@ -1,14 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\DB;
 use App\Models\Discountproduct;
 use App\Models\Category;
 use App\Models\Orderitem;
+use App\Models\Review;
 use App\Models\User;
 use App\Models\Testimonial;
 use App\Models\Product;
 use Illuminate\Http\Request;
+
 use PHPUnit\Framework\Constraint\Count;
 
 class DiscountproductController extends Controller
@@ -61,31 +65,64 @@ $totalQuantity = Orderitem::sum('Quantity');
           return view('AllPages.Home'); 
     }
 
+    // public function Allproduct($Category_ID)
+    // {
+    //     // Initialize an empty array to store all products
+    //     $allProducts = [];
+    
+    //     // Retrieve products related to the specified category in chunks
+    //     Product::where('CategoryID', $Category_ID)->chunk(100, function ($products) use (&$allProducts) {
+    //         // Process each chunk of products
+    //         foreach ($products as $product) {
+    //             $allProducts[] = $product;
+    //         }
+    //     });
+    
+    //     // You can pass the $allProducts data to your view
+    //     $allProductsCollection = collect($allProducts);
+
+    //     return view('AllPages.Allproducts', compact('allProductsCollection'));
+        
+    // }
+    
     public function Allproduct($Category_ID)
     {
         // Initialize an empty array to store all products
         $allProducts = [];
     
-        // Retrieve products related to the specified category in chunks
-        Product::where('CategoryID', $Category_ID)->chunk(100, function ($products) use (&$allProducts) {
-            // Process each chunk of products
-            foreach ($products as $product) {
-                $allProducts[] = $product;
-            }
-        });
+        // Define the number of products per page
+        $perPage = 9;
     
-        // You can pass the $allProducts data to your view
+        // Retrieve products related to the specified category in chunks
+        DB::table('products')
+            ->where('CategoryID', $Category_ID)
+            ->orderBy('id') // You should order by a unique column (e.g., 'id')
+            ->chunk(100, function ($products) use (&$allProducts, $perPage) {
+                // Manually paginate the products within the chunk
+                $chunkedProducts = array_chunk($products->toArray(), $perPage); // Convert to array
+    
+                // Process and display each chunk of products
+                foreach ($chunkedProducts as $chunk) {
+                    foreach ($chunk as $product) {
+                        $allProducts[] = $product;
+                    }
+                    // You can pass this chunk of products to your view
+                    // Process and display each chunk of products in your view
+                    // For example, you can return a partial view
+                }
+            });
+    
         $allProductsCollection = collect($allProducts);
-
+    
+        // Optionally, you can return the main view, but paginated content will be displayed through AJAX or partial views
         return view('AllPages.Allproducts', compact('allProductsCollection'));
-        
     }
     
 
 
     public function product_detail($id)
     {
-        $product = Product::find($id);
+        $product = Product::find( $id);
           
         // Check if the product exists
         if (!$product) {
@@ -96,7 +133,7 @@ $totalQuantity = Orderitem::sum('Quantity');
         // Retrieve reviews related to the product
         $reviews = DB::table('reviews')
         ->join('users', 'reviews.UserID', '=', 'users.id')
-        ->select('reviews.*', 'users.Firstname as userName')
+        ->select('reviews.*', 'users.name as userName','users.Image')
         ->where('ProductID', $id)
         ->get();
 
@@ -110,11 +147,35 @@ $totalQuantity = Orderitem::sum('Quantity');
     ->inRandomOrder() // Randomly order the results
     ->take(4) // Limit the result to 4 products
     ->get();
+    
 
 
     return view('AllPages.Detail', ['products' => $products, 'relatedProducts' => $relatedProducts, 'reviews' => $reviews]);
 }
-    
+ 
+
+
+public function product_comment(Request $request, $id){
+  if (Auth::check()) {
+    // User is already logged in, create the review and redirect to product detail
+    Review::create([
+        'comments' => $request->input('comments'),
+        'Rating' => $request->input('Rating'),
+        'date' => now(),
+        'UserID' => auth()->id(),
+        'ProductID' => $id,
+        // Add other fields as needed
+    ]);
+
+    // Redirect to the product detail page
+    return redirect()->route('productdetail', ['id' => $id])->with('success', 'Review added successfully.');
+} else {
+    // User is not logged in, store the intended URL and redirect to the login page with an error message
+    session()->put('intended_url', route('productdetail', ['id' => $id]));
+    return redirect()->route('login')->with('error', 'You must be logged in to leave a review.');
+}
+
+}
 
 
     /**
@@ -124,7 +185,7 @@ $totalQuantity = Orderitem::sum('Quantity');
      */
     public function create()
     {
-        //
+      
     }
 
     /**
@@ -135,7 +196,7 @@ $totalQuantity = Orderitem::sum('Quantity');
      */
     public function store(Request $request)
     {
-        //
+          
     }
 
     /**

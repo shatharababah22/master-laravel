@@ -29,7 +29,8 @@ return new class extends Migration
             $table->string('Firstname')->nullable();
             $table->string('Lastname')->nullable();
             $table->bigInteger('Phone')->nullable();
-            $table->string('Image')->nullable();
+            $table->string('Image')->nullable()->default('person-transformed.jpeg');
+
             $table->date('Birthday')->nullable();
             $table->timestamps();
         });
