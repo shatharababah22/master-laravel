@@ -6,7 +6,8 @@
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
                     <a href="index.html" class="navbar-brand d-flex align-items-center mb-2" href="index.html">
-                        <img  src="./images/3.PNG" width="120px">
+                        <img src="{{ asset('images/3.PNG') }}" alt="Image Description" width="120px">
+
                     </a>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Tabrbour, Amman, Jordan</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+962 790 751376</p>
@@ -98,33 +99,49 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
     <script>
-       
-        $(document).ready(function() {
-            $('#carouselExample3Controls').carousel();
-      // Initialize the rating based on the hidden input value
-      var initialRating = $("#rating-input").val();
-      $(".rating i").each(function() {
-          if ($(this).data("rating") <= initialRating) {
-              $(this).addClass("selected");
-          }
-      });
-  
-      // Handle click events on star icons
-      $(".rating i").click(function() {
-          var rating = $(this).data("rating");
-  
-          // Update the hidden input field with the selected rating
-          $("#rating-input").val(rating);
-  
-          // Highlight the selected star and unhighlight others
-          $(this).addClass("selected");
-          $(this).prevAll().addClass("selected");
-          $(this).nextAll().removeClass("selected");
-      });
-  });
-      </script>
-  
+$(document).ready(function () {
+    $('#carouselExample3Controls').carousel();
+
+    // Initialize the rating based on the hidden input value
+    var initialRating = $("#rating-input").val();
+    $(".rating i").each(function () {
+        if ($(this).data("rating") <= initialRating) {
+            $(this).addClass("selected");
+        }
+    });
+
+    // Add event listeners to handle star rating selection
+    const stars = document.querySelectorAll(".rating i");
+    const ratingInput = document.getElementById("rating-input");
+
+    stars.forEach((star) => {
+        star.addEventListener("click", function () {
+            const rating = parseInt(star.getAttribute("data-rating"));
+
+            // Highlight the selected star and stars to the left
+            stars.forEach((s) => {
+                if (parseInt(s.getAttribute("data-rating")) <= rating) {
+                    s.classList.add("selected");
+                } else {
+                    s.classList.remove("selected");
+                }
+            });
+
+            ratingInput.value = rating;
+        });
+    });
+       $("#incrementButton, #decrementButton").click(function () {
+            var action = $(this).data("action");
+            $("#actionInput").val(action);
+            // Trigger the form submission
+            $(this).closest("form").submit();
+        });
+});
+</script>
+
+
       
 </body>
 

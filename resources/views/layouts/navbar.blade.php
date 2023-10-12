@@ -77,8 +77,9 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <img  src="./images/3.PNG" width="100px">
+        <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+ <img src="{{ asset('images/3.PNG') }}" alt="Image Description" width="100px">
+
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>

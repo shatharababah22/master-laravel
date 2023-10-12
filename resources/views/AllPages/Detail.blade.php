@@ -119,21 +119,22 @@
                     </select> --}}
                   </div>
                   <!-- col.// -->
-                  <div class="col-md-4 col-6 ">
-                    {{-- <label class="mb-2 d-block">Quantity</label>
-                    <div class="input-group mb-2" style="width: 170px;">
-                      <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon1" data-mdb-ripple-color="dark">
-                        <i class="fas fa-minus"></i>
-                      </button>
-                      <input type="text" class="form-control text-center border border-secondary" placeholder="2" aria-label="Example text with button addon" aria-describedby="button-addon1" />
-                      <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon2" data-mdb-ripple-color="dark">
-                        <i class="fas fa-plus"></i>
-                      </button>
-                    </div> --}}
-                  </div>
+                  <form method="POST" action="{{ route('addcart', ['id' => $product->id]) }}">
+                    @csrf
+                    <div class="col-md-4 col-6">
+                        <label class="mb-2 d-block">Quantity</label>
+                        <div class="input-group mb-2" style="width: 170px;">
+                          
+                          <input type="text" class="form-control text-center border border-secondary" id="quantity" name="quantity" placeholder="1" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                          
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                </form>
+                
                 </div>
                 <a href="checkout.html" class="btn btn-warning shadow-0"> Buy now </a>
-                <a href="{{ route('addcart', ['id_cart' => $product->id]) }}" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+                {{-- <a href="{{ route('addcart', ['id_cart' => $product->id]) }}" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a> --}}
                 <a href="#" class="btn btn-light  icon-hover px-3"><i class="me-1 fa fa-heart fa-lg " style="color: green;"></i> Save </a>
               </div>
             </main>
@@ -198,13 +199,15 @@
                           <div class="form-group">
                             <label for="Rating">Rating:</label>
                             <div class="rating mt-2">
-                                <i class="fas fa-star" data-rating="5"></i>
-                                <i class="fas fa-star" data-rating="4"></i>
-                                <i class="fas fa-star" data-rating="3"></i>
-                                <i class="fas fa-star" data-rating="2"></i>
-                                <i class="fas fa-star" data-rating="1"></i>
-                            </div>
-                            <input type="hidden" name="Rating" value='{{ old('Rating') }}' id="rating-input" value="0">
+                              <i class="fas fa-star"  data-rating="1" id="star-1"></i>
+                              <i class="fas fa-star" data-rating="2" id="star-2"></i>
+                              <i class="fas fa-star" data-rating="3" id="star-3"></i>
+                              <i class="fas fa-star" data-rating="4" id="star-4"></i>
+                              <i class="fas fa-star" data-rating="5" id="star-5"></i>
+                          </div>
+                          <input type="hidden" name="Rating" id="rating-input" value="0">
+                          
+                          
                         </div>
                         
                           
@@ -260,7 +263,7 @@
                                       <i class="far fa-heart"></i>
                                   </a>
                                   <ul class="product-links">
-                                      <li><a href="{{ route('productdetail', ['id' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
+                                      <li><a href="{{ route('productdetail', ['id_cart' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
                                       <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
                                       <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
                                   </ul>
@@ -308,6 +311,12 @@
 
 
 @endsection
+
+
+
+
+
+
 
 
 

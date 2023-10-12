@@ -87,36 +87,27 @@ $totalQuantity = Orderitem::sum('Quantity');
     
     public function Allproduct($Category_ID)
     {
-        // Initialize an empty array to store all products
-        $allProducts = [];
+        $perPage = 6;
+        $categories = Category::all();
     
-        // Define the number of products per page
-        $perPage = 9;
+        $query = DB::table('products')
+            ->where('CategoryID', $Category_ID);
     
-        // Retrieve products related to the specified category in chunks
-        DB::table('products')
-            ->where('CategoryID', $Category_ID)
-            ->orderBy('id') // You should order by a unique column (e.g., 'id')
-            ->chunk(100, function ($products) use (&$allProducts, $perPage) {
-                // Manually paginate the products within the chunk
-                $chunkedProducts = array_chunk($products->toArray(), $perPage); // Convert to array
-    
-                // Process and display each chunk of products
-                foreach ($chunkedProducts as $chunk) {
-                    foreach ($chunk as $product) {
-                        $allProducts[] = $product;
-                    }
-                    // You can pass this chunk of products to your view
-                    // Process and display each chunk of products in your view
-                    // For example, you can return a partial view
-                }
+        $search = request('search');
+        if (!empty($search)) {
+            $query->where(function ($query) use ($search) {
+                $query->where('product_name', 'like', "%$search%")
+                      ->orWhere('product_description', 'like', "%$search%");
             });
+        }
     
-        $allProductsCollection = collect($allProducts);
+        $allProductsCollection = $query->orderBy('id')->paginate($perPage);
+        $categoryProductCounts = $query->count();
     
-        // Optionally, you can return the main view, but paginated content will be displayed through AJAX or partial views
-        return view('AllPages.Allproducts', compact('allProductsCollection'));
+        return view('AllPages.Allproducts', compact('allProductsCollection', 'categories', 'categoryProductCounts'));
     }
+    
+    
     
 
 
@@ -157,6 +148,8 @@ $totalQuantity = Orderitem::sum('Quantity');
 
 public function product_comment(Request $request, $id){
   if (Auth::check()) {
+
+    
     // User is already logged in, create the review and redirect to product detail
     Review::create([
         'comments' => $request->input('comments'),
@@ -176,6 +169,60 @@ public function product_comment(Request $request, $id){
 }
 
 }
+
+
+
+
+public function add_cart(Request $request, $id)
+{
+    $product = Product::find($id);
+    $quantity1 = $request->quantity;
+
+    if (Auth::check()) {
+        // Handle authenticated user cart logic
+
+
+    } else {
+        $cart = session()->get('cart', []);
+
+        // Generate a unique key for each item based on the product ID
+        $cartKey = 'product_' . $product->id;
+
+        if (isset($cart[$cartKey])) {
+            $cart[$cartKey]['quantity']++;
+        } else {
+            $cart[$cartKey] = [
+                'id' => $product->id,
+              
+                'image1' => $product->image1,
+                'Name' => $product->Name,
+                'quantity' => $quantity1,
+                'price' => $product->Price,
+            ];
+        }
+
+        session()->put('cart', $cart);
+        // dd($cart);
+        
+    }
+
+    return redirect()->back()->with('success', 'Product deleted successfully');
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**

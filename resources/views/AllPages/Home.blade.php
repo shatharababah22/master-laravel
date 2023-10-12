@@ -403,7 +403,7 @@
                     <i class="far fa-heart"></i>
                 </a>
                 <ul class="product-links">
-                    <li><a href="{{ route('productdetail', ['id' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: green;"></i></a></li>
+                    <li><a href="{{ route('productdetail', ['id_cart' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: green;"></i></a></li>
                     <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: green;"></i></a></li>
                     <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: green;"></i></a></li>
                 </ul>

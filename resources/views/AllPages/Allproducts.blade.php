@@ -1,5 +1,19 @@
 @extends('layouts.Master')
 @section('title', 'PRO')
+
+    <!-- Google Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,500,600,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&display=swap" rel="stylesheet">
+
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="{{ asset('vendor-product/font-awesome/css/fontawesome-all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor-product/animate.css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css-product/font-mytravel.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor-product/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
+    
+
+    <!-- CSS MyTravel Template -->
+    <link rel="stylesheet" href="{{ asset('css-product/theme.css') }}">
 @section('content')
 
 
@@ -24,110 +38,270 @@
     <!-- Page Header End -->
 
 
-    <div class="container py-5  wow fadeInUp pro1 " data-wow-delay="0.1s">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <ul class="nav layout_tab_nav ul_li mr-2" role="tablist">
-                        <li>
-                            <button class="active custom-button ml-2" data-bs-toggle="tab" data-bs-target="#grid_layout" type="button" role="tab" aria-selected="true">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 12 12">
-                                    <path id="grid" class="cls-1" d="M1784,905h2v2h-2v-2Zm5,0h2v2h-2v-2Zm5,0h2v2h-2v-2Zm-10,5h2v2h-2v-2Zm5,0h2v2h-2v-2Zm5,0h2v2h-2v-2Zm-10,5h2v2h-2v-2Zm5,0h2v2h-2v-2Zm5,0h2v2h-2v-2Z" transform="translate(-1784 -905)" />
-                                </svg>
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+            <div class="container pt-5 pt-xl-8" >
+                <div class="row mb-5 mb-md-8 mt-xl-1 pb-md-1">
+                    <div class="col-lg-4 col-xl-3 order-lg-1 width-md-50">
+                        <div class="navbar-expand-lg navbar-expand-lg-collapse-block">
+                            <button class="btn d-lg-none mb-5 p-0 collapsed" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="far fa-caret-square-down text-primary font-size-20 card-btn-arrow ml-0"></i>
+                                <span class="text-primary ml-2">Sidebar</span>
                             </button>
-                        </li>
-                        <li>
-                            <h4 class="show_result ml-2" style="margin-left:10px;">Showing 1–9 of 50 results</h4>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <ul class="nav layout_tab_nav ul_li mr-2 justify-content-end" role="tablist">
-                        <li>
-                            <div class="input-group">
-                                <div class="form-outline">
-                                    <input id="search-input" type="search" id="form1" class="form-control"  placeholder="Search"/>
-                                 
-                                </div>
-                                <button id="search-button" type="button" class="btn2 btn-primary">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="container">
-                @foreach ($allProductsCollection->chunk(3) as $productChunk)
-                    <div class="row row-cols-1 row-cols-md-3 g-3 mt-4">
-                        @foreach ($productChunk as $product)
-                        <!-- Start a new column for each product -->
-                        <div class="col product m-3">
-                            <div class="product-grid">
-                                <div class="product-image">
-                                    <a href="#" class="image mt-3">
-                                        <img class="img-1" src="{{ asset('images/' . $product->image1) }}">
-                                        <img class="img-2 mt-2" src="{{ asset('images/' . $product->image2) }}">
-                                    </a>
-                                    <ul class="product-links">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="Produc-details.html"><i class="fa fa-random"></i></a></li>
-                                        <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                    <a href="{{ route('productdetail', ['id' => $product->id]) }}" class="product-view"><i class="fa fa-search"></i></a>
-                                </div>
-                                <div class="product-content">
-                                    <ul class="rating">
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star"></li>
-                                        <li class="fas fa-star disable"></li>
-                                        <li class="disable">(1 review)</li>
-                                    </ul>
-                                    <h3 class="title"><a href="#">{{ $product->Name }}</a></h3>
-                                    <div class="price">{{ $product->Price }}</div>
+                            <div id="sidebar" class="collapse navbar-collapse">
+                                <div class="mb-6 w-100">
+                                    <div class="pb-4 mb-2">
+                                     
+                                            <div class="sidebar border border-color-1 rounded-xs">
+                                                <div class="sidebar border border-color-1 rounded-xs">
+                                                    
+                                                    {{-- <form method="post" action="{{ route('allproducts', $Category_ID) }}">
+                                                        <div>
+                                                            <label>Search:</label>
+                                                            <input type="text" name="search" class="form-control text-center border border-secondary search-input w-100" aria-label="Example text with button addon" aria-describedby="button-addon1" value="{{ request('search') }}" />
+                                                
+                                                            <button type="submit" id="apply-filter">Apply Filter</button>
+                                                        </div>
+                                                    </form> --}}
+                                                </div>
+                                                
+                                            </div>
+   
+                                      
+                                    </div>
+                                  
+
+                                    <div class="sidenav border border-color-8 rounded-xs">
+                                        <!-- Accordiaon -->
+                                        <div id="shopCartAccordion" class="accordion rounded shadow-none">
+                                            <div class="border-0">
+                                                <div class="card-collapse" id="shopCardHeadingOne">
+                                                    <h3 class="mb-0">
+                                                        <button type="button" class="btn btn-link btn-block card-btn py-2 px-5 text-lh-3 collapsed" data-toggle="collapse" data-target="#shopCardOne" aria-expanded="false" aria-controls="shopCardOne">
+                                                            <span class="row align-items-center">
+                                                                <span class="col-9">
+                                                                    <span class="d-block font-size-lg-15 font-size-17 font-weight-bold text-dark">Price Range ($)</span>
+                                                                </span>
+                                                                <span class="col-3 text-right">
+                                                                    <span class="card-btn-arrow">
+                                                                        <span class="fas fa-chevron-down small"></span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </h3>
+                                                </div>
+                                                <div id="shopCardOne" class="collapse show" aria-labelledby="shopCardHeadingOne" data-parent="#shopCartAccordion">
+                                                    <div class="card-body pt-0 px-5">
+                                                        <div class="pb-3 mb-1 d-flex text-lh-1">
+                                                            <span>£</span>
+                                                            <span id="rangeSliderExample3MinResult" class=""></span>
+                                                            <span class="mx-0dot5"> — </span>
+                                                            <span>£</span>
+                                                            <span id="rangeSliderExample3MaxResult" class=""></span>
+                                                        </div>
+                                                        <input class="js-range-slider" type="text"
+                                                        data-extra-classes="u-range-slider height-35"
+                                                        data-type="double"
+                                                        data-grid="false"
+                                                        data-hide-from-to="true"
+                                                        data-min="0"
+                                                        data-max="3456"
+                                                        data-from="200"
+                                                        data-to="3456"
+                                                        data-prefix="$"
+                                                        data-result-min="#rangeSliderExample3MinResult"
+                                                        data-result-max="#rangeSliderExample3MaxResult">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Accordion -->
+                                        <div id="cityCategoryAccordion" class="accordion rounded-0 shadow-none border-top ">
+                                            <div class="border-0"  style="margin-left:30px;">
+                                                <div class="card-collapse" id="cityCategoryHeadingOne">
+                                                    <h3 class="mb-0 " >
+                                                        <button type="button" class="btn btn-link btn-block card-btn py-2   collapsed" data-toggle="collapse" data-target="#cityCategoryOne" aria-expanded="false" aria-controls="cityCategoryOne">
+                                                            <span class="row align-items-center">
+                                                                <span class="col-9">
+                                                                    <span class="font-weight-bold font-size-35 text-dark mb-3">Categories</span>
+                                                                </span>
+                                                                <span class="col-3 text-right">
+                                                                    <span class="card-btn-arrow">
+                                                                        <span class="fas fa-chevron-down small"></span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </h3>
+                                                </div>
+                                                <div id="cityCategoryOne" class="collapse" aria-labelledby="cityCategoryHeadingOne" data-parent="#cityCategoryAccordion">
+                                                    <div class="card-body pt-0 mt-1 px-3 pb-4">
+                                                        @foreach ($categories as $category)
+                                                        <div class="form-group d-flex align-items-center font-size-1 text-lh-md  mb-3">
+                                                   
+                                                                <a href="{{ route('allproduct', ['Category_ID' => $category->id]) }}"><i class="bi bi-circle me-1"></i></a>
+
+                                                          <span class="custom-control-label " for="brandamsterdam">{{$category->Name}}</span>     
+                                                           
+                                                        </div>
+                                                        @endforeach
+
+                                                        <!-- End Checkboxes -->
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Accordion -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- End of the column for each product -->
-                    @endforeach
+                    </div>
+                    <div class="col-lg-8 col-xl-9 order-md-1 order-lg-2">
+                        <!-- Shop-control-bar Title -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="font-size-21 font-weight-bold mb-0 text-lh-1">{{ $categoryProductCounts}} results found.</h3>
+                     
+                        </div>
+                        <!-- End shop-control-bar Title -->
+
+                        <!-- Slick Tab carousel -->
+                        <div class="u-slick__tab">
+                         
+
+                            <!-- Tab Content -->
+                            <div class="tab-content " id="pills-tabContent">
+                            
+                                <div class="tab-pane fade show active" id="pills-one-example1" role="tabpanel" aria-labelledby="pills-one-example1-tab" data-target-group="groups">
+                                    <!-- Product Cards Feature with Ratings -->
+                                    <div class="row">
+
+                                        @foreach ($allProductsCollection as $product)
+                                        <div class="col-md-6 col-xl-4 mb-3 mb-md-4 pb-1">
+                                            <div class="card transition-3d-hover shadow-hover-2 h-100">
+                                                <div class="position-relative">
+                                                    <a href="{{ route('productdetail', ['id_cart' => $product->id]) }}" style="background-color: #dbdbdb9e;">
+                                                        <img class="card-img-top" src="{{ asset('images/' . $product->image1) }}">
+                                                    </a>
+                                                    {{-- <div class="position-absolute top-0 left-0 pt-3 pr-3">
+                                                        <i class="me-1 fa fa-heart fa-lg" style="color: rgba(6, 128, 0, 0.952);"></i>
+                                                    </div> --}}
+                                                    
+                                                    {{-- <div class="position-absolute bottom-0 left-0 right-0">
+                                                        <div class="px-3 pb-2">
+                                                            <a href="../yacht/yacht-single-v1.html">
+                                                                <span class="text-white font-weight-bold font-size-17">{{ $product->Name }}</span>
+                                                            </a>
+                                                            <div class="text-white my-2">
+                                                                <span class="mr-1 font-size-14">From</span>
+                                                                <span class="font-weight-bold font-size-19">JOD {{ $product->Price }}</span>
+                                                          
+                                                            </div>
+                                                        </div>
+                                                    </div> --}}
+                                                </div>
+                                                <div class="card-body px-4 pt-3 pb-2 border-bottom">
+                                                    <a href="../yacht/yacht-single-v1.html" class="d-block">
+                                                        <div class="d-flex align-items-center font-size-18 font-weight-bold text-secondary" >
+                                                           {{ $product->Name }}
+                                                        </div>
+                                                    </a>
+                                                    <a href="../yacht/yacht-single-v1.html" class="d-block">
+                                                        <div class="d-flex align-items-center font-size-14 text-gray-1 mt-1">
+                                                          JOD {{ $product->Price }}
+                                                        </div>
+                                                    </a>
+                                                    <div class="my-2">
+                                                        <div class="d-inline-flex align-items-center font-size-14 text-lh-1 text-primary">
+                                                            <div class=" mr-2"  style="color: rgba(6, 128, 0, 0.952); font-size:18px;">
+                                                                <small class="fas fa-star" ></small>
+                                                                <small class="fas fa-star"></small>
+                                                                <small class="fas fa-star"></small>
+                                                                <small class="fas fa-star"></small>
+                                                                <small class="fas fa-star"></small>
+                                                            </div>
+                                                            <span class="text-secondary font-size-14 mt-1 ">48 Reviews</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="px-4 py-3">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <ul class="list-unstyled mb-0">
+                                                                <li class="media mb-2 text-gray-1 align-items-center">
+                                                                  
+                                                                 
+                                                                    
+                                                                    <div class="media-body font-size-1">
+                                                                        <i class="fas fa-box" style="color: rgba(6, 128, 0, 0.952); font-size:17px;"></i>   {{ $product->Stockquantity }}
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        
+                                                        <div class="col-6">
+                                                            <ul class="list-unstyled mb-0">
+                                                                <li class="media mb-2 text-gray-1 align-items-center">
+                                                                    {{-- <small class="mr-2">
+                                                                        <i class="fas fa-gem " style="color: rgba(6, 128, 0, 0.952);font-size:18px;"></i>
+                                                                    </small> --}}
+                                                                    <div class="media-body font-size-1 ">
+                                                                        <i class="fas fa-gem " style="color: rgba(6, 128, 0, 0.952);font-size:17px;"></i>            {{ $product->Brand }}
+                                                                    </div>
+                                                                </li>
+                                                           
+                                                            </ul>
+                                                        </div>
+                                                        
+                                                
+
+                                                    </div>
+                                                </div>
+                                                {{-- <ul class="product-links">
+                                                    <li><a href="{{ route('productdetail', ['id' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
+                                                    <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
+                                                    <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
+                                                </ul> --}}
+                                                <div class="w-100">
+                                                    <div class="d-flex justify-content-between mx-auto ">
+                                                       
+                                                        <div class="w-100">
+                                                            <a  class="btn btn-primary shadow-0 w-100 btn2 "> <i class="me-1 fa fa-shopping-basket"></i>Add to cart</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        @endforeach
+                                        
+                                      
+                                    </div>
+                               
+                                   
+                                    <!-- End Product Cards Feature with Ratings -->
+                                </div>
+                            </div>
+
+                           
+                            <!-- End Tab Content -->
+                          
+                        </div>
+                        
+                        <!-- Slick Tab carousel -->
+                    </div>
                 </div>
-                <!-- End of the row for every three products -->
-            @endforeach
+            </div>
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+
+        <div style="margin-left: 56%; margin-right: 35%; text-align: center;">
+            {!! $allProductsCollection->withQueryString()->links('pagination::bootstrap-5') !!}
         </div>
         
-        {{-- {{ $allProductsCollection->links() }} --}}
-
-</div>
-</div>
-
-<div class="pagination-container">
-    <a class="pagination-newer" href="#">PREV</a>
-<div class="pagination page-center">	
-
-	<input id="dot-1" type="radio" name="dots">	
-	<label class="label" for="dot-1"></label>	
-	<input  id="dot-2" type="radio" name="dots">
-	<label class="label" for="dot-2"></label>	
-	<input id="dot-3" type="radio" name="dots" checked="checked">
-	<label  class="label" for="dot-3"></label>	
-	<input id="dot-4" type="radio" name="dots">
-	<label class="label" for="dot-4"></label>	
-	<input id="dot-5" type="radio" name="dots">
-	<label  class="label" for="dot-5"></label>	
-	<input id="dot-6" type="radio" name="dots">
-	<label  class="label" for="dot-6"></label>	
-	<input id="dot-7" type="radio" name="dots">
-	<label  class="label" for="dot-7"></label>	
-	<input id="dot-8" type="radio" name="dots">
-	<label  class="label" for="dot-8"></label>
-	<div class="pacman"></div>
-</div>
-<a class="pagination-older" href="#">NEXT</a>
-</div>
 
 
 
@@ -141,16 +315,79 @@
 
 
 
-
-
-
-
-
-
-
-
-
+       
 
 
 
 @endsection
+
+
+  <!-- JS Global Compulsory -->
+  {{-- <script src="{{ asset('vendor-product/jquery/dist/jquery.min.js') }}" ></script>
+  <script src="{{ asset('vendor-product/jquery-migrate/dist/jquery-migrate.min.js') }}" ></script>
+  <script src="{{ asset('vendor-product/popper.js/dist/umd/popper.min.js') }}" ></script>
+  <script src="{{ asset('vendor-product/bootstrap/bootstrap.min.js') }}" ></script> --}}
+
+  <!-- JS Implementing Plugins -->
+<script src="{{ asset('vendor-product/hs-megamenu/src/hs.megamenu.js') }}" ></script>
+  <script src="{{ asset('vendor-product/jquery-validation/dist/jquery.validate.min.js') }}" ></script>
+  <script src="{{ asset('vendor-product/flatpickr/dist/flatpickr.min.js') }}" ></script>
+  <script src="{{ asset('vendor-product/bootstrap-select/dist/js/bootstrap-select.min.js') }}" ></script>
+  <script src="{{ asset('vendor-product/slick-carousel/slick/slick.js') }}" ></script>
+  <script src="{{ asset('vendor-product/gmaps/gmaps.min.js') }}" ></script>
+  <script src="{{ asset('vendor-product/ion-rangeslider/js/ion.rangeSlider.min.js') }}" ></script>
+
+  <script>
+      $(window).on('load', function () {
+          // initialization of HSMegaMenu component
+          $('.js-mega-menu').HSMegaMenu({
+              event: 'hover',
+              pageContainer: $('.container'),
+              breakpoint: 1199.98,
+              hideTimeOut: 0
+          });
+
+          // Page preloader
+          setTimeout(function() {
+            $('#jsPreloader').fadeOut(500)
+          }, 800);
+      });
+
+      $(document).on('ready', function () {
+          // initialization of header
+          $.HSCore.components.HSHeader.init($('#header'));
+
+          // initialization of google map
+          function initMap() {
+              $.HSCore.components.HSGMap.init('.js-g-map');
+          }
+
+          // initialization of unfold component
+          $.HSCore.components.HSUnfold.init($('[data-unfold-target]'));
+
+          // initialization of show animations
+          $.HSCore.components.HSShowAnimation.init('.js-animation-link');
+
+          // initialization of datepicker
+          $.HSCore.components.HSRangeDatepicker.init('.js-range-datepicker');
+
+          // initialization of forms
+          $.HSCore.components.HSRangeSlider.init('.js-range-slider');
+
+          // initialization of select
+          $.HSCore.components.HSSelectPicker.init('.js-select');
+
+          // initialization of quantity counter
+          $.HSCore.components.HSQantityCounter.init('.js-quantity');
+
+          // initialization of slick carousel
+          $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+
+          // initialization of go to
+          $.HSCore.components.HSGoTo.init('.js-go-to');
+      });
+  </script> 
+
+
+
+  

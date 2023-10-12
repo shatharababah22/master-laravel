@@ -15,7 +15,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController;
 use App\Http\Controllers\CartitemController;
 use App\Http\Controllers\DiscountproductController;
-use App\Models\Discountproduct;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,12 +30,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('AllPages.Home');
-});
-Route::get('/cart', function () {
-    return view('AllPages.cart');
-});
+// Route::get('/', function () {
+//     return view('AllPages.Home');
+// });
+// Route::get('/cart', function () {
+//     return view('AllPages.cart');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -51,15 +51,23 @@ require __DIR__.'/auth.php';
 
 
 
-Route::get('/', [DiscountproductController::class, 'index']);
+Route::get('/', [DiscountproductController::class, 'index'])->name('home');
 
 
 Route::get('/allproduct/{Category_ID}', [DiscountproductController::class, 'Allproduct'])->name('allproduct');
-Route::get('/productdetail/{id}', [DiscountproductController::class, 'product_detail'])->name('productdetail');
+Route::get('/productdetail/{id_cart}', [DiscountproductController::class, 'product_detail'])->name('productdetail');
 Route::post('/productdetail/comment/{id}', [DiscountproductController::class, 'product_comment'])->name('productcomment');
-Route::get('/cart/{id_cart}', [CartitemController::class, 'add_cart'])->name('addcart');
 
 
+//...............cart.....................
+Route::post('/productdetail/add/{id}', [DiscountproductController::class,'add_cart'])->name('addcart');
+Route::delete('/delete/{iddelete}', [CartitemController::class, 'delete_cart'])->name('deletecart');
+
+// Route::get('/cart/update/{product_id}', [CartitemController::class, 'update_cart'])->name('updatecart');
+// Route::get('/cart', [CartitemController::class, 'index']);
+
+Route::post('/discountcoupon', [CartitemController::class, 'Discount'])->name('discountcoupon');
+Route::get('/cart', [CartitemController::class, 'index']);
 
 
 

@@ -1054,7 +1054,7 @@ text-align: center;
 
 
 /* panganation */
-
+/* 
 .pagination-container {
     display: flex;
     justify-content: center;
@@ -1070,7 +1070,7 @@ text-align: center;
 	--rd: 15px;
 	--rdim: calc(var(--rd)*2);
 	--pm: #2c6a39;
-}
+} */
 
 .label {
 	content: '';
@@ -1413,4 +1413,47 @@ font-size: 15px;
    /* Set the width of the scroll bar */
 }
 
+.btn2{
+    border-radius: 2px !important;
+    height: 43px !important;
+    background-color: rgb(59, 132, 10);
+  }
+  .pagination li a {
+    color: rgb(59, 132, 10); 
+    margin:auto;/* Change the color to red */
+}
 
+.pagination li.active a {
+    background-color: rgb(59, 132, 10); /* Change the background color of the active page */
+}
+
+.bi-circle {
+    width: 17px;
+    height: 17px;
+    
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+  }
+
+  .bi-circle:hover {
+    background-color: green;
+  }
+ 
+  .search-input {
+    width: 200px; /* Adjust the width as needed */
+    padding: 8px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #f2f2f2;
+    transition: border 0.3s;
+  }
+  
+  .search-input:focus {
+    border: 2px solid #007bff; /* Change the border color when the input is in focus */
+    outline: none; /* Remove the default focus outline */
+  }
+  
