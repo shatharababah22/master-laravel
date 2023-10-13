@@ -191,7 +191,7 @@
                   
                 </div>
                 <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
-                  <form id="algin-form" action="{{ route('productcomment', ['id' => $product->id]) }}" method="POST">
+                  <form id="algin-form" action="{{ route('productcomment', ['id_comment' => $product->id]) }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <h4>Leave a comment</h4>
@@ -263,7 +263,7 @@
                                       <i class="far fa-heart"></i>
                                   </a>
                                   <ul class="product-links">
-                                      <li><a href="{{ route('productdetail', ['id_cart' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
+                                      <li><a href="{{ route('productdetail', ['id_product' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
                                       <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
                                       <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
                                   </ul>

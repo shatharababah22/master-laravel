@@ -17,8 +17,7 @@ return new class extends Migration
 
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('UserID');
-            $table->foreign('UserID')->references('id')->on('users');
+           
         });
 
         Schema::enableForeignKeyConstraints();

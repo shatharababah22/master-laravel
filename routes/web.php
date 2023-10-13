@@ -55,8 +55,8 @@ Route::get('/', [DiscountproductController::class, 'index'])->name('home');
 
 
 Route::get('/allproduct/{Category_ID}', [DiscountproductController::class, 'Allproduct'])->name('allproduct');
-Route::get('/productdetail/{id_cart}', [DiscountproductController::class, 'product_detail'])->name('productdetail');
-Route::post('/productdetail/comment/{id}', [DiscountproductController::class, 'product_comment'])->name('productcomment');
+Route::get('/productdetail/{id_product}', [DiscountproductController::class, 'product_detail'])->name('productdetail');
+Route::post('/productdetail/comment/{id_comment}', [DiscountproductController::class, 'product_comment'])->name('productcomment');
 
 
 //...............cart.....................

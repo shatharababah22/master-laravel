@@ -34,6 +34,8 @@
                         <div class="d-flex justify-content-between align-items-center mb-5">
 
                           <h1 class="fw-bold mb-0 ">Shopping Cart</h1>
+                       
+                       
                           @if(session('cart'))
                           <h6 class="mb-0 text-muted">{{ count(session('cart')) }}  items</h6>
                         </div>
@@ -43,13 +45,14 @@
                       
                           <div class="container">
                            
-                            @foreach(session('cart') as $id => $product)
+                            @foreach($cart as $item)
                                       <div class="row mb-4 d-flex justify-content-between align-items-center">
-                                          <div class="col-md-2 col-lg-2 col-xl-2">
-                                              <img src="{{asset('images/'.$product['image1'])}}" class="img-fluid rounded-3">
-                                          </div>
+                                        <div class="col-md-2 col-lg-2 col-xl-2">
+                                            <img src="{{ asset('images/' . (isset($item->product) ? $item->product->image1 : $item['image1'])) }}" class="img-fluid rounded-3">
+                                        </div>
+                                        
                                           <div class="col-md-3 col-lg-3 col-xl-3">
-                                              <h5>{{$product['Name']}}</h5>
+                                              <h5>{{isset($item->product) ? $item->product->name : $item['Name']}}</h5>
                                           </div>
                                           <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                             <div class="col-md-4 col-6">
@@ -63,7 +66,7 @@
 </button>
 
 
-<input type="text" name="quantity" id="actionInput"  class="form-control text-center border border-secondary" placeholder=" {{$product['quantity']}}" value=" {{$product['quantity']}}" aria-label="Example text with button addon" aria-describedby="button-addon1"  />
+<input type="text" name="quantity" id="actionInput"  class="form-control text-center border border-secondary" value="{{isset($item->product) ? $item->Quantity : $item['quantity']}}" aria-label="Example text with button addon" aria-describedby="button-addon1"  />
 <button class="btn btn-white border border-secondary px-3 increment-button" 
         data-action="increment" 
         data-mdb-ripple-color="dark" 
@@ -76,16 +79,16 @@
                                         </div>
                                         
                                           <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                              <h6 class="mb-0">{{$product['price']}}</h6>
+                                              <h6 class="mb-0">{{isset($item->product) ? $item->product->Price : $item['price']}}</h6>
                                           </div>
                                       
-                                          <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                          {{-- <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                             <a href="javascript:void(0);" class="text-muted delete-product" data-product-id="{{ $product['id'] }}">
                                                 <i class="fas fa-times"></i>
                                             </a>
                                             
                                       
-                                          </div>
+                                          </div> --}}
                                       </div>
                                       <hr class="my-4">
                                 
@@ -193,6 +196,7 @@
                           </div>
                       </div>
                   </div>
+             
                   
 {{--                   
                   @if(isset($message))
@@ -211,6 +215,12 @@
                   <a href="checkout.html" class="btn btn-primary mx-auto py-3 px-4 mt-4" style="float: right;">Checkout</a>
                   </div>
                 @endif  
+
+
+
+
+
+
 
 
 

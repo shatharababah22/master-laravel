@@ -182,7 +182,7 @@
                                         <div class="col-md-6 col-xl-4 mb-3 mb-md-4 pb-1">
                                             <div class="card transition-3d-hover shadow-hover-2 h-100">
                                                 <div class="position-relative">
-                                                    <a href="{{ route('productdetail', ['id_cart' => $product->id]) }}" style="background-color: #dbdbdb9e;">
+                                                    <a href="{{ route('productdetail', ['id_product' => $product->id]) }}" style="background-color: #dbdbdb9e;">
                                                         <img class="card-img-top" src="{{ asset('images/' . $product->image1) }}">
                                                     </a>
                                                     {{-- <div class="position-absolute top-0 left-0 pt-3 pr-3">

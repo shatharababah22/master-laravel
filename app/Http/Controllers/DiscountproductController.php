@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Discountproduct;
 use App\Models\Category;
+use App\Models\Cart;
+use App\Models\Cartitem;
 use App\Models\Orderitem;
 use App\Models\Review;
 use App\Models\User;
@@ -161,16 +163,14 @@ public function product_comment(Request $request, $id){
     ]);
 
     // Redirect to the product detail page
-    return redirect()->route('productdetail', ['id' => $id])->with('success', 'Review added successfully.');
+    return redirect()->route('productdetail', ['id_product' => $id])->with('success', 'Review added successfully.');
 } else {
     // User is not logged in, store the intended URL and redirect to the login page with an error message
-    session()->put('intended_url', route('productdetail', ['id' => $id]));
+    session()->put('intended_url', route('productdetail', ['id_product' => $id]));
     return redirect()->route('login')->with('error', 'You must be logged in to leave a review.');
 }
 
 }
-
-
 
 
 public function add_cart(Request $request, $id)
@@ -179,21 +179,40 @@ public function add_cart(Request $request, $id)
     $quantity1 = $request->quantity;
 
     if (Auth::check()) {
-        // Handle authenticated user cart logic
+       
+        // $user = Auth::user();
+        $iduser = auth()->user()->id;
+        $productId = $product->id;
+        $quantity = $request->quantity;
 
+        // Check if the product already exists in the cart
+        $existingCart = Cartitem::where('UserID', $iduser)
+            ->where('ProductID', $productId)
+            ->first();
 
+        if ($existingCart) {
+            // Product already exists in the cart, so increment the quantity
+            $existingCart->update([
+                'Quantity' =>$existingCart->Quantity + $quantity
+            ]);
+        } else {
+            // Product does not exist in the cart, so create a new record
+            Cartitem::create([
+                'UserID' => $iduser,
+                'ProductID' => $productId,
+                'Quantity' => $quantity
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Product added to the cart successfully');
     } else {
         $cart = session()->get('cart', []);
 
-        // Generate a unique key for each item based on the product ID
-        $cartKey = 'product_' . $product->id;
-
-        if (isset($cart[$cartKey])) {
-            $cart[$cartKey]['quantity']++;
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] += $quantity1;
         } else {
-            $cart[$cartKey] = [
+            $cart[$id] = [
                 'id' => $product->id,
-              
                 'image1' => $product->image1,
                 'Name' => $product->Name,
                 'quantity' => $quantity1,
@@ -203,12 +222,12 @@ public function add_cart(Request $request, $id)
 
         session()->put('cart', $cart);
         // dd($cart);
-        
+
+        return redirect()->back()->with('success', 'Product added to the cart successfully');
     }
-
-    return redirect()->back()->with('success', 'Product deleted successfully');
-
 }
+
+
 
 
 

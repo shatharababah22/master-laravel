@@ -18,8 +18,8 @@ return new class extends Migration
         Schema::create('cartitems', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('Quantity');
-            $table->unsignedBigInteger('CartID');
-            $table->foreign('CartID')->references('id')->on('carts');
+            $table->unsignedBigInteger('UserID');
+            $table->foreign('UserID')->references('id')->on('users');
             $table->unsignedBigInteger('ProductID');
             $table->foreign('ProductID')->references('id')->on('products');
         });

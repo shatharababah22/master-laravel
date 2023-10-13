@@ -16,7 +16,20 @@ class CartitemController extends Controller
      */
     public function index()
     {
-        return view('AllPages.cart');
+if (auth()->user()) {
+    $user= auth()->user();
+    
+    $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
+}
+else{
+
+    $cart = session('cart');
+
+}
+        
+// dd(isset($cart->product));
+
+        return view('AllPages.cart',compact('cart'));
     }
 
 
