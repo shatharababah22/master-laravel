@@ -55,14 +55,30 @@
                                             <div class="sidebar border border-color-1 rounded-xs">
                                                 <div class="sidebar border border-color-1 rounded-xs">
                                                     
-                                                    {{-- <form method="post" action="{{ route('allproducts', $Category_ID) }}">
-                                                        <div>
-                                                            <label>Search:</label>
-                                                            <input type="text" name="search" class="form-control text-center border border-secondary search-input w-100" aria-label="Example text with button addon" aria-describedby="button-addon1" value="{{ request('search') }}" />
-                                                
-                                                            <button type="submit" id="apply-filter">Apply Filter</button>
-                                                        </div>
-                                                    </form> --}}
+                                            <form method="get" action="{{ route('search') }}">
+    @csrf
+    <div>
+        <label>Search:</label>
+        <input type="text" name="search" id="search" class="form-control text-center border border-secondary search-input w-100"
+            aria-label="Example text with button addon" aria-describedby="button-addon1" value="{{ request('search') }}" />
+    </div>
+</form>
+
+<form method="get" action="{{ route('search') }}">
+    @csrf
+    <div class="form-row">
+        <div class="col">
+            <label>Min Price:</label>
+            <input type="text" name="min_price" id="min_price" class="form-control text-center border border-secondary search-input" aria-label="Minimum Price" value="{{ request('min_price') }}" />
+        </div>
+        <div class="col">
+            <label>Max Price:</label>
+            <input type="text" name="max_price" id="max_price" class="form-control text-center border border-secondary search-input" aria-label="Maximum Price" value="{{ request('max_price') }}" />
+        </div>
+        <button type="submit">uu</button>
+    </div>
+</form>
+
                                                 </div>
                                                 
                                             </div>
@@ -179,7 +195,7 @@
                                     <div class="row">
 
                                         @foreach ($allProductsCollection as $product)
-                                        <div class="col-md-6 col-xl-4 mb-3 mb-md-4 pb-1">
+                                        <div class="col-md-6 col-xl-4 mb-3 mb-md-4 pb-1"  id="product-{{ $product->id }}" >
                                             <div class="card transition-3d-hover shadow-hover-2 h-100">
                                                 <div class="position-relative">
                                                     <a href="{{ route('productdetail', ['id_product' => $product->id]) }}" style="background-color: #dbdbdb9e;">
@@ -329,6 +345,8 @@
   <script src="{{ asset('vendor-product/bootstrap/bootstrap.min.js') }}" ></script> --}}
 
   <!-- JS Implementing Plugins -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="{{ asset('vendor-product/hs-megamenu/src/hs.megamenu.js') }}" ></script>
   <script src="{{ asset('vendor-product/jquery-validation/dist/jquery.validate.min.js') }}" ></script>
   <script src="{{ asset('vendor-product/flatpickr/dist/flatpickr.min.js') }}" ></script>
@@ -338,20 +356,19 @@
   <script src="{{ asset('vendor-product/ion-rangeslider/js/ion.rangeSlider.min.js') }}" ></script>
 
   <script>
-      $(window).on('load', function () {
-          // initialization of HSMegaMenu component
-          $('.js-mega-menu').HSMegaMenu({
-              event: 'hover',
-              pageContainer: $('.container'),
-              breakpoint: 1199.98,
-              hideTimeOut: 0
-          });
+    //   $(window).on('load', function () {
+    //       // initialization of HSMegaMenu component
+    //       $('.js-mega-menu').HSMegaMenu({
+    //           event: 'hover',
+    //           pageContainer: $('.container'),
+    //           breakpoint: 1199.98,
+    //           hideTimeOut: 0
+    //       });
 
-          // Page preloader
-          setTimeout(function() {
-            $('#jsPreloader').fadeOut(500)
-          }, 800);
-      });
+          
+    //   });
+
+
 
       $(document).on('ready', function () {
           // initialization of header
@@ -360,6 +377,23 @@
           // initialization of google map
           function initMap() {
               $.HSCore.components.HSGMap.init('.js-g-map');
+
+              $('#search').on('input', function () {
+    var query = $(this).val();
+    if (query.length >= 3) {
+        console.log("Document is ready!"); 
+        $.ajax({
+            url: "{{ route('search') }}",
+            method: "GET",
+            data: { search: query },
+            success: function (data) {
+                // Identify the specific product item you want to update
+                // For example, if you have product ID 123, update it like this:
+                $('#product-123').html(data);
+            }
+        });
+    }
+});
           }
 
           // initialization of unfold component

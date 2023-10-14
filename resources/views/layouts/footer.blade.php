@@ -75,8 +75,10 @@
     
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      
+
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>.
-        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 
@@ -91,7 +93,7 @@
     <script src="{{ asset('lib/parallax/parallax.min.js')}}"></script>
     <script src="{{ asset('lib/isotope/isotope.pkgd.min.js')}}"></script>
     <script src="{{ asset('lib/lightbox/js/lightbox.min.js')}}"></script>
-    <script src="{{ asset('https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -138,7 +140,13 @@ $(document).ready(function () {
             // Trigger the form submission
             $(this).closest("form").submit();
         });
+
+
+
 });
+
+
+  
 </script>
 
 

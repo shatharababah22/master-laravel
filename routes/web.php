@@ -52,7 +52,7 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/', [DiscountproductController::class, 'index'])->name('home');
-
+Route::get('/search', [DiscountproductController::class, 'search'])->name('search');
 
 Route::get('/allproduct/{Category_ID}', [DiscountproductController::class, 'Allproduct'])->name('allproduct');
 Route::get('/productdetail/{id_product}', [DiscountproductController::class, 'product_detail'])->name('productdetail');
@@ -61,13 +61,18 @@ Route::post('/productdetail/comment/{id_comment}', [DiscountproductController::c
 
 //...............cart.....................
 Route::post('/productdetail/add/{id}', [DiscountproductController::class,'add_cart'])->name('addcart');
-Route::delete('/delete/{iddelete}', [CartitemController::class, 'delete_cart'])->name('deletecart');
+Route::delete('/delete/{iddelete}', [CartitemController::class, 'deletecart'])->name('deletecart');
 
 // Route::get('/cart/update/{product_id}', [CartitemController::class, 'update_cart'])->name('updatecart');
 // Route::get('/cart', [CartitemController::class, 'index']);
 
-Route::post('/discountcoupon', [CartitemController::class, 'Discount'])->name('discountcoupon');
+Route::post('/discountcoupon', [CartitemController::class, 'index'])->name('discountcoupon');
 Route::get('/cart', [CartitemController::class, 'index']);
+
+
+
+
+
 
 
 

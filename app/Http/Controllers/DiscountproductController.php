@@ -67,6 +67,12 @@ $totalQuantity = Orderitem::sum('Quantity');
           return view('AllPages.Home'); 
     }
 
+
+
+
+
+    
+
     // public function Allproduct($Category_ID)
     // {
     //     // Initialize an empty array to store all products
@@ -95,13 +101,37 @@ $totalQuantity = Orderitem::sum('Quantity');
         $query = DB::table('products')
             ->where('CategoryID', $Category_ID);
     
-        $search = request('search');
-        if (!empty($search)) {
-            $query->where(function ($query) use ($search) {
-                $query->where('product_name', 'like', "%$search%")
-                      ->orWhere('product_description', 'like', "%$search%");
-            });
+          
+    
+        $allProductsCollection = $query->orderBy('id')->paginate($perPage);
+        $categoryProductCounts = $query->count();
+    
+        return view('AllPages.Allproducts', compact('allProductsCollection', 'categories', 'categoryProductCounts'));
+    }
+    
+    public function search(Request $request)
+    {
+        $perPage = 6;
+        $categories = Category::all();
+        $query = DB::table('products');
+    
+        // Check if a min_price query parameter is present
+        if (isset($request->min_price) && $request->min_price != null) {
+            $minPrice = $request->min_price;
+    
+            // Add a condition to filter products with prices greater than or equal to the minimum price
+            $query->where('Price', '>=', $minPrice);
         }
+    
+        // Check if a max_price query parameter is present
+        if (isset($request->max_price) && $request->max_price != null) {
+            $maxPrice = $request->max_price;
+    
+            // Add a condition to filter products with prices less than or equal to the maximum price
+            $query->where('Price', '<=', $maxPrice);
+        }
+    
+        // Your name search query handling (if any)
     
         $allProductsCollection = $query->orderBy('id')->paginate($perPage);
         $categoryProductCounts = $query->count();

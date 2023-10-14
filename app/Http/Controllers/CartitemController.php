@@ -16,95 +16,56 @@ class CartitemController extends Controller
      */
     public function index()
     {
+        
 if (auth()->user()) {
-    $user= auth()->user();
-    
+    $user = auth()->user();
+
     $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
+
+    // $cartCount = count($cart);
+    // Now, $cartCount contains the count of items in the cart
 }
+
 else{
 
     $cart = session('cart');
 
 }
-        
+   
+
 // dd(isset($cart->product));
 
         return view('AllPages.cart',compact('cart'));
     }
 
 
-   
+    public function deletecart($id)
+    {
+        if (auth()->user()) {
+            $product = Cartitem::find($id);
+    
+            if ($product) {
+                $product->delete();
+                return redirect()->back()->with('success', 'Product deleted successfully');
+            } else {
+                return redirect()->back()->with('error', 'Product not found or already deleted');
+            }
+        } else {
+            $cart = session('cart');
+    
+            if (isset($cart[$id])) {
+                unset($cart[$id]);
+                session()->put('cart', $cart);
+                return redirect()->back()->with('success', 'Product deleted successfully');
+            } else {
+                return redirect()->back()->with('error', 'Product not found or already deleted');
+            }
+        }
+    }
+    
+    
    // Import the Discount model
 
-    public function Discount(Request $request)
-    {
-        // $discountCode = $request->input('discount');
-        // $discount = Discount::where('Name', $discountCode)->first();
-        
-        // $cart = session('cart'); // Retrieve your cart data from the session
-        // $cartTotal = array_reduce($cart, function ($carry, $item) {
-        //     return $carry + $item['price'];
-        // }, 0);
-    
-        // $appliedDiscount = null;
-        // if ($discount) {
-        //     // If a valid discount is found, calculate the discounted price
-        //     $appliedDiscount = $discount;
-        //     $cartTotal *= (1 - ($discount->Percent / 100));
-            
-        //     // Store the applied discount and cart total in the session
-        //     session(['appliedDiscount' => $appliedDiscount, 'cartTotal' => $cartTotal]);
-        // } else {
-        //     // If no valid discount is found, clear any previously applied discount
-        //     session()->forget(['appliedDiscount', 'cartTotal']);
-        // }
-        
-         return view('AllPages.cart');
-    
-
-
-
-    
-
-
-
-
-    // public function update_cart(Request $request, $product_id)
-    // {
-    //     // Retrieve the cart from the session
-    //     $cart = session('cart');
-    
-    //     // Check if the product exists in the cart
-    //     if (isset($cart[$product_id])) {
-    //         $action = $request->input('action');
-    
-    //         // Perform the update based on the action
-    //         if ($action === 'increment') {
-    //             // Check if the quantity is less than the maximum you allow (if there is a limit)
-    //             if ($cart[$product_id]['quantity'] < 10) { // Replace $maxQuantity with your actual maximum quantity
-    //                 // Increase the quantity by 1
-    //                 $cart[$product_id]['quantity'] += 1;
-    //             }
-    //         } elseif ($action === 'decrement' && $cart[$product_id]['quantity'] > 1) {
-    //             // Decrease the quantity by 1, but ensure it remains at least 1
-    //             $cart[$product_id]['quantity'] -= 1;
-    //         }
-    
-    //         // Update the session cart
-    //         session(['cart' => $cart]);
-    //     }
-    
-    //     // Redirect back to the cart page
-    //     return view('AllPages.cart');
-    // }
-    
-    
-    
-    
-
-
-
-    }
 
 
 
