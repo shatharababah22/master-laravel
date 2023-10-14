@@ -51,30 +51,41 @@ require __DIR__.'/auth.php';
 
 
 
+
+// ................all_product and single_product.......................
 Route::get('/', [DiscountproductController::class, 'index'])->name('home');
 Route::get('/search', [DiscountproductController::class, 'search'])->name('search');
-
 Route::get('/allproduct/{Category_ID}', [DiscountproductController::class, 'Allproduct'])->name('allproduct');
 Route::get('/productdetail/{id_product}', [DiscountproductController::class, 'product_detail'])->name('productdetail');
 Route::post('/productdetail/comment/{id_comment}', [DiscountproductController::class, 'product_comment'])->name('productcomment');
 
 
+
+
 //...............cart.....................
 Route::post('/productdetail/add/{id}', [DiscountproductController::class,'add_cart'])->name('addcart');
 Route::delete('/delete/{iddelete}', [CartitemController::class, 'deletecart'])->name('deletecart');
-
 // Route::get('/cart/update/{product_id}', [CartitemController::class, 'update_cart'])->name('updatecart');
 // Route::get('/cart', [CartitemController::class, 'index']);
-
 Route::post('/discountcoupon', [CartitemController::class, 'index'])->name('discountcoupon');
 Route::get('/cart', [CartitemController::class, 'index']);
 
+// ....................checkout.....................
+Route::get('/adresses/{iduser}', [DiscountproductController::class, 'addresess'])->name('adresess_user');
+Route::post('/shath', [DiscountproductController::class, 'CheckoutAddress'])->name('checkout_address');
 
 
 
 
 
+// ...............contact us ..................
+Route::get('contact-us', [ContactController::class, 'index'])->name('contact');
+Route::post('contact-us', [ContactController::class, 'store'])->name('contact.us.store');
 
+
+Route::get('/about', function () {
+    return view('AllPages.about');
+})->name('about');
 
 // .....................admin..........................
 Route::resource('category', CategoryController::class);
@@ -89,7 +100,6 @@ Route::resource('review',DiscountproductController::class);
 
 
 // ...................admin_login.................
-
 Route::post('/adminlogin', [AuthenticatedSessionController::class,"create"]);
 Route::middleware('admin')->group(function () {
 
@@ -98,16 +108,15 @@ Route::middleware('admin')->group(function () {
     });
     
 });
-
 Route::get('/dash/login', [AdminLoginController::class, 'login'])->name("admin.login");
 Route::get('/dash/home', [AdminLoginController::class, 'showLoginForm'])->name("admin.lolo");
 Route::post('/dash/check', [AdminLoginController::class, 'check'])->name("admin.check");
 Route::get('/adminlogout', [AdminLoginController::class, 'logout'])->name("admin.logout");
 
-// ...............contact us ..................
 
-Route::get('contact-us', [ContactController::class, 'index']);
-Route::post('contact-us', [ContactController::class, 'store'])->name('contact.us.store');
+
+
+
 
 
 

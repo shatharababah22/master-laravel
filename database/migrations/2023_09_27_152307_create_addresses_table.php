@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('addresses', function (Blueprint $table) {
-            $table->id();
-         
+            $table->id(); 
             $table->string('address1');
             $table->string('city');
-            $table->string('country');
+            $table->string('email');
             $table->bigInteger('mobile');
             $table->string('street');
             $table->unsignedBigInteger('UserID');

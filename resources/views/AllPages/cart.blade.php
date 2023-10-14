@@ -54,6 +54,7 @@
                        
                       
                           <div class="container">
+                     
                             @if (is_object($cart))
                             @foreach($cart as $item)
                                       <div class="row mb-4 d-flex justify-content-between align-items-center">
@@ -110,6 +111,7 @@
                                     
                               @endforeach
                          @endif
+                
                           </div>
           
                       
@@ -156,7 +158,8 @@
                     @endforeach
     
                     <div class="d-flex justify-content-between mb-4">
-                        <h5 class="text-uppercase">{{ $cartCount }} items</h5>
+                        @php      $cartCount = ($cart !== null) ? count($cart) : 0;   @endphp
+                        <h5 class="text-uppercase">{{ $cartCount}}  items</h5>
                         <h5>JOD {{ $totalprice }}</h5>
                     </div>
                     <h5 class="text-uppercase mb-3">Shipping</h5>
@@ -216,8 +219,8 @@
                    <h5 class="text-uppercase">Total price</h5>
                    <h5>JOD {{$totalprice }}</h5>
                </div> 
-                  <a href="checkout.html" class="btn btn-primary mx-auto py-3 px-4 mt-4" style="float: right;">Checkout</a>
-    </div>
+               <a href="{{ route('adresess_user', ['iduser' => auth()->user()->id]) }}" class="btn btn-primary mx-auto py-3 px-4 mt-4" style="float: right;">Checkout</a>
+            </div>
                 </div>
             </div>
         </div>

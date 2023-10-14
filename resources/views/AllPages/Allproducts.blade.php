@@ -55,122 +55,72 @@
                                             <div class="sidebar border border-color-1 rounded-xs">
                                                 <div class="sidebar border border-color-1 rounded-xs">
                                                     
-                                            <form method="get" action="{{ route('search') }}">
-    @csrf
-    <div>
-        <label>Search:</label>
-        <input type="text" name="search" id="search" class="form-control text-center border border-secondary search-input w-100"
-            aria-label="Example text with button addon" aria-describedby="button-addon1" value="{{ request('search') }}" />
-    </div>
-</form>
+                                                    <form method="get" action="{{ route('search') }}">
+                                                        @csrf
+                                                        {{-- <span class="d-block font-size-lg-15 font-size-18 font-weight-bold text-dark ms-1 mb-1">Search now:</span> --}}
+                                                        <div class="search-input-container col-12 mt-4">
+                                                            <input type="text" name="search" id="search" class="form-control text-center border border-color-1 rounded-xs  "
+                                                                aria-label="Example text with button addon" value="{{ request('search') }}" placeholder="Search here" />
+                                                            <i class="fas fa-search search-icon" style="font-size: 25px;"></i>
+                                                        </div>
+                                                    </form>
+                                                    
+                                                    
+
 
 <form method="get" action="{{ route('search') }}">
     @csrf
+    <span class="d-block font-size-lg-15 font-size-18 font-weight-bold text-dark ms-1 mb-1">Price Range (JOD):</span>
+
     <div class="form-row">
-        <div class="col">
-            <label>Min Price:</label>
-            <input type="text" name="min_price" id="min_price" class="form-control text-center border border-secondary search-input" aria-label="Minimum Price" value="{{ request('min_price') }}" />
+        <div class="col-12">
+            <div class="combined-input" style="width: 98%;margin-left:3px;">
+                <input type="number" name="min_price" id="min_price" placeholder="Min Price" class="form-control text-center border-color-1 rounded-xs search-input" aria-label="Minimum Price" value="{{ request('min_price') }}" />
+                <input type="number" name="max_price" id="max_price" placeholder="Max Price" class="form-control text-center border-color-1 rounded-xs search-input" aria-label="Maximum Price" value="{{ request('max_price') }}" />
+            </div>
         </div>
-        <div class="col">
-            <label>Max Price:</label>
-            <input type="text" name="max_price" id="max_price" class="form-control text-center border border-secondary search-input" aria-label="Maximum Price" value="{{ request('max_price') }}" />
-        </div>
-        <button type="submit">uu</button>
+        <button type="submit" hidden>uu</button>
     </div>
 </form>
 
+
+<form>
+    <span class="d-block font-size-lg-15 font-size-18 font-weight-bold text-dark ms-1 mb-1">Choose the brand:</span>
+    <div style="width: 98%;margin-left:3px;">
+<select name="min_price" class="form-control text-center border border-color-1 rounded-xs" aria-label="Minimum Price" style="background-color: white">
+    <option value="">Select Minimum Price</option>
+    <option >Shatha</option>
+    <option>Woww</option>
+
+    <!-- Add more options as needed -->
+</select>
+    </div>
+</form>
+
+
+<div class="card-collapse" id="cityCategoryHeadingOne">
+    <span class="d-block font-size-lg-15 font-size-18 font-weight-bold text-dark ms-1 mb-1">All Categories:</span>
+    @foreach ($categories as $category)
+    <div class="form-group d-flex align-items-center font-size-1 text-lh-md  mb-3 ">
+
+            <a href="{{ route('allproduct', ['Category_ID' => $category->id]) }}"><i class="bi bi-circle me-1 ms-2"></i></a>
+
+      <span class="custom-control-label " for="brandamsterdam">{{$category->Name}}</span>     
+       
+    </div>
+    @endforeach
+
+</div>
+
+
                                                 </div>
+                                              
                                                 
                                             </div>
    
                                       
                                     </div>
-                                  
-
-                                    <div class="sidenav border border-color-8 rounded-xs">
-                                        <!-- Accordiaon -->
-                                        <div id="shopCartAccordion" class="accordion rounded shadow-none">
-                                            <div class="border-0">
-                                                <div class="card-collapse" id="shopCardHeadingOne">
-                                                    <h3 class="mb-0">
-                                                        <button type="button" class="btn btn-link btn-block card-btn py-2 px-5 text-lh-3 collapsed" data-toggle="collapse" data-target="#shopCardOne" aria-expanded="false" aria-controls="shopCardOne">
-                                                            <span class="row align-items-center">
-                                                                <span class="col-9">
-                                                                    <span class="d-block font-size-lg-15 font-size-17 font-weight-bold text-dark">Price Range ($)</span>
-                                                                </span>
-                                                                <span class="col-3 text-right">
-                                                                    <span class="card-btn-arrow">
-                                                                        <span class="fas fa-chevron-down small"></span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </button>
-                                                    </h3>
-                                                </div>
-                                                <div id="shopCardOne" class="collapse show" aria-labelledby="shopCardHeadingOne" data-parent="#shopCartAccordion">
-                                                    <div class="card-body pt-0 px-5">
-                                                        <div class="pb-3 mb-1 d-flex text-lh-1">
-                                                            <span>£</span>
-                                                            <span id="rangeSliderExample3MinResult" class=""></span>
-                                                            <span class="mx-0dot5"> — </span>
-                                                            <span>£</span>
-                                                            <span id="rangeSliderExample3MaxResult" class=""></span>
-                                                        </div>
-                                                        <input class="js-range-slider" type="text"
-                                                        data-extra-classes="u-range-slider height-35"
-                                                        data-type="double"
-                                                        data-grid="false"
-                                                        data-hide-from-to="true"
-                                                        data-min="0"
-                                                        data-max="3456"
-                                                        data-from="200"
-                                                        data-to="3456"
-                                                        data-prefix="$"
-                                                        data-result-min="#rangeSliderExample3MinResult"
-                                                        data-result-max="#rangeSliderExample3MaxResult">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Accordion -->
-                                        <div id="cityCategoryAccordion" class="accordion rounded-0 shadow-none border-top ">
-                                            <div class="border-0"  style="margin-left:30px;">
-                                                <div class="card-collapse" id="cityCategoryHeadingOne">
-                                                    <h3 class="mb-0 " >
-                                                        <button type="button" class="btn btn-link btn-block card-btn py-2   collapsed" data-toggle="collapse" data-target="#cityCategoryOne" aria-expanded="false" aria-controls="cityCategoryOne">
-                                                            <span class="row align-items-center">
-                                                                <span class="col-9">
-                                                                    <span class="font-weight-bold font-size-35 text-dark mb-3">Categories</span>
-                                                                </span>
-                                                                <span class="col-3 text-right">
-                                                                    <span class="card-btn-arrow">
-                                                                        <span class="fas fa-chevron-down small"></span>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </button>
-                                                    </h3>
-                                                </div>
-                                                <div id="cityCategoryOne" class="collapse" aria-labelledby="cityCategoryHeadingOne" data-parent="#cityCategoryAccordion">
-                                                    <div class="card-body pt-0 mt-1 px-3 pb-4">
-                                                        @foreach ($categories as $category)
-                                                        <div class="form-group d-flex align-items-center font-size-1 text-lh-md  mb-3">
-                                                   
-                                                                <a href="{{ route('allproduct', ['Category_ID' => $category->id]) }}"><i class="bi bi-circle me-1"></i></a>
-
-                                                          <span class="custom-control-label " for="brandamsterdam">{{$category->Name}}</span>     
-                                                           
-                                                        </div>
-                                                        @endforeach
-
-                                                        <!-- End Checkboxes -->
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Accordion -->
-                                    </div>
+                           
                                 </div>
                             </div>
                         </div>

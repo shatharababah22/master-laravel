@@ -86,8 +86,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
+                <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
                 <a href="All-product.html" class="nav-item nav-link">Our Products</a>
                 <a href="#courses" class="nav-item nav-link">Courses</a>
                 {{-- <div class="nav-item dropdown">
@@ -101,7 +101,7 @@
                        
                     </div>
                 </div> --}}
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
             </div>
             @if (Auth::check())
                         {{-- <li> <a href="{{ route('profile.edit', [Auth::user()]) }}"

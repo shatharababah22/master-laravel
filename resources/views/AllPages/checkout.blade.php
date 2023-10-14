@@ -177,17 +177,18 @@
     </div>
     <!-- Page Header End -->
 
-<br>
 
-    <div id="container" class="container mt-5">
-        <div class="progress px-1" style="height: 3px;">
+
+    <div id="container" class="container">
+      <h1 style="text-align: center">Address</h1>
+        {{-- <div class="progress px-1" style="height: 3px;">
           <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <div class="step-container  d-flex justify-content-between ">
           <div class="step-circle" onclick="displayStep(1)">1</div>
           <div class="step-circle" onclick="displayStep(2)">2</div>
           <div class="step-circle" onclick="displayStep(3)">3</div>
-        </div>
+        </div> --}}
    
 
         <form id="multi-step-form ">
@@ -197,7 +198,7 @@
                 <h3 class="mb-2">Billing address</h3>
               </div> -->
               
-              <div class="container py-5">
+              <div class="container py-4">
                 <div class="row d-flex justify-content-center align-items-center">
                   <div class="col">
                     <div class="  shadow-3">
@@ -205,9 +206,19 @@
                     
                         <div class="col-xl-6">
                           <div class="card-body p-md-5 text-black">
-                            <h3 class="mb-4 text-uppercase">Delivery Info</h3>
-              
-                            <div class="row">
+                            <div class="row mb-2">
+                            <h3 class="mb-4 text-uppercase col-md-6">Delivery Info</h3>
+                            <div class="form-outline col-md-6">
+                              <select class="form-select form-select-lg" aria-label=".form-select-lg example">
+                                  <option >All_address</option>
+                                  <option value="1">Amman</option>
+                                  <option value="2">Zarqa</option>
+                                  <option value="3">Tafilah</option>
+                                </select>
+                     
+                            </div>
+                          </div>
+                            {{-- <div class="row">
                               <div class="col-md-6 mb-4">
                                 <div class="form-outline">
                                  
@@ -221,55 +232,53 @@
                          
                                 </div>
                               </div>
-                            </div>
+                            </div>  --}}
               
               
               
-              
+                            <form method="POST" action="{{ route('checkout_address') }}">
+                              @csrf
                             <div class="row">
+                              <div class="col-md-6  mb-4">
+                                <div class="form-outline">
+                                  <input type="text" id="form3Example1m" class="form-control form-control-lg" name="city" placeholder="City"/>
+
+                         
+                                </div>
+                              </div>
                                 <div class="col-md-6 mb-4">
                                   <div class="form-outline">
                                    
-                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" placeholder="Postal Code"/>
+                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" name="street" placeholder="Street"/>
                                    
                                   </div>
                                 </div>
-                                <div class="col-md-6  mb-4">
-                                  <div class="form-outline">
-                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                        <option >City</option>
-                                        <option value="1">Amman</option>
-                                        <option value="2">Zarqa</option>
-                                        <option value="3">Tafilah</option>
-                                      </select>
                            
-                                  </div>
-                                </div>
                               </div>
                               
                             <div class="form-outline mb-4">
-                                <input type="text" id="form3Example8" class="form-control form-control-lg" placeholder="Address" />
+                                <input type="text" id="form3Example8" class="form-control form-control-lg" name="address1" placeholder="Address" />
                    
                               </div>
 
                               <div class="form-outline mb-4">
-                                <input type="text" id="form3Example8" class="form-control form-control-lg" placeholder="Email" />
+                                <input type="text" id="form3Example8" class="form-control form-control-lg" name="email"   placeholder="Email" />
                    
                               </div>
 
                               <div class="form-outline mb-4">
-                              <input type="tel" id="phone" class="form-control form-control-lg" data-mdb-input-mask="+48 999-999-999" placeholder="Phone number" />
+                              <input type="tel" id="phone" class="form-control form-control-lg" name="mobile"  placeholder="Phone number" />
                              
                                </div>
               
                             <div class="d-flex justify-content-end ">
-                                <a href="" class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block">Next<i class="fa fa-arrow-right ms-3"></i></a>
+                              <button type="submit" class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block">Next <i class="fa fa-arrow-right ms-3"></i></button>
                             </div>
-              
+              </form>
                           </div>
                         </div>
                         <div class="col-xl-6 d-xl-block bg-image">
-                            <img src="./images/d1.jpg" alt="Sample photo"
+                            <img src="{{ asset('./images/d1.jpg') }}"  alt="Sample photo"
                               class="img-fluid" />
                             
                           </div>
@@ -306,7 +315,7 @@
 
 
 
-
+{{-- 
       <div id="container" class="container mt-5">
       
      
@@ -663,7 +672,7 @@
             
           </div> -->
         </form>
-      </div>
+      </div> --}}
 
 
 
@@ -686,7 +695,7 @@
 
 
 
-    <script>
+    {{-- <script>
 
 
 
@@ -735,37 +744,6 @@
             }
           });
               </script>
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+           --}}
 
 @endsection

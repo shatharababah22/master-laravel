@@ -11,6 +11,7 @@ use App\Models\Cartitem;
 use App\Models\Orderitem;
 use App\Models\Review;
 use App\Models\User;
+use App\Models\Address;
 use App\Models\Testimonial;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -267,9 +268,29 @@ public function add_cart(Request $request, $id)
 
 
 
+public function addresess($id){
 
 
+return view('AllPages.checkout');
+}
 
+
+public function CheckoutAddress(Request $request) {
+    
+    if (Auth::check()) {
+   $input = $request->all();
+    // Create a new Address record using the Address model and save it to the database
+    Address::create([
+        'UserID' => auth()->user()->id, // Add the user_id to the address record
+        'email' => $input['email'],
+        'mobile' => $input['mobile'],
+        'street' => $input['street'],
+        'city' => $input['city'],
+        'address1' =>$input['address1'],
+    ]);
+    }
+    return redirect()->route('checkout_address')->with('success', 'Order successful.');
+}
 
 
 
