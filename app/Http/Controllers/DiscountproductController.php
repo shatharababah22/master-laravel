@@ -277,7 +277,8 @@ return view('AllPages.checkout');
 
 public function CheckoutAddress(Request $request) {
     
-    if (Auth::check()) {
+  
+    // if (Auth::check()) {
    $input = $request->all();
     // Create a new Address record using the Address model and save it to the database
     Address::create([
@@ -288,8 +289,8 @@ public function CheckoutAddress(Request $request) {
         'city' => $input['city'],
         'address1' =>$input['address1'],
     ]);
-    }
-    return redirect()->route('checkout_address')->with('success', 'Order successful.');
+    // }
+    return redirect()->route('home')->with('success', 'Order successful.');
 }
 
 

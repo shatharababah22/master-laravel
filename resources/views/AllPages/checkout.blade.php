@@ -191,7 +191,7 @@
         </div> --}}
    
 
-        <form id="multi-step-form ">
+        <div id="multi-step-form ">
           <div class="step step-1 container">
             <!-- Step 1 form fields here -->
             <!-- <div class="container text-center">
@@ -305,7 +305,7 @@
             <h3>Step 3</h3>
             
           </div> -->
-        </form>
+        </div>
       </div>
 
 
