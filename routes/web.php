@@ -64,11 +64,23 @@ Route::post('/productdetail/comment/{id_comment}', [DiscountproductController::c
 
 //...............cart.....................
 Route::post('/productdetail/add/{id}', [DiscountproductController::class,'add_cart'])->name('addcart');
-Route::delete('/delete/{iddelete}', [CartitemController::class, 'deletecart'])->name('deletecart');
+// Route::delete('/delete/{iddelete}', [CartitemController::class, 'deletecart'])->name('deletecart');
 // Route::get('/cart/update/{product_id}', [CartitemController::class, 'update_cart'])->name('updatecart');
 // Route::get('/cart', [CartitemController::class, 'index']);
 Route::post('/discountcoupon', [CartitemController::class, 'index'])->name('discountcoupon');
 Route::get('/cart', [CartitemController::class, 'index']);
+
+// Example routes
+Route::patch('/updatecart/{id}', [CartitemController::class, 'update'])->name('updatecart');
+Route::delete('/deletecart/{id}', [CartitemController::class, 'destroy'])->name('deletecart');
+
+
+
+
+
+
+
+
 
 // ....................checkout.....................
 Route::get('/adresses/{iduser}', [DiscountproductController::class, 'addresess'])->name('adresess_user');
@@ -112,6 +124,7 @@ Route::get('/dash/login', [AdminLoginController::class, 'login'])->name("admin.l
 Route::get('/dash/home', [AdminLoginController::class, 'showLoginForm'])->name("admin.lolo");
 Route::post('/dash/check', [AdminLoginController::class, 'check'])->name("admin.check");
 Route::get('/adminlogout', [AdminLoginController::class, 'logout'])->name("admin.logout");
+
 
 
 

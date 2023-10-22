@@ -125,17 +125,18 @@
                         <label class="mb-2 d-block">Quantity</label>
                         <div class="input-group mb-2" style="width: 170px;">
                           
-                          <input type="text" class="form-control text-center border border-secondary" id="quantity" name="quantity" placeholder="1" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                          <input type="number" class="form-control text-center border border-secondary" min="1" id="quantity" name="quantity" placeholder="1" aria-label="Example text with button addon" aria-describedby="button-addon1" />
                           
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    <a href="checkout.html" class="btn btn-warning shadow-0"> Buy now </a>
+                {{-- <a href="{{ route('addcart', ['id_cart' => $product->id]) }}" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a> --}}
+                <a href="#" class="btn btn-light  icon-hover px-3"><i class="me-1 fa fa-heart fa-lg " style="color: green;"></i> Save </a>
                 </form>
                 
                 </div>
-                <a href="checkout.html" class="btn btn-warning shadow-0"> Buy now </a>
-                {{-- <a href="{{ route('addcart', ['id_cart' => $product->id]) }}" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a> --}}
-                <a href="#" class="btn btn-light  icon-hover px-3"><i class="me-1 fa fa-heart fa-lg " style="color: green;"></i> Save </a>
+                
               </div>
             </main>
           </div>

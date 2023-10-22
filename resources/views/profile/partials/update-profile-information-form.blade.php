@@ -13,19 +13,37 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
+
         @csrf
         @method('patch')
 
-        <div>
+        <div class="row">
+            <div class=" col-4">
+                <div>
+                @if ($user->name)
+                <img src="{{ asset('images/' . $user->Image) }}" class="img-fluid" style="max-width: 200px; height: auto;">
+                 @else
+                    <img src="{{ asset('images/users/Default_pfp.svg.png') }}" alt="Default Profile Picture" class="img-fluid" style="max-width: 200px; height: auto;">
+                @endif 
+
+                <div class="form-group mt-3">
+                    <label for="Image">{{ __('Upload new image') }}</label>
+                    <input id="Image" name="Image" type="file" accept="images/*" class="form-control-file" :value="old('Image', $user->Image)" autocomplete="Image" />
+                    <x-input-error class="mt-2" :messages="$errors->get('Image')" />
+                </div>
+            </div>
+            </div>
+
+        <div class="mt-4">
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-text-input id="name" name="name" type="text" class="form-control text-center border-color-1 rounded-xs " :value="old('name', $user->name)" required autofocus autocomplete="name" style="width: 50%;height:43px;" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block form-control text-center border-color-1 rounded-xs w-full" :value="old('email', $user->email)" required autocomplete="username" style="width: 50%;height:43px;" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -47,8 +65,8 @@
             @endif
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+        <div class="flex items-center gap-4 mt-2">
+            <x-primary-button class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block " style="border-radius: 28px">{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p

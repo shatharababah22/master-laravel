@@ -206,75 +206,52 @@
                     
                         <div class="col-xl-6">
                           <div class="card-body p-md-5 text-black">
-                            <div class="row mb-2">
-                            <h3 class="mb-4 text-uppercase col-md-6">Delivery Info</h3>
-                            <div class="form-outline col-md-6">
-                              <select class="form-select form-select-lg" aria-label=".form-select-lg example">
-                                  <option >All_address</option>
-                                  <option value="1">Amman</option>
-                                  <option value="2">Zarqa</option>
-                                  <option value="3">Tafilah</option>
-                                </select>
-                     
-                            </div>
-                          </div>
-                            {{-- <div class="row">
-                              <div class="col-md-6 mb-4">
-                                <div class="form-outline">
-                                 
-                                  <input type="text" id="form3Example1m" class="form-control form-control-lg" placeholder="First name"/>
-                                 
-                                </div>
-                              </div>
-                              <div class="col-md-6 mb-4">
-                                <div class="form-outline">
-                                  <input type="text" id="form3Example1n" class="form-control form-control-lg" placeholder="Last name" />
-                         
-                                </div>
-                              </div>
-                            </div>  --}}
-              
-              
-              
                             <form method="POST" action="{{ route('checkout_address') }}">
                               @csrf
-                            <div class="row">
-                              <div class="col-md-6  mb-4">
-                                <div class="form-outline">
-                                  <input type="text" id="form3Example1m" class="form-control form-control-lg" name="city" placeholder="City"/>
-
-                         
-                                </div>
-                              </div>
-                                <div class="col-md-6 mb-4">
-                                  <div class="form-outline">
-                                   
-                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" name="street" placeholder="Street"/>
-                                   
+                              <div class="row mb-2">
+                                  <h3 class="mb-4 text-uppercase col-md-6">Delivery Info</h3>
+                                  <div class="form-outline col-md-6">
+                                      <select id="addressSelect" class="form-select form-select-lg" name="UserId">
+                                          <option value="">Select an address</option>
+                                          @if(isset($addresses))
+                                              @foreach($addresses as $address)
+                                                  <option value="{{ $address->id }}" data-city="{{ $address->city }}" data-street="{{ $address->street }}" data-address="{{ $address->address1 }}" data-email="{{ $address->email }}" data-mobile="{{ $address->mobile }}">{{ $address->city }}</option>
+                                              @endforeach
+                                          @endif
+                                      </select>
                                   </div>
-                                </div>
-                           
+                              </div>
+                          
+                              <div class="row">
+                                  <div class="col-md-6 mb-4">
+                                      <div class="form-outline">
+                                          <input type="text" id="city" class="form-control form-control-lg" name="city" placeholder="City"/>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                      <div class="form-outline">
+                                          <input type="text" id="street" class="form-control form-control-lg" name="street" placeholder="Street"/>
+                                      </div>
+                                  </div>
                               </div>
                               
-                            <div class="form-outline mb-4">
-                                <input type="text" id="form3Example8" class="form-control form-control-lg" name="address1" placeholder="Address" />
-                   
-                              </div>
-
                               <div class="form-outline mb-4">
-                                <input type="text" id="form3Example8" class="form-control form-control-lg" name="email"   placeholder="Email" />
-                   
+                                  <input type="text" id="address1" class="form-control form-control-lg" name="address1" placeholder="Address" />
                               </div>
-
+                              
                               <div class="form-outline mb-4">
-                              <input type="tel" id="phone" class="form-control form-control-lg" name="mobile"  placeholder="Phone number" />
-                             
-                               </div>
-              
-                            <div class="d-flex justify-content-end ">
-                              <button type="submit" class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block">Next <i class="fa fa-arrow-right ms-3"></i></button>
-                            </div>
-              </form>
+                                  <input type="text" id="email" class="form-control form-control-lg" name="email" placeholder="Email" />
+                              </div>
+                              
+                              <div class="form-outline mb-4">
+                                  <input type="tel" id="phone" class="form-control form-control-lg" name="mobile" placeholder="Phone number" />
+                              </div>
+                              
+                              <div class="d-flex justify-content-end">
+                                  <button type="submit" class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block">Next <i class="fa fa-arrow-right ms-3"></i></button>
+                              </div>
+                          </form>
+                          
                           </div>
                         </div>
                         <div class="col-xl-6 d-xl-block bg-image">
@@ -316,161 +293,7 @@
 
 
 {{-- 
-      <div id="container" class="container mt-5">
-      
      
-   
-
-        <form id="multi-step-form ">
-          <div class="step step-2 container">
-            <!-- Step 1 form fields here -->
-            <!-- <div class="container text-center">
-                <h3 class="mb-2">Billing address</h3>
-              </div> -->
-              
-              <div class="container py-5">
-                <div class="row d-flex justify-content-center align-items-center">
-                  <div class="col">
-                    <div class="  shadow-3">
-                      <div class="row g-0">
-                    
-                        <div class="col-md-6">  
-                
-                              <h3 class="mb-4 text-uppercase">Payment details</h3>
-                            <div class="card border-0">
-            
-                              <div class="accordion" id="accordionExample">
-                                
-                                <div class="">
-                                  <div class="card-header p-0" id="headingTwo">
-                                    <h2 class="mb-0">
-                                      <button class="btn  btn-block text-left collapsed p-3 rounded-0 border-bottom-custom" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        <div class="d-flex align-items-center justify-content-between">
-            
-                                          <span class="me-2">Paypal </span>
-                                          <img src="./images/paypal (1).png"  width="30">
-                                          
-                                        </div>
-                                      </button>
-                                    </h2>
-                                  </div>
-                                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                      <input type="text" class="form-control" placeholder="Paypal email">
-                                    </div>
-                                  </div>
-                                </div>
-            
-                                <div >
-                                  <div class="card-header p-0">
-                                    <h2 class="mb-0">
-                                      <button class="btn  btn-block text-left p-3 rounded-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <div class="d-flex align-items-center justify-content-between">
-            
-                                          <span class="me-2">Payment method  </span>
-                                          <div class="icons">
-                                            <img src="./images/card.png" width="30">
-                                            <img src="./images/payment-method.png" width="30">
-                                            <img src="images/visa.png" width="30">
-                                            <img src="images/paypal (1).png" width="30">
-                                    
-                                          </div>
-                                          
-                                        </div>
-                                      </button>
-                                    </h2>
-                                  </div>
-            
-                                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                    <div class="card-body payment-card-body">
-                                      
-                                      <span class="font-weight-normal card-text">Card Number</span>
-                                      <div class="input">
-            
-                                      
-                                        <input type="text" class="form-control" placeholder="0000 0000 0000 0000">
-                                        
-                                      </div> 
-            
-                                      <div class="row mt-3 mb-3">
-            
-                                        <div class="col-md-6">
-            
-                                          <span class="font-weight-normal card-text">Expiry Date</span>
-                                          <div class="input">
-            
-                     
-                                            <input type="text" class="form-control" placeholder="MM/YY">
-                                            
-                                          </div> 
-                                          
-                                        </div>
-            
-            
-                                        <div class="col-md-6">
-            
-                                          <span class="font-weight-normal card-text">CVC/CVV</span>
-                                          <div class="input">
-            
-                                   
-                                            <input type="text" class="form-control" placeholder="000">
-                                            
-                                          </div> 
-                                          
-                                        </div>
-                                        
-            
-                                      </div>
-            
-                                      <span class="text-muted certificate-text"><i class="fa fa-lock"></i> Your transaction is secured with ssl certificate</span>
-                                     
-                                    </div>
-                                  </div>
-                                </div>
-                                
-                              </div>
-                              
-                            </div>
-                            <div class="d-flex justify-content-end mt-4">
-                                <a href="" class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block">Next<i class="fa fa-arrow-right ms-3"></i></a>
-                            </div>
-            
-                          </div>
-            
-
-
-
-                        <div class="col-xl-6 d-xl-block bg-image " >
-                            <img src="./images/ppp.png" alt="Sample photo"
-                              class="img-fluid " />
-                            
-                          </div>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-      
-
-
-
-
-
-
-
-
-
-
-        
-      
-          <!-- <div class="step step-3">
-            
-            <h3>Step 3</h3>
-            
-          </div> -->
-        </form>
-      </div>
 
 
       <div id="container" class="container mt-5">
@@ -745,5 +568,16 @@
           });
               </script>
            --}}
+           <script>
+            document.getElementById('addressSelect').addEventListener('change', function () {
+                const selectedOption = this.options[this.selectedIndex];
+                document.getElementById('city').value = selectedOption.dataset.city;
+                document.getElementById('street').value = selectedOption.dataset.street;
+                document.getElementById('address1').value = selectedOption.dataset.address;
+                document.getElementById('email').value = selectedOption.dataset.email;
+                document.getElementById('phone').value = selectedOption.dataset.mobile;
+            });
+        </script>
+        
 
 @endsection

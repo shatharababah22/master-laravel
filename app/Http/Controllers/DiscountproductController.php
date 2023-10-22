@@ -55,7 +55,7 @@ $products = $shuffledProducts->take(4);
 
 $users = User::count();
 $totalQuantity = Orderitem::sum('Quantity');
-
+$products_count = Product::count();
            
         view()->share([
             'categories' => $categories,
@@ -63,6 +63,7 @@ $totalQuantity = Orderitem::sum('Quantity');
             'products' => $products,
             'users' => $users,
             'totalQuantity' => $totalQuantity,
+            'products_count'=>$products_count,
             
         ]);
           return view('AllPages.Home'); 
@@ -270,27 +271,33 @@ public function add_cart(Request $request, $id)
 
 public function addresess($id){
 
-
-return view('AllPages.checkout');
+    $addresses = Address::where('UserID', auth()->user()->id)->get();
+return view('AllPages.checkout', compact('addresses'));
 }
 
 
 public function CheckoutAddress(Request $request) {
     
-  
-    // if (Auth::check()) {
-   $input = $request->all();
-    // Create a new Address record using the Address model and save it to the database
+    
+
+// You don't need to filter by a specific city in this case.
+
+// Assuming you want to save a new address if the request contains the necessary data
+if ($request->has('email') && $request->has('mobile') && $request->has('street') && $request->has('city') && $request->has('address1')) {
+    $input = $request->all();
+
     Address::create([
-        'UserID' => auth()->user()->id, // Add the user_id to the address record
+        'UserID' => auth()->user()->id,
         'email' => $input['email'],
         'mobile' => $input['mobile'],
         'street' => $input['street'],
         'city' => $input['city'],
-        'address1' =>$input['address1'],
+        'address1' => $input['address1'],
     ]);
-    // }
-    return redirect()->route('home')->with('success', 'Order successful.');
+}
+
+return view('AllPages.payment');
+
 }
 
 

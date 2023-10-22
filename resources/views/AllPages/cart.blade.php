@@ -55,7 +55,7 @@
                       
                           <div class="container">
                      
-                            @if (is_object($cart))
+                            {{-- @if (is_object($cart)) --}}
                             @foreach($cart as $item)
                                       <div class="row mb-4 d-flex justify-content-between align-items-center">
                                         <div class="col-md-2 col-lg-2 col-xl-2">
@@ -63,27 +63,32 @@
                                         </div>
                                         
                                           <div class="col-md-3 col-lg-3 col-xl-3">
-                                              <h5>{{isset($item->product) ? $item->product->name : $item['Name']}}</h5>
+                                              <h5>{{isset($item->product) ? $item->product->Name : $item['Name']}}</h5>
                                           </div>
                                           <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                             <div class="col-md-4 col-6">
                                                 <div class="input-group" style="width: 170px;">
                                                    
-                                                   <button class="btn btn-white border border-secondary px-3 decrement-button" 
+                                                    <form method="POST" action="{{ route('updatecart', isset($item->product) ? $item->product->id : $item['id']) }}">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                   {{-- <button class="btn btn-white border border-secondary px-3 decrement-button" 
         data-action="decrement" 
         data-mdb-ripple-color="dark" 
         >
     <i class="fas fa-minus" style="color: green;"></i>
-</button>
+</button> --}}
 
 
-<input type="text" name="quantity" id="actionInput"  class="form-control text-center border border-secondary" value="{{isset($item->product) ? $item->Quantity : $item['quantity']}}" aria-label="Example text with button addon" aria-describedby="button-addon1"  />
-<button class="btn btn-white border border-secondary px-3 increment-button" 
+<input type="text" name="quantity" id="actionInput" class="form-control text-center border border-secondary" value="{{ isset($item->product) ? $item->Quantity : $item['quantity'] }}" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+{{-- <button class="btn btn-white border border-secondary px-3 increment-button" 
         data-action="increment" 
         data-mdb-ripple-color="dark" 
       >
     <i class="fas fa-plus" style="color: green;"></i>
-</button> 
+</button>  --}}
+       <button type="submit" class="btn btn-primary update-product" hidden>Update</button>
+</form>
 
                                                 </div>
                                             </div>
@@ -95,22 +100,28 @@
                                             </h6>
                                             
                                           </div>
-                                      
+{{--                                       
                                           <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                            <form method="POST" action="{{ route('updatecart', isset($item->product) ? $item->product->id : $item['id']) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                         
+                                         
+                                        </div> --}}
+                                        
+                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                             <form method="POST" action="{{ route('deletecart', isset($item->product) ? $item->product->id : $item['id']) }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-muted delete-product">Delete</button>
+                                                <button type="submit" class="btn btn-danger delete-product">Delete</button>
                                             </form>
-                                            
-                                            
-                                      
-                                          </div>
+                                        </div>
+                                        
                                       </div>
                                       <hr class="my-4">
                                     
                               @endforeach
-                         @endif
+                         {{-- @endif --}}
                 
                           </div>
           
@@ -265,12 +276,11 @@
                         $totalPrice = 0;
                         
                         if (is_array($cart)) {
-                            $totalPrice = array_reduce($cart, function ($carry, $item) {
+                            foreach ($cart as $item) {
                                 if (isset($item['price'])) {
-                                    return $carry + $item['price'];
+                                    $totalPrice += $item['price'] * $item['quantity'];
                                 }
-                                return $carry;
-                            }, 0);
+                            }
                         }
                         
                         $appliedDiscount = null;
@@ -292,7 +302,7 @@
                                 }
                             }
                         }
-                        @endphp
+                    @endphp
                         
                         <h5 class="text-uppercase">items {{ $cartCount }}</h5>
                         <h5>JOD {{ number_format($totalPrice, 2) }}</h5>
@@ -375,7 +385,7 @@
 
 
 
-
+{{-- 
       <script src="sweetalert2.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -408,7 +418,7 @@
             });
         });
     });
-</script>
+</script> --}}
 
     
 
@@ -421,7 +431,27 @@
 
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const actionInput = document.getElementById('actionInput');
+        const decrementButton = document.querySelector('.decrement-button');
+        const incrementButton = document.querySelector('.increment-button');
 
+        decrementButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            const currentValue = parseInt(actionInput.value) || 0;
+            if (currentValue > 0) {
+                actionInput.value = currentValue - 1;
+            }
+        });
+
+        incrementButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            const currentValue = parseInt(actionInput.value) || 0;
+            actionInput.value = currentValue + 1;
+        });
+    });
+</script>
 
 
 

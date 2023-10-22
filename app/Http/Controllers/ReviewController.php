@@ -14,6 +14,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
+        
         $comments = Review::select('reviews.date','reviews.id', 'reviews.comments', 'reviews.Rating','users.Email','products.Name')
        ->join('users', 'reviews.UserID', '=', 'users.id')
        ->join('products', 'reviews.ProductID', '=', 'products.id')
