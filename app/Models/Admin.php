@@ -22,36 +22,39 @@ class Admin extends Authenticatable
      * @var array<int, string>
      */
 
-    protected $fillable = [
-         "Image",
-              "Username",
-              "FirstName",
-              "LastName",
-              "Address",
-              "Email",
-              "Password",
-              "Phone",
-              "birthday"
-              
-    ];
+     use HasApiTokens, HasFactory, Notifiable;
 
-    public $timestamps = false;
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+     protected $fillable = [
+          "Image",
+               "name",
+               "Firstname",
+               "Lastname",
+               "email",
+               "password",
+               "Phone",
+               "Birthday"
+               
+     ];
+ 
+     public $timestamps = false;
+ 
+         /**
+      * The attributes that should be hidden for serialization.
+      *
+      * @var array<int, string>
+      */
+     protected $hidden = [
+         'password',
+         'remember_token',
+     ];
 
     /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
      */
-    protected $casts = [];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
 }

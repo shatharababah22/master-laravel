@@ -59,7 +59,7 @@ Category
               <th>Email</th>
               <th>Phone</th>
               <th>Birthday</th>
-              <th>Address</th>
+     
               <th>Action</th>
            
             
@@ -72,44 +72,40 @@ Category
                       <input type="checkbox" id="check" style="border: 1px solid black">
                   </td>
                   <td >{{ $user->id}}</td>
-                  <td >
+                  <td>
                       <img class="pic"
                       src="/images/{{ $user->Image }}" alt="">
                   </td>
-                  <td>
-                      <div>
-                          
-                          <p class="m-0 fw-bold text-muted">{{ $user->Username}} </p>
-                      </div>
-                  </td>
                 
+            
+                   <td class="d- text-muted">
+                  {{ $user->name}}
+                </td>
                   <td class="d- text-muted">
-                    {{ $user->FirstName}}
+                    {{ $user->Firstname}}
+                  
+                  <td class="d- text-muted">
+                    {{ $user->Lastname}}
                   </td>
                   <td class="d- text-muted">
-                    {{ $user->LastName}}
-                  </td>
-                  <td class="d- text-muted">
-                    {{ $user->Email}}
+                    {{ $user->email}}
                   </td>
                   <td class="d- text-muted">
                     {{ $user->Phone}}
                   </td>
                   <td class="d- text-muted">
-                    {{ $user->birthday}}
+                    {{ $user->Birthday}}
                   </td>
-                  <td class="d- text-muted">
-                    {{ $user->Address}}
-                  </td>
-
+             
                  
+
                   <td>
                     <div style="display: grid; grid-template-columns: 50px auto;">
 
-                        <form id="delete-form-{{ $user->id }}" method="POST" action="{{ route('user_admin.destroy', $user->id) }}">
+                        <form  method="POST" action="{{ route('user_admin.destroy', $user->id) }}">
                               @csrf
                               @method('DELETE')
-                              <button type="submit" class="btn btn-danger btnedit"  data-delete-id="{{ $user->id }}"><i class="bi-trash"></i> </button>
+                              <button type="submit" class="btn btn-danger btnedit" ><i class="bi-trash"></i> </button>
                             </form>
                           </div>
                         </form>

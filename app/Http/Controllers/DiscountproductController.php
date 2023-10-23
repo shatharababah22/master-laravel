@@ -56,7 +56,8 @@ $products = $shuffledProducts->take(4);
 $users = User::count();
 $totalQuantity = Orderitem::sum('Quantity');
 $products_count = Product::count();
-           
+
+
         view()->share([
             'categories' => $categories,
             'Testimonials' => $Testimonials,
@@ -64,12 +65,20 @@ $products_count = Product::count();
             'users' => $users,
             'totalQuantity' => $totalQuantity,
             'products_count'=>$products_count,
-            
+
         ]);
           return view('AllPages.Home'); 
     }
 
+    // public function index2(){
 
+
+    //     $cartCount = Auth::check()
+    //     ? Cartitem::where('UserID', Auth::user()->id)->count()
+    //     : count(session('cart'));
+
+    // return view('layouts.navbar', compact('cartCount'));
+    // }
 
 
 

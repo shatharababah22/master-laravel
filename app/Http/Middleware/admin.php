@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class admin
 {
-    /**
+      /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -17,11 +17,9 @@ class admin
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {
-        {  if(!Auth::guard('admin')->check()){
-            return redirect()->route('admin.login');
-             }
-             return $next($request);
-        }
+    {  if(!Auth::guard('admin')->check()){
+        return redirect()->route('admin.login');
+         }
+        return $next($request);
     }
 }

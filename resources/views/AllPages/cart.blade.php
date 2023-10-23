@@ -54,7 +54,7 @@
                        
                       
                           <div class="container">
-                     
+                            @if (session()->has('cart') && count(session('cart')) > 0)
                             {{-- @if (is_object($cart)) --}}
                             @foreach($cart as $item)
                                       <div class="row mb-4 d-flex justify-content-between align-items-center">
@@ -72,21 +72,11 @@
                                                     <form method="POST" action="{{ route('updatecart', isset($item->product) ? $item->product->id : $item['id']) }}">
                                                         @csrf
                                                         @method('PATCH')
-                                                   {{-- <button class="btn btn-white border border-secondary px-3 decrement-button" 
-        data-action="decrement" 
-        data-mdb-ripple-color="dark" 
-        >
-    <i class="fas fa-minus" style="color: green;"></i>
-</button> --}}
+ 
 
 
 <input type="text" name="quantity" id="actionInput" class="form-control text-center border border-secondary" value="{{ isset($item->product) ? $item->Quantity : $item['quantity'] }}" aria-label="Example text with button addon" aria-describedby="button-addon1" />
-{{-- <button class="btn btn-white border border-secondary px-3 increment-button" 
-        data-action="increment" 
-        data-mdb-ripple-color="dark" 
-      >
-    <i class="fas fa-plus" style="color: green;"></i>
-</button>  --}}
+
        <button type="submit" class="btn btn-primary update-product" hidden>Update</button>
 </form>
 
@@ -121,7 +111,7 @@
                                       <hr class="my-4">
                                     
                               @endforeach
-                         {{-- @endif --}}
+                         @endif
                 
                           </div>
           

@@ -138,11 +138,11 @@ else{
      */
     public function update(Request $request, $id)
     {
-        // استخراج الكمية المحدثة من إدخال النموذج
+
         $updatedQuantity = $request->input('quantity');
     
         if (auth()->user()) {
-            // إذا كان المستخدم مصادقًا عليه، قم بتحديث العنصر في قاعدة البيانات
+
             $user = auth()->user();
             $cartItem = Cartitem::where('UserID', $user->id)->where('ProductID', $id)->first();
     
@@ -150,7 +150,7 @@ else{
                 $cartItem->update(['Quantity' => $updatedQuantity]);
             }
         } else {
-            // إذا لم يكن المستخدم مصادقًا عليه، قم بتحديث العنصر في الجلسة
+
             $cart = session('cart');
             if ($cart !== null) {
                 foreach ($cart as $key => $item) {
@@ -163,7 +163,7 @@ else{
             }
         }
     
-        return redirect()->back()->with('success', 'تمت إضافة المنتج إلى سلة التسوق بنجاح');
+        return redirect()->back()->with('success', 'Product added to the cart successfully');
     }
     
     

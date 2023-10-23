@@ -90,6 +90,7 @@
                 <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
                 <a href="All-product.html" class="nav-item nav-link">Our Products</a>
                 <a href="#courses" class="nav-item nav-link">Courses</a>
+               
                 {{-- <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu bg-light m-0">
@@ -102,8 +103,27 @@
                     </div>
                 </div> --}}
                 <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
+                {{-- @if (Auth::check())
+                @php
+                    $cartCount = \App\Cartitem::where('UserID', Auth::user()->id)->count();
+                @endphp
+            @else
+                @php
+                    $cart = session('cart');
+                    $cartCount = is_array($cart) ? count($cart) : 0;
+                @endphp
+            @endif --}}
+{{--             
+            <a href="{{ route('cart') }}" class="nav-item nav-link">
+                <i class="bi bi-cart" style="font-size: 20px"></i>
+                <span style="font-size: 15px; vertical-align: middle;  color:darkgreen;">({{ $cartCount }})</span>
+            </a> --}}
+            
+         
+
             </div>
             @if (Auth::check())
+            
                         {{-- <li> <a href="{{ route('profile.edit', [Auth::user()]) }}"
                                 class="nav-item">{{ Auth::user()->name }}</a></li> --}}
                         {{-- <form style="display: inline-block" method="POST" class="nav-item"
@@ -115,7 +135,6 @@
                                     {{ __('Log Out') }}
                                     <i class="fa fa-arrow-right ms-3"></i> </a>
                         </form> --}}
-
                               <!-- Avatar -->
                               <div class="dropdown me-2">
                                 <button class="btn b dropdown-toggle custom-button1 " type="button" id="navbarDropdownMenuAvatar" data-bs-toggle="dropdown" aria-expanded="false">

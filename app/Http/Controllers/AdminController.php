@@ -15,6 +15,9 @@ class AdminController extends Controller
     public function index()
     {
         $users = Admin::all();
+
+
+        
         return view('Dashboard.Admin.admin', compact('users')); 
     }
 
@@ -38,8 +41,8 @@ class AdminController extends Controller
     {
        
         $input = $request->all();
-        if ($request->has('Password')) {
-            $input['Password'] = bcrypt($request->input('Password'));
+        if ($request->has('password')) {
+            $input['password'] = bcrypt($request->input('password'));
         }
         if ($image = $request->file('Image')) {
             $destinationPath = 'images/';
@@ -98,6 +101,6 @@ class AdminController extends Controller
     {
         Admin::destroy($id);
      
-        return redirect()->route('dmin.index')->with(['deleted' => 'Deleted successfully']);
+        return redirect()->route('admin.index')->with(['deleted' => 'Deleted successfully']);
     }
 }

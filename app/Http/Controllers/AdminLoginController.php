@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\User;
+use App\Models\Product;
 // use App\Models\User;
 // use App\Models\Volnteer;
 use Illuminate\Support\Facades\Auth;
@@ -12,26 +14,60 @@ use Illuminate\Validation\Rules\Password;
 
 class AdminLoginController extends Controller
 {
+    
     public function showLoginForm()
     {
-      
-      
+       if (session()->has("adminid")) {
+        $admin = Admin::all();
+        $products=Product::all();
+        $users = User::all();
+
+
+             
+        view()->share([
+            'admin' => $admin,
+            'products' => $products,
+            'users' =>  $users,
+         
+        ]);
     
         return view('Dashboard.Home');
 
+  
+        
+        
+
+       }else{
+        return view("Admin_login.login");
+       }
     }
 
 
+    // Handle the login request
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => [
+                'required',
+                Password::min(8)->mixedCase()->numbers()->symbols(),
+            ], // Adjust the password requirements as needed.
+        ]);
+        $admin = Admin::where('email', $request->email)->first();
+    
 
+        if ($admin) {
+            if (Hash::check($request->password, $admin->password)) {
+                $request->session()->put('adminid', $admin->id);
+            
+                return redirect('/dash');
+            } else {
+                return back()->with('fail', 'Password does not match');
+            }
+        } else {
+            return back()->with('fail', 'This email is not registered');
+        }
 
-
-
-      // Handle the login request
-
-      public function login()
-      {
-
-        return view('Admin_login.login');
     }
         
 
@@ -53,35 +89,12 @@ class AdminLoginController extends Controller
      
   
 
-      public function check(Request $request)
-    {
-       
-  $request->validate([
-              'Email' => 'required|email',
-              'Password' => [
-                  'required',
-                  Password::min(8)->mixedCase()->numbers()->symbols(),
-              ], // Adjust the password requirements as needed.
-          ]);
-        $check = $request->all();
-        
-   
-        
-        $check = $request->only(['Email', 'Password']); // Assuming 'Email' and 'Password' are form field names.
-        
-        // Hash the password.
-        $hashedPassword = Hash::make($check['Password']);
-        
-        if (Auth::guard('admin')->attempt(['Email' => $check['Email'], 'Password' => $hashedPassword])) {
-            // Authentication successful
-            return redirect()->route('admin.lolo');
-        } else {
-            // Authentication failed
-            return redirect()->back()->with('error', 'Your credentials are invalid');
+        public function logout()
+        {
+           session()->pull("adminid");
+    
+            return redirect('/dash'); // You can customize the redirection
         }
-        
-       
-    }
     
     // Add a logout action if needed
     //   public function logout()

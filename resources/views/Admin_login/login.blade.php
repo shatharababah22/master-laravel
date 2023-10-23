@@ -63,22 +63,24 @@ body{
                             </a>
                             <h3 style="color: darkolivegreen;">Sign In</h3>
                         </div>
-                        <form action="{{ route('admin.check') }}" method="POST" >
+                        <form method="POST" action="{{ route('admin.login') }}">
                             @csrf
-                            @method('post')
+                     
 
                             
                         <!-- Email Address -->
                         <div class="form-floating mb-3 ">
-                            <x-text-input type="email" class="form-control bg-transparent" id="email"  name="Email" :value="old('Email')" required autofocus
-                            autocomplete="username"  placeholder="name@example.com" />
-                            <x-input-label for="email" :value="__('Email')" />
-                            <x-input-error :messages="$errors->get('Email')" class="mt-2" style="color: red; background-color:#ffe6e6"  />
+                            <x-text-input type="email" class="form-control bg-transparent" id="email"  type="email"
+                            name="email" :value="old('email')" required autofocus
+                            autocomplete="username"   placeholder="name@example.com" />
+                            <x-input-label for="email" :value="__('email')" />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" style="color: red; background-color:#ffe6e6"  />
                         </div>
                         <div class="form-floating mb-4">
-                            <x-text-input type="password" class="form-control bg-transparent" name="Password" id="password" required autocomplete="current-password" placeholder="Password" />
-                            <x-input-label for="password" :value="__('Password')" />
-                            <x-input-error :messages="$errors->get('Password')" class="mt-2" style="color: red; background-color:#ffe6e6"  />
+                            <x-text-input type="password" class="form-control bg-transparent" 
+                            name="password" required autocomplete="current-password" placeholder="Password" />
+                            <x-input-label for="password" :value="__('password')" />
+                            <x-input-error :messages="$errors->get('password')" class="mt-2" style="color: red; background-color:#ffe6e6"  />
                         </div>
 
                         {{-- <div class="d-flex align-items-center justify-content-between mb-4">

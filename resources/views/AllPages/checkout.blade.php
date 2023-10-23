@@ -569,15 +569,18 @@
               </script>
            --}}
            <script>
-            document.getElementById('addressSelect').addEventListener('change', function () {
-                const selectedOption = this.options[this.selectedIndex];
-                document.getElementById('city').value = selectedOption.dataset.city;
-                document.getElementById('street').value = selectedOption.dataset.street;
-                document.getElementById('address1').value = selectedOption.dataset.address;
-                document.getElementById('email').value = selectedOption.dataset.email;
-                document.getElementById('phone').value = selectedOption.dataset.mobile;
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('addressSelect').addEventListener('change', function () {
+                    const selectedOption = this.options[this.selectedIndex];
+                    document.getElementById('city').value = selectedOption.dataset.city;
+                    document.getElementById('street').value = selectedOption.dataset.street;
+                    document.getElementById('address1').value = selectedOption.dataset.address;
+                    document.getElementById('email').value = selectedOption.dataset.email;
+                    document.getElementById('phone').value = selectedOption.dataset.mobile;
+                });
             });
         </script>
+        
         
 
 @endsection

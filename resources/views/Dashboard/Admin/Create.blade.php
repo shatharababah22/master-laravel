@@ -28,31 +28,31 @@ Admin
         <div class="form-floating mb-3 ">
             {{-- <span style="color:red">@error('name'){{ $message }} @enderror</span><br><br> --}}
 
-            <input class="form-control inputadmin " id="name" name="Username" value='{{ old('Username') }}' type="text" placeholder="Username" data-sb-validations="required" />
+            <input class="form-control inputadmin " id="name" name="name" value='{{ old('name') }}' type="text" placeholder="Name" data-sb-validations="required" />
 
-            <label for="name">Username</label>
+            <label for="name">name</label>
 
             
         </div>
         <div class="form-group row mb-3">
             <div class="col-md-6">
-                <input class="form-control inputadd" id="decription" name="FirstName" value='{{ old('FirstName') }}' type="text" placeholder="Firstname" data-sb-validations="required" />
+                <input class="form-control inputadd" id="decription" name="Firstname" value='{{ old('Firstname') }}' type="text" placeholder="Firstname" data-sb-validations="required" />
             
             </div>
             
             <!-- Add another input field here -->
             <div class="col-md-6">
-                <input class="form-control inputadd" name="LastName" value='{{ old('LastName') }}' type="text" placeholder="Lastname" data-sb-validations="required" />
+                <input class="form-control inputadd" name="Lastname" value='{{ old('Lastname') }}' type="text" placeholder="Lastname" data-sb-validations="required" />
            
             </div>
         </div>
         <div class="form-floating mb-3 ">
-            <input class="form-control inputadmin" id="decription" name="Email" value='{{ old('Email') }}' type="email" placeholder="Email" data-sb-validations="required" />
+            <input class="form-control inputadmin" id="decription" name="email" value='{{ old('email') }}' type="email" placeholder="Email" data-sb-validations="required" />
             <label for="decription">Email</label>
         
         </div>
         <div class="form-floating mb-3 ">
-            <input class="form-control inputadmin" id="decription" name="Password" value='{{ old('Password') }}' type="password" placeholder="Password" data-sb-validations="required" />
+            <input class="form-control inputadmin" id="decription" name="password" value='{{ old('password') }}' type="password" placeholder="Password" data-sb-validations="required" />
             <label for="decription">Password</label>
         
         </div>
@@ -64,19 +64,11 @@ Admin
             
             <!-- Add another input field here -->
             <div class="col-md-6">
-                <input class="form-control inputadd" name="birthday" value='{{ old('birthday') }}' type="birthday" placeholder="Birthday" data-sb-validations="required" />
+                <input class="form-control inputadd" name="Birthday" value='{{ old('Birthday') }}' type="birthday" placeholder="Birthday" data-sb-validations="required" />
            
             </div>
         </div>
-        <div class="form-floating mb-3 ">
-            {{-- <span style="color:red">@error('name'){{ $message }} @enderror</span><br><br> --}}
-
-            <input class="form-control inputadmin " id="name" name="Address" value='{{ old('Address') }}' type="text" placeholder="Address" data-sb-validations="required" />
-
-            <label for="name">Address</label>
-
-            
-        </div>
+    
         <div>
             <input class="form-control inputadmin" name="Image" value='{{ old('Image') }}' type="file"  data-sb-validations="required" />
             <span style="color:red">@error('image'){{ $message }} @enderror</span><br><br>

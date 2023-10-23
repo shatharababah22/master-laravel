@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DiscountController;
@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ContactController;
 
@@ -37,14 +38,21 @@ use Illuminate\Support\Facades\Route;
 //     return view('AllPages.cart');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+Route::middleware('admin')->group(function () {
+
+    Route::get('/dash', function () {
+        return view('Dashboard.Home');
+    });
+    
 });
 
 require __DIR__.'/auth.php';
@@ -54,6 +62,7 @@ require __DIR__.'/auth.php';
 
 // ................all_product and single_product.......................
 Route::get('/', [DiscountproductController::class, 'index'])->name('home');
+// Route::get('/navbar', [DiscountproductController::class, 'index2'])->name('home');
 Route::get('/search', [DiscountproductController::class, 'search'])->name('search');
 Route::get('/allproduct/{Category_ID}', [DiscountproductController::class, 'Allproduct'])->name('allproduct');
 Route::get('/productdetail/{id_product}', [DiscountproductController::class, 'product_detail'])->name('productdetail');
@@ -64,11 +73,8 @@ Route::post('/productdetail/comment/{id_comment}', [DiscountproductController::c
 
 //...............cart.....................
 Route::post('/productdetail/add/{id}', [DiscountproductController::class,'add_cart'])->name('addcart');
-// Route::delete('/delete/{iddelete}', [CartitemController::class, 'deletecart'])->name('deletecart');
-// Route::get('/cart/update/{product_id}', [CartitemController::class, 'update_cart'])->name('updatecart');
-// Route::get('/cart', [CartitemController::class, 'index']);
 Route::post('/discountcoupon', [CartitemController::class, 'index'])->name('discountcoupon');
-Route::get('/cart', [CartitemController::class, 'index']);
+Route::get('/cart', [CartitemController::class, 'index'])->name('cart');
 
 // Example routes
 Route::patch('/updatecart/{id}', [CartitemController::class, 'update'])->name('updatecart');
@@ -112,18 +118,10 @@ Route::resource('review',DiscountproductController::class);
 
 
 // ...................admin_login.................
-Route::post('/adminlogin', [AuthenticatedSessionController::class,"create"]);
-Route::middleware('admin')->group(function () {
 
-    Route::get('/dash', function () {
-        return view('Dashboard.Home');
-    });
-    
-});
-Route::get('/dash/login', [AdminLoginController::class, 'login'])->name("admin.login");
-Route::get('/dash/home', [AdminLoginController::class, 'showLoginForm'])->name("admin.lolo");
-Route::post('/dash/check', [AdminLoginController::class, 'check'])->name("admin.check");
+Route::get('/dash', [AdminLoginController::class, 'showLoginForm']);
 Route::get('/adminlogout', [AdminLoginController::class, 'logout'])->name("admin.logout");
+Route::match(['get', 'post'],'/dash/login', [AdminLoginController::class, 'login'])->name("admin.login");
 
 
 
