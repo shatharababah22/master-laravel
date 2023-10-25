@@ -10,11 +10,13 @@ class Order extends Model
     use HasFactory;
     
 
-
     protected $fillable = [
         "OrderDate",
              "TotalAmount",
              "Status",
+             "UserID",
+             "billingsId",
+             "PaymentMethodID",
             
              
    ];

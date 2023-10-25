@@ -54,7 +54,7 @@
                        
                       
                           <div class="container">
-                            @if (session()->has('cart') && count(session('cart')) > 0)
+                            {{-- @if (session()->has('cart') && count(session('cart')) > 0) --}}
                             {{-- @if (is_object($cart)) --}}
                             @foreach($cart as $item)
                                       <div class="row mb-4 d-flex justify-content-between align-items-center">
@@ -111,7 +111,7 @@
                                       <hr class="my-4">
                                     
                               @endforeach
-                         @endif
+                         {{-- @endif --}}
                 
                           </div>
           
@@ -138,7 +138,7 @@
 
         @if (auth()->user())
         @php $totalprice = 0 @endphp
-
+        @php $shipment = 2 @endphp
     
         <div class="row mb-4 justify-content-center align-items-center h-100 container">
             <div class="mb-5 col-lg-6"></div>
@@ -151,7 +151,7 @@
                             <!-- Your item rendering code here -->
                             @php
                                 $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
-                                $totalprice += $itemPrice;
+                                $totalprice += $itemPrice+$shipment;
                            
                             @endphp
                         </div>

@@ -90,7 +90,9 @@ Route::delete('/deletecart/{id}', [CartitemController::class, 'destroy'])->name(
 
 // ....................checkout.....................
 Route::get('/adresses/{iduser}', [DiscountproductController::class, 'addresess'])->name('adresess_user');
-Route::post('/shath', [DiscountproductController::class, 'CheckoutAddress'])->name('checkout_address');
+Route::match(['get', 'post'],'/shath', [DiscountproductController::class, 'CheckoutAddress'])->name('checkout_address');
+Route::get('/orders/{order}', [DiscountproductController::class, 'Order'])->name('orders');
+Route::get('/confirm/{order}', [DiscountproductController::class, 'Confirm'])->name('confirm');
 
 
 

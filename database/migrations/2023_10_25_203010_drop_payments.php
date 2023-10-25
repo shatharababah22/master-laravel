@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('payments');
+        //
     }
 
     /**
@@ -23,15 +23,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::create('payments', function (Blueprint $table) {
-            $table->id();
-         
-        
-            $table->bigInteger('Amount');
-            $table->date('PaymentDate');
-            $table->string('Status');
-            $table->timestamps();
-        });
-       
+        //
     }
 };

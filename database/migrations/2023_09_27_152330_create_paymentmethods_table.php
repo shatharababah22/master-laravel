@@ -18,8 +18,6 @@ return new class extends Migration
         Schema::create('paymentmethods', function (Blueprint $table) {
             $table->id();
             $table->string('PaymentType');
-            $table->bigInteger('CardNumber');
-            $table->date('ExpirationDate');
             $table->unsignedBigInteger('UserId');
             $table->foreign('UserId')->references('id')->on('users');
         });

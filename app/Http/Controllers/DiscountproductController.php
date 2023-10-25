@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Discountproduct;
 use App\Models\Category;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Cartitem;
 use App\Models\Orderitem;
+use App\Models\Paymentmethod;
 use App\Models\Review;
 use App\Models\User;
 use App\Models\Address;
@@ -188,30 +190,29 @@ $products_count = Product::count();
 }
  
 
-
 public function product_comment(Request $request, $id){
-  if (Auth::check()) {
-
-    
-    // User is already logged in, create the review and redirect to product detail
-    Review::create([
-        'comments' => $request->input('comments'),
-        'Rating' => $request->input('Rating'),
-        'date' => now(),
-        'UserID' => auth()->id(),
-        'ProductID' => $id,
-        // Add other fields as needed
-    ]);
-
-    // Redirect to the product detail page
-    return redirect()->route('productdetail', ['id_product' => $id])->with('success', 'Review added successfully.');
-} else {
-    // User is not logged in, store the intended URL and redirect to the login page with an error message
-    session()->put('intended_url', route('productdetail', ['id_product' => $id]));
-    return redirect()->route('login')->with('error', 'You must be logged in to leave a review.');
-}
-
-}
+    if (Auth::check()) {
+      // User is already logged in, create the review and redirect to product detail
+      Review::create([
+          'comments' => $request->input('comments'),
+          'Rating' => $request->input('Rating'),
+          'date' => now(),
+          'UserID' => auth()->id(),
+          'ProductID' => $id,
+          // Add other fields as needed
+      ]);
+  
+      // Redirect to the product detail page
+      return redirect()->route('productdetail', ['id_product' => $id])->with('success', 'Review added successfully.');
+    } else {
+      // Store the intended URL in the session
+      session()->put('intended_url', route('productdetail', ['id_product' => $id]));
+  
+      // Redirect to the login page
+      return redirect()->route('login')->with('error', 'You must be logged in to leave a review.');
+    }
+  }
+  
 
 
 public function add_cart(Request $request, $id)
@@ -286,28 +287,116 @@ return view('AllPages.checkout', compact('addresses'));
 
 
 public function CheckoutAddress(Request $request) {
-    
-    
+    // Retrieve the selected address ID
+    $selectedAddressId = $request->input('UserID');
 
-// You don't need to filter by a specific city in this case.
+    $selectedPaymentMethod = $request->input('PaymentType');
 
-// Assuming you want to save a new address if the request contains the necessary data
-if ($request->has('email') && $request->has('mobile') && $request->has('street') && $request->has('city') && $request->has('address1')) {
-    $input = $request->all();
-
-    Address::create([
+    // Create a new payment method record in the database
+      $paymentMethod = PaymentMethod::create([
+        'PaymentType' => $selectedPaymentMethod,
         'UserID' => auth()->user()->id,
-        'email' => $input['email'],
-        'mobile' => $input['mobile'],
-        'street' => $input['street'],
-        'city' => $input['city'],
-        'address1' => $input['address1'],
     ]);
+
+    // Check if the user has selected an existing address
+    if ($selectedAddressId) {
+        // You can retrieve the selected address from the database using $selectedAddressId and set it as the "last_address" in the session.
+        $selectedAddress = Address::find($selectedAddressId);
+
+        if ($selectedAddress) {
+            $request->session()->put('last_address', $selectedAddress);
+        }
+    } else {
+        // If a new address is provided, check if it already exists in the database
+        $input = $request->all();
+        $existingAddress = Address::where([
+            'UserID' => auth()->user()->id,
+            'email' => $input['email'],
+            'mobile' => $input['mobile'],
+            'street' => $input['street'],
+            'city' => $input['city'],
+            'address1' => $input['address1'],
+        ])->first();
+
+        // If the address doesn't exist, create and store it
+        if (!$existingAddress) {
+            $newAddress = Address::create([
+                'UserID' => auth()->user()->id,
+                'email' => $input['email'],
+                'mobile' => $input['mobile'],
+                'street' => $input['street'],
+                'city' => $input['city'],
+                'address1' => $input['address1'],
+            ]);
+
+            // Store the address information in the session
+            $request->session()->put('last_address', $newAddress);
+        } else {
+            // Address already exists, use the existing address
+            $request->session()->put('last_address', $existingAddress);
+        }
+    }
+
+    $lastAddress = $request->session()->get('last_address');
+
+    // Check if the last address is available
+    if ($lastAddress) {
+        $lastAddressCity = $lastAddress->city;
+    } else {
+        $lastAddressCity = null;
+    }
+
+    $user = auth()->user();
+    $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
+
+    // Calculate the total price as you were doing before
+    $totalprice = 0;
+    $shipment = 2;
+    foreach ($cart as $item) {
+        $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
+        $totalprice += $itemPrice + $shipment;
+    }
+
+    // Create a new order record in the database
+    $order = Order::create([
+        'OrderDate' => now(),
+        'TotalAmount' => $totalprice,
+        'UserID' => $user->id,
+        'billingsId' => $lastAddress->id, // Assuming billingsId is the address ID
+        'PaymentMethodID' => $paymentMethod->id,
+    ]);
+
+    return redirect()->route('orders', [
+        'order' => $order,
+        'cart' => $cart,
+        'lastAddressCity' => $lastAddressCity,
+        // Add other variables you want to pass here
+    ]);
+    
 }
 
-return view('AllPages.payment');
 
+public function Order(Order $order) {
+    $user = auth()->user();
+    // You can access the variables passed in the view
+    $cart = Cartitem::where('UserID', $user->id)->with('product')->get(); // Get the cart variable
+    $lastAddressCity = request('lastAddressCity'); // Get the lastAddressCity variable
+
+    return view('AllPages.order', compact('order', 'cart', 'lastAddressCity'));
 }
+
+
+public function Confirm(Order $order)
+{
+    $orderData = Order::select('orders.*', 'paymentmethods.PaymentType', 'addresses.city')
+        ->join('paymentmethods', 'orders.PaymentMethodID', '=', 'paymentmethods.id')
+        ->join('addresses', 'orders.billingsId', '=', 'addresses.id')
+        ->where('orders.id', $order->id)
+        ->first();
+
+    return view('AllPages.wow', compact('orderData'));
+}
+
 
 
 

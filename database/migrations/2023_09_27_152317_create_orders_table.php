@@ -19,11 +19,13 @@ return new class extends Migration
             $table->id();
             $table->date('OrderDate');
             $table->bigInteger('TotalAmount');
-            $table->boolean('Status');
+            $table->boolean('Status')->nullable();
             $table->unsignedBigInteger('UserID');
             $table->foreign('UserID')->references('id')->on('users');
             $table->unsignedBigInteger('billingsId');
             $table->foreign('billingsId')->references('id')->on('addresses');
+            $table->unsignedBigInteger('PaymentMethodID');
+            $table->foreign('PaymentMethodID')->references('id')->on('paymentmethods');
             $table->timestamps();
         });
 
