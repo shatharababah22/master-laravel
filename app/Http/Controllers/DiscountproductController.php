@@ -435,32 +435,39 @@ public function Confirm(Order $order)
 public function Recycling(Request $request)
 {
     if (auth()->check()) {
-
         $validatedData = $request->validate([
             'types' => 'required',
             'Amount' => 'required|numeric',
             'phone' => 'required',
         ]);
 
-
         $userID = auth()->id();
+        $userType = $validatedData['types'];
 
+        // Check if a record exists for the same user and type
+        $existingRecord = Recycling::where('UserID', $userID)
+            ->where('types', $userType)
+            ->first();
 
-        Recycling::create([
-            'types' => $validatedData['types'],
-            'Amount' => $validatedData['Amount'],
-            'phone' => $validatedData['phone'],
-            'UserID' => $userID, 
-        ]);
-
+        if ($existingRecord) {
+            // If a record exists, update the "Amount"
+            $existingRecord->increment('Amount', $validatedData['Amount']);
+        } else {
+            // If no record exists, create a new record
+            Recycling::create([
+                'types' => $userType,
+                'Amount' => $validatedData['Amount'],
+                'phone' => $validatedData['phone'],
+                'UserID' => $userID,
+            ]);
+        }
 
         return redirect()->route('form_recycling')->with('success', 'Data has been saved successfully');
     } else {
-   
         return redirect()->route('login')->with('message', 'Please log in to insert data.');
     }
-    
 }
+
 
 
  
