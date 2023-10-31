@@ -71,7 +71,7 @@
                                                    
                                                     <form method="POST" action="{{ route('updatecart', isset($item->product) ? $item->product->id : $item['id']) }}">
                                                         @csrf
-                                                        @method('PATCH')
+                                                        @method('PUT')
  
 
 

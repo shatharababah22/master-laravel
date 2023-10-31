@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\Cartitem;
 use App\Models\Orderitem;
 use App\Models\Paymentmethod;
+use App\Models\Recycling;
 use App\Models\Review;
 use App\Models\User;
 use App\Models\Address;
@@ -122,35 +123,44 @@ $products_count = Product::count();
         return view('AllPages.Allproducts', compact('allProductsCollection', 'categories', 'categoryProductCounts'));
     }
     
+    
     public function search(Request $request)
     {
         $perPage = 6;
         $categories = Category::all();
         $query = DB::table('products');
     
+        // Check if the search parameter is present
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            // Add a condition to filter products based on the search term
+            $query->where('Name', 'like', '%' . $search . '%');
+        }
         // Check if a min_price query parameter is present
-        if (isset($request->min_price) && $request->min_price != null) {
-            $minPrice = $request->min_price;
+if (isset($request->min_price) && $request->min_price != null) {
+    $minPrice = $request->min_price;
+
+    // Add a condition to filter products with prices greater than or equal to the minimum price
+    $query->where('Price', '>=', $minPrice);
+}
+
+// Check if a max_price query parameter is present
+if (isset($request->max_price) && $request->max_price != null) {
+    $maxPrice = $request->max_price;
+
+    // Add a condition to filter products with prices less than or equal to the maximum price
+    $query->where('Price', '<=', $maxPrice);
+}
+
     
-            // Add a condition to filter products with prices greater than or equal to the minimum price
-            $query->where('Price', '>=', $minPrice);
-        }
-    
-        // Check if a max_price query parameter is present
-        if (isset($request->max_price) && $request->max_price != null) {
-            $maxPrice = $request->max_price;
-    
-            // Add a condition to filter products with prices less than or equal to the maximum price
-            $query->where('Price', '<=', $maxPrice);
-        }
-    
-        // Your name search query handling (if any)
+        // Handle price range and other filters as you are already doing.
     
         $allProductsCollection = $query->orderBy('id')->paginate($perPage);
         $categoryProductCounts = $query->count();
     
         return view('AllPages.Allproducts', compact('allProductsCollection', 'categories', 'categoryProductCounts'));
     }
+    
     
     
     
@@ -286,6 +296,9 @@ return view('AllPages.checkout', compact('addresses'));
 }
 
 
+
+
+
 public function CheckoutAddress(Request $request) {
     // Retrieve the selected address ID
     $selectedAddressId = $request->input('UserID');
@@ -376,14 +389,24 @@ public function CheckoutAddress(Request $request) {
 }
 
 
+
+
 public function Order(Order $order) {
     $user = auth()->user();
-    // You can access the variables passed in the view
-    $cart = Cartitem::where('UserID', $user->id)->with('product')->get(); // Get the cart variable
+    
+
+    // Retrieve the cart items for the user
+    $cart = Cartitem::where('UserID', $user->id)->get();
+
+   
+
     $lastAddressCity = request('lastAddressCity'); // Get the lastAddressCity variable
 
-    return view('AllPages.order', compact('order', 'cart', 'lastAddressCity'));
+    return view('AllPages.order', compact('order', 'lastAddressCity','cart'));
 }
+
+
+
 
 
 public function Confirm(Order $order)
@@ -393,6 +416,15 @@ public function Confirm(Order $order)
         ->join('addresses', 'orders.billingsId', '=', 'addresses.id')
         ->where('orders.id', $order->id)
         ->first();
+    $user = auth()->user();
+    
+    // Retrieve the cart items for the user
+    $cartItems = Cartitem::where('UserID', $user->id)->get();
+    
+    // Delete the cart items associated with the user
+    $cartItems->each(function ($cartItem) {
+        $cartItem->delete();
+    });
 
     return view('AllPages.wow', compact('orderData'));
 }
@@ -400,16 +432,52 @@ public function Confirm(Order $order)
 
 
 
+public function Recycling(Request $request)
+{
+    if (auth()->check()) {
+
+        $validatedData = $request->validate([
+            'types' => 'required',
+            'Amount' => 'required|numeric',
+            'phone' => 'required',
+        ]);
+
+
+        $userID = auth()->id();
+
+
+        Recycling::create([
+            'types' => $validatedData['types'],
+            'Amount' => $validatedData['Amount'],
+            'phone' => $validatedData['phone'],
+            'UserID' => $userID, 
+        ]);
+
+
+        return redirect()->route('form_recycling')->with('success', 'Data has been saved successfully');
+    } else {
+   
+        return redirect()->route('login')->with('message', 'Please log in to insert data.');
+    }
+    
+}
+
+
+ 
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    
     public function create()
     {
       
     }
+    
 
     /**
      * Store a newly created resource in storage.

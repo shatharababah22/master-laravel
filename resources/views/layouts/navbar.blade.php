@@ -103,21 +103,21 @@
                     </div>
                 </div> --}}
                 <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
-                {{-- @if (Auth::check())
+            @if (Auth::check())
                 @php
-                    $cartCount = \App\Cartitem::where('UserID', Auth::user()->id)->count();
+                    $cartCount =App\Models\Cartitem::where('UserID', Auth::user()->id)->count();
                 @endphp
-            @else
+  @else
                 @php
                     $cart = session('cart');
                     $cartCount = is_array($cart) ? count($cart) : 0;
                 @endphp
-            @endif --}}
-{{--             
+            @endif 
+           
             <a href="{{ route('cart') }}" class="nav-item nav-link">
                 <i class="bi bi-cart" style="font-size: 20px"></i>
                 <span style="font-size: 15px; vertical-align: middle;  color:darkgreen;">({{ $cartCount }})</span>
-            </a> --}}
+            </a> 
             
          
 

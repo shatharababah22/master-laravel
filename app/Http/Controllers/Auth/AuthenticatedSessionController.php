@@ -31,7 +31,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
 
-
         $sessionCart = session('cart');
 
         if($sessionCart != null){
