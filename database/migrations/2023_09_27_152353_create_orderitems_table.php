@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
          
             $table->bigInteger('Quantity');
-            $table->bigInteger('column_3');
+   
             $table->bigInteger('Subtotal');
             $table->unsignedBigInteger('OrderID');
             $table->foreign('OrderID')->references('id')->on('orders');

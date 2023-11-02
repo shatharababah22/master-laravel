@@ -42,12 +42,15 @@ Route::get('/about', function () {
 })->name('about');
 
 
+
+
 // ...............Profile ..................
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::get('/profile_user', [DiscountproductController::class, 'user_address'])->name('profile.general');
 
 
 

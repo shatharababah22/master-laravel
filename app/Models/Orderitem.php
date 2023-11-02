@@ -10,9 +10,11 @@ class Orderitem extends Model
     use HasFactory;
     
     
-    protected $fillable = [
+    protected $fillable = [	
         "Quantity",
              "Subtotal",
+             "OrderID",
+             "ProductID",
            
             
              
