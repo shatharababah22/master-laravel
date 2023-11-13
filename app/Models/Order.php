@@ -22,4 +22,11 @@ class Order extends Model
    ];
 
    public $timestamps = false;
+
+ public function orderItems()
+{
+    return $this->hasMany(Orderitem::class, 'OrderID', 'id');
+}
+
+   
 }

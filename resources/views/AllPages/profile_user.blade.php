@@ -220,7 +220,7 @@
                     </tbody>
                 </table>
               </div>
-              <h4>Order Table</h4>
+              <h4>Recyclings Table</h4>
               <div class="row gutters-sm">
                 <table class="styled-table">
                     <thead>
@@ -233,15 +233,55 @@
                     </thead>
                     <tbody>
 
-                 @foreach($Orders as $order)
-                 <tr class="active-row">
-                    <td>{{$order->OrderDate}}</td>
-                    <td>{{ $order->items_count}}</td>
-                    <td>{{$order->TotalAmount}}</td>
-                    <td>{{$order->PaymentType}}</td>
-                </tr>
-                
-                 @endforeach
+                    
+   
+                      @foreach($Orders ?? [] as $order)
+                      {{-- {{ dd($order->orderItems) }} --}}
+                      <tr class="active-row">
+                          <td class="order-details" data-order-id="{{$order->id}}">{{$order->OrderDate}}</td>
+                          <td>{{ $order->items_count}}</td>
+                          <td>{{$order->TotalAmount}}</td>
+                          <td>{{$order->PaymentType}}</td>
+                      </tr>
+                  
+                      <tr class="order-items-row" id="order-items-{{$order->id}}" style="display: none;">
+                          <td colspan="4">
+                              <table class="styled-table" style="width: 100%">
+                                  <thead>
+                                      <tr>
+                                    
+                                          <th>Image</th>
+                                          <th>Name</th>
+                                          <th>Quantity</th>
+                                          <th>Subtotal</th>
+                                          
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    @foreach($order->orderItems ?? [] as $orderItem)
+                          
+                                    <tr>
+                                      <td>
+                                      
+                                        <img src="{{ asset('images/' . $orderItem->product->image1) }}" alt="Product Image" width="150px" height="120px">
+                                
+                                      </td>
+                                      <td>{{ $orderItem->product->Name }}</td>
+                                      <td>{{ $orderItem->Quantity }}</td>
+                                      <td>{{ $orderItem->Subtotal }}</td>
+                                  </tr>
+                                @endforeach
+                                
+                                  </tbody>
+                              </table>
+                          </td>
+                      </tr>
+                      @endforeach
+                  </tbody>
+                  
+                  
+                  
+                </table>
             
                     </tbody>
                 </table>
@@ -260,30 +300,26 @@
 
 
 
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-
-
     <script>
-      $(document).ready(function () {
-          $('.order-row').on('click', function () {
-              var orderId = $(this).data('order-id');
+      document.addEventListener("DOMContentLoaded", function () {
+          var orderDetails = document.querySelectorAll(".order-details");
   
-              // Assuming you have a route like /getItems/{orderId} to fetch items for a specific order
-              $.ajax({
-                  url: '/getItems/' + orderId,
-                  method: 'GET',
-                  success: function (data) {
-                      // Update the items-container with the fetched items
-                      $('#items-container').html(data);
-                  },
-                  error: function (error) {
-                      console.error('Error fetching items:', error);
+          orderDetails.forEach(function (element) {
+              element.addEventListener("click", function () {
+                  var orderId = this.getAttribute("data-order-id");
+                  var orderItemsRow = document.getElementById("order-items-" + orderId);
+  
+                  // Toggle the visibility of the order items row
+                  if (orderItemsRow.style.display === "none") {
+                      orderItemsRow.style.display = "table-row";
+                  } else {
+                      orderItemsRow.style.display = "none";
                   }
               });
           });
       });
   </script>
+  
+
 
 @endsection
