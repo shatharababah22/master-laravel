@@ -38,7 +38,7 @@ Route::post('contact-us', [ContactController::class, 'store'])->name('contact.us
 
 // ...............About us ..................
 Route::get('/about', function () {
-    return view('AllPages.form');
+    return view('AllPages.about');
 })->name('about');
 
 
@@ -124,6 +124,9 @@ Route::match(['get', 'post'],'/dash/login', [AdminLoginController::class, 'login
 // ...................Recycling_form.................
 Route::match(['get', 'post'],'/recyclings', [DiscountproductController::class, 'Recycling'])->name("form_recycling");
 
+Route::get('/recyclings-page', function () {
+    return view('AllPages.form');
+})->name('form');
 
 
 

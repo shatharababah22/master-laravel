@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use PharIo\Manifest\Url;
 
 class RegisteredUserController extends Controller
 {
@@ -20,6 +22,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
+        \Illuminate\Support\Facades\Redirect::setIntendedUrl(\Illuminate\Support\Facades\URL::previous());
         return view('auth.register');
     }
 
@@ -44,6 +47,7 @@ class RegisteredUserController extends Controller
 
         
 
-        return redirect(RouteServiceProvider::LOGIN);
+          return redirect()->intended(RouteServiceProvider::HOME);
+
     }
 }

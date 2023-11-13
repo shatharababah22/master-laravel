@@ -482,15 +482,45 @@ class DiscountproductController extends Controller
         }
     }
 
+ public function user_address()
+{
+    $addresses = Address::where('UserID', auth()->user()->id)->get();
+    $Recyclings = Recycling::where('UserID', auth()->user()->id)->get();
 
+    $Orders = Order::where('orders.UserID', auth()->user()->id)
+        ->join('paymentmethods', 'orders.PaymentMethodID', '=', 'paymentmethods.id')
+        ->join('orderitems', 'orders.id', '=', 'orderitems.OrderID')
+        ->join('products', 'orderitems.ProductID', '=', 'products.id') // Join the products table
+        ->select(
+            'orders.id',
+            'orders.OrderDate',
+            'orders.TotalAmount',
+            'orderitems.Quantity',
+            'orderitems.Subtotal',
+            'paymentmethods.PaymentType as PaymentType',
+            'products.Name as ProductName',
+            'products.image1 as ProductImage',
+            DB::raw('COUNT(orderitems.id) as items_count')
+        )
+        ->groupBy(
+            'orders.id',
+            'orders.OrderDate',
+            'orders.TotalAmount',
+            'paymentmethods.PaymentType',
+            'orderitems.Quantity',
+            'orderitems.Subtotal',
+            'products.Name',
+            'products.image1',
+            'orderitems.ProductID' // Group by ProductID to avoid duplicates
+        )
+        ->get();
 
-    public function user_address()
-    {
+    return view('AllPages.profile_user', compact('addresses', 'Recyclings', 'Orders'));
+}
 
-        $addresses = Address::where('UserID', auth()->user()->id)->get();
-        $Recyclings = Recycling::where('UserID', auth()->user()->id)->get();
-        return view('AllPages.profile_user', compact('addresses', 'Recyclings'));
-    }
+    
+    
+    
 
 
     /**

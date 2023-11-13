@@ -225,25 +225,29 @@
                 <table class="styled-table">
                     <thead>
                         <tr>
-                            <th>Types</th>
-                            <th>Quantity (In kileo)</th>
-                            <th>Max Quantity (In kileo) <small>To get 30%</small></th>
-                            <th>Max Quantity (In kileo) <small>To get 50%</small></th>
-                            <th>Max Quantity (In kileo) <small>To get 80%</small></th>
+                          <th>Date</th>
+                            <th># items</th>
+                            <th>Total price</th>
+                            <th>Payment method</th>
                         </tr>
                     </thead>
                     <tbody>
-                 @foreach($Recyclings as $item)
+
+                 @foreach($Orders as $order)
                  <tr class="active-row">
-                    <td>{{$item->types}}</td>
-                    <td>{{$item->Amount}}</td>
+                    <td>{{$order->OrderDate}}</td>
+                    <td>{{ $order->items_count}}</td>
+                    <td>{{$order->TotalAmount}}</td>
+                    <td>{{$order->PaymentType}}</td>
                 </tr>
+                
                  @endforeach
-                       
-              
+            
                     </tbody>
                 </table>
               </div>
+
+
 
 
 
@@ -257,9 +261,29 @@
 
 
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
 
-
+    <script>
+      $(document).ready(function () {
+          $('.order-row').on('click', function () {
+              var orderId = $(this).data('order-id');
+  
+              // Assuming you have a route like /getItems/{orderId} to fetch items for a specific order
+              $.ajax({
+                  url: '/getItems/' + orderId,
+                  method: 'GET',
+                  success: function (data) {
+                      // Update the items-container with the fetched items
+                      $('#items-container').html(data);
+                  },
+                  error: function (error) {
+                      console.error('Error fetching items:', error);
+                  }
+              });
+          });
+      });
+  </script>
 
 @endsection

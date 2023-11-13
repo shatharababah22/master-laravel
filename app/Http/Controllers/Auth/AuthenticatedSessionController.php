@@ -18,6 +18,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
+        \Illuminate\Support\Facades\Redirect::setIntendedUrl(\Illuminate\Support\Facades\URL::previous());
         return view('auth.login');
     }
 
@@ -61,6 +62,6 @@ class AuthenticatedSessionController extends Controller
 
 
 
-        return redirect('/');
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 }

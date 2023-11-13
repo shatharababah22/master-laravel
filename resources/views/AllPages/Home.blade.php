@@ -367,8 +367,10 @@
                   
                      
                       <div class="button1 mx-auto">
-                          <button class="btn1 btn-primary mx-auto" style="height: 50px;"><a href="./Profit.html" style="color: white;">Click here</a></button>
-                        </div>
+                        <button class="btn1 btn-primary mx-auto" style="height: 50px;">
+                            <a href="{{ route('form') }}" style="color: white;">Click here</a>
+                        </button>
+                                                </div>
               
           </div>
       </div>

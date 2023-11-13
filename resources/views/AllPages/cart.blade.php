@@ -21,7 +21,6 @@
     </div>
     <!-- Page Header End -->
 
-
     <section class="h-100 h-custom" >
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
@@ -54,7 +53,7 @@
                        
                       
                           <div class="container">
-                            {{-- @if (session()->has('cart') && count(session('cart')) > 0) --}}
+                            @if (session()->has('cart') && count(session('cart')) > 0)
                             {{-- @if (is_object($cart)) --}}
                             @foreach($cart as $item)
                                       <div class="row mb-4 d-flex justify-content-between align-items-center">
@@ -111,7 +110,7 @@
                                       <hr class="my-4">
                                     
                               @endforeach
-                         {{-- @endif --}}
+                         @endif
                 
                           </div>
           
