@@ -143,7 +143,7 @@
                                 
                                 
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                                    <li><a href="{{ route('profile.edit', [Auth::user()]) }}"
+                                    <li><a href="{{ route('profile.general', [Auth::user()]) }}"
                                         class="nav-item ms-3">My profile</a></li>
                                   <li>
                                     <form method="POST" class="dropdown-item" action="{{ route('logout') }}">

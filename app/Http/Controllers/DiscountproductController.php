@@ -9,6 +9,7 @@ use App\Models\Discountproduct;
 use App\Models\Category;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Coupon;
 use App\Models\Cartitem;
 use App\Models\Orderitem;
 use App\Models\Paymentmethod;
@@ -397,7 +398,7 @@ class DiscountproductController extends Controller
             'order' => $order,
             'cart' => $cart,
             'lastAddressCity' => $lastAddressCity,
-            // Add other variables you want to pass here
+
         ]);
     }
 
@@ -484,22 +485,49 @@ class DiscountproductController extends Controller
 
     public function user_address()
     {
+
+
+
         $addresses = Address::where('UserID', auth()->user()->id)->get();
         $Recyclings = Recycling::where('UserID', auth()->user()->id)->get();
-    
-        $Orders = Order::where('orders.UserID', auth()->user()->id)
-        ->join('paymentmethods', 'orders.PaymentMethodID', '=', 'paymentmethods.id')
-        ->join('orderitems', 'orders.id', '=', 'orderitems.OrderID')
-        ->select('orders.id', 'orders.OrderDate', 'orders.TotalAmount', 'paymentmethods.PaymentType as PaymentType', DB::raw('COUNT(orderitems.id) as items_count'))
-        ->groupBy('orders.id', 'orders.OrderDate','orders.TotalAmount', 'paymentmethods.PaymentType')
-        ->get();
-        return view('AllPages.profile_user', compact('addresses', 'Recyclings', 'Orders'));
-    
-    }
 
-    
-    
-    
+        $Orders = Order::where('orders.UserID', auth()->user()->id)
+            ->join('paymentmethods', 'orders.PaymentMethodID', '=', 'paymentmethods.id')
+            ->join('orderitems', 'orders.id', '=', 'orderitems.OrderID')
+            ->select('orders.id', 'orders.OrderDate', 'orders.TotalAmount', 'paymentmethods.PaymentType as PaymentType', DB::raw('COUNT(orderitems.id) as items_count'))
+            ->groupBy('orders.id', 'orders.OrderDate', 'orders.TotalAmount', 'paymentmethods.PaymentType')
+            ->get();
+            $kiloesForTypes = [
+                'organic' => [30, 50, 80], // Define percentages for each type
+                'plastic' => [30, 50, 80],
+                'paper' => [30, 50, 80],
+                'glass' => [30, 50, 80],
+                // Add more types if needed
+            ];
+        
+            $kiloesForRecycling = [];
+        
+            foreach ($kiloesForTypes as $type => $percentages) {
+                foreach ($percentages as $percent) {
+                    $kiloesForRecycling[$type][$percent] = $this->fetchKiloesForRecycling($type, $percent);
+                }
+            }
+        
+            // Now you have an array $kiloesForRecycling containing kiloes for each type and percentage
+        
+            return view('AllPages.profile_user', compact('addresses', 'Recyclings', 'Orders', 'kiloesForRecycling'));
+        }
+        
+        private function fetchKiloesForRecycling($type, $percent)
+        {
+            return Coupon::where('percent', $percent)
+                ->whereHas('recycling', function ($query) use ($type) {
+                    $query->where('types', $type);
+                })
+                ->pluck('Kiloes')
+                ->first() ?? "Default Value for $type $percent%";
+        }
+
 
 
     /**

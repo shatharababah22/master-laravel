@@ -158,6 +158,9 @@
       border-bottom-right-radius: 16px;
       }
       }
+/* SWAl */
+
+
 
 
     
@@ -386,7 +389,9 @@
           });
               </script>
            --}}
-           <script src="https://unpkg.com/sweetalert@2"></script>
+           <link href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+           {{-- <script src="https://unpkg.com/sweetalert@2"></script> --}}
            <script>
             document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('addressSelect').addEventListener('change', function () {
@@ -404,32 +409,43 @@
     const selectedPaymentMethod = document.getElementById('selectedPaymentMethod');
 
     paymentRadios.forEach((radio) => {
-        radio.addEventListener('change', function () {
-            if (radio.checked) {
-                const selectedValue = radio.value;
-                selectedPaymentType.textContent = selectedValue;
-                selectedPaymentMethod.style.display = 'block';
+    radio.addEventListener('change', function () {
+        if (radio.checked) {
+            const selectedValue = radio.value;
+            selectedPaymentType.textContent = selectedValue;
+            selectedPaymentMethod.style.display = 'block';
 
-                // Show SweetAlert confirmation
-                swal({
-                    title: 'Payment Method Confirmation',
-                    text: `You have selected ${selectedValue}. Do you want to proceed?`,
-                    icon: 'info',
-                    buttons: ['Cancel', 'Confirm'],
-                }).then((confirm) => {
-                    if (confirm) {
-                        swal('Payment Confirmed!', 'You can now proceed with your payment.', 'success');
-                    } else {
-                        // User canceled, reset selection
-                        radio.checked = false;
-                        selectedPaymentMethod.style.display = 'none';
-                    }
-                });
-            }
-        });
+            // Show SweetAlert confirmation
+            Swal.fire({
+                title: 'Are you sure?',
+                text: `You have selected ${selectedValue}. Do you want to proceed?`,
+                icon: 'warning',
+                customClass: {
+                    icon: 'custom-warning-icon' // Apply the custom icon class
+                },
+                showCancelButton: true,
+                confirmButtonColor: '#6BA60E',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, proceed!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Confirmed!',
+                        'You can now proceed with your payment.',
+                        'success'
+                    )
+                } else {
+                
+                    radio.checked = false;
+                    selectedPaymentMethod.style.display = 'none';
+                }
+            });
+        }
     });
-        </script>
-        
+});
+
+
+</script>
         
 
 @endsection

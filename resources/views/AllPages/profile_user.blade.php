@@ -175,7 +175,7 @@
                     </div>
                     <div class="col-sm-9 text-secondary">
                        <select id="addressSelect" class="form-select form-select-md w-50" name="UserID">
-                                          <option value="">Select an address</option>
+                                  
                                         
                                           @if(isset($addresses))
                                               @foreach($addresses as $address)
@@ -209,12 +209,54 @@
                         </tr>
                     </thead>
                     <tbody>
-                 @foreach($Recyclings as $item)
-                 <tr class="active-row">
-                    <td>{{$item->types}}</td>
-                    <td>{{$item->Amount}}</td>
-                </tr>
-                 @endforeach
+                      @foreach($Recyclings as $item)
+                @if(in_array($item->types, ['plastic', 'organic', 'paper', 'glass']))
+                    <tr class="active-row">
+                        <td>{{$item->types}}</td>
+                        <td>{{$item->Amount}}</td>
+                        <td>
+                              @if($item->types == 'plastic')
+                                  {{$kiloesForRecycling['plastic'][30]}} <!-- Display kiloes related to plastic for 30% -->
+                              @elseif($item->types == 'organic')
+                                  {{$kiloesForRecycling['organic'][30]}} <!-- Display kiloes related to organic for 30% -->
+                              @elseif($item->types == 'paper')
+                                  {{$kiloesForRecycling['paper'][30]}} <!-- Display kiloes related to paper for 30% -->
+                              @elseif($item->types == 'glass')
+                                  {{$kiloesForRecycling['glass'][30]}} <!-- Display kiloes related to glass for 30% -->
+                              @else
+                                  <!-- Handle other types similarly if you have specific kiloes for them -->
+                              @endif
+                          </td>
+                          <td>
+                              @if($item->types == 'plastic')
+                                  {{$kiloesForRecycling['plastic'][50]}} <!-- Display kiloes related to plastic for 50% -->
+                              @elseif($item->types == 'organic')
+                                  {{$kiloesForRecycling['organic'][50]}} <!-- Display kiloes related to organic for 50% -->
+                              @elseif($item->types == 'paper')
+                                  {{$kiloesForRecycling['paper'][50]}} <!-- Display kiloes related to paper for 50% -->
+                              @elseif($item->types == 'glass')
+                                  {{$kiloesForRecycling['glass'][50]}} <!-- Display kiloes related to glass for 50% -->
+                              @else
+                                  <!-- Handle other types similarly if you have specific kiloes for them -->
+                              @endif
+                          </td>
+                          <td>
+                              @if($item->types == 'plastic')
+                                  {{$kiloesForRecycling['plastic'][80]}} <!-- Display kiloes related to plastic for 80% -->
+                              @elseif($item->types == 'organic')
+                                  {{$kiloesForRecycling['organic'][80]}} <!-- Display kiloes related to organic for 80% -->
+                              @elseif($item->types == 'paper')
+                                  {{$kiloesForRecycling['paper'][80]}} <!-- Display kiloes related to paper for 80% -->
+                              @elseif($item->types == 'glass')
+                                  {{$kiloesForRecycling['glass'][80]}} <!-- Display kiloes related to glass for 80% -->
+                              @else
+                                  <!-- Handle other types similarly if you have specific kiloes for them -->
+                              @endif
+                          </td>
+                      </tr>
+                      @endif
+                  @endforeach
+                  
                        
               
                     </tbody>
