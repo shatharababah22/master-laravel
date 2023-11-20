@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PayPalController;
 
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController;
 use App\Http\Controllers\CartitemController;
@@ -91,7 +92,10 @@ Route::match(['get', 'post'],'/shath', [DiscountproductController::class, 'Check
 Route::get('/orders/{order}', [DiscountproductController::class, 'Order'])->name('orders');
 Route::get('/confirm/{order}', [DiscountproductController::class, 'Confirm'])->name('confirm');
 
-
+Route::get('create-transaction', [PayPalController::class, 'createTransaction'])->name('createTransaction');
+Route::match(['get', 'post'],'process-transaction', [PayPalController::class, 'processTransaction'])->name('processTransaction');
+Route::get('success-transaction', [PayPalController::class, 'successTransaction'])->name('successTransaction');
+Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])->name('cancelTransaction');
 
 
 // .....................admin..........................
