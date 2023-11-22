@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('Image');
             $table->longText('comments');
             $table->string('Major');
-            // $table->unsignedBigInteger('UserID');
-            // $table->foreign('UserID')->references('id')->on('users');
             $table->timestamps();
         });
     }
