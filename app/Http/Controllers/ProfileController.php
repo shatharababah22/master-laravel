@@ -41,34 +41,32 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
-
-
-           // Check if the user uploaded a new image
-           if ($request->hasFile('Image')) {
+    
+        // Check if the user uploaded a new image
+        if ($request->hasFile('Image')) {
             // Validate and store the uploaded image
             $image = $request->file('Image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/'), $imageName);
-
+    
             $user->Image = $imageName;
         }
-
+    
+        // Update phone number
+        // dd($request->input('Phone'));
+        $user->Phone = $request->input('Phone');
+    
         $request->user()->fill($request->validated());
-
-
+    
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-
-
+    
         $request->user()->save();
-
-        // $user->Phone = $request->input('Phone');
-        // $user->Birthday = $request->input('Birthday');
-
-
+    
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
+    
 
     /**
      * Delete the user's account.

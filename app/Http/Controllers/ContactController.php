@@ -33,21 +33,21 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|digits:10|numeric',
-            'subject' => 'required',
-            'message' => 'required'
-        ]);
-  
-        Contact::create($request->all());
-  
-        return view('AllPages.contactus')->with('message_sent','Your message has been sent successfully');
-      
-    }
+  public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email',
+        'phone' => 'required|digits:10|numeric',
+        'subject' => 'required',
+        'message' => 'required'
+    ]);
+
+    Contact::create($request->all());
+
+    return redirect()->route('contact')->with('message_sent', 'Your message has been sent successfully');
+}
+
 
 
     /**

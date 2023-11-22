@@ -40,6 +40,13 @@
             <x-text-input id="name" name="name" type="text" class="form-control text-center border-color-1 rounded-xs " :value="old('name', $user->name)" required autofocus autocomplete="name" style="width: 50%;height:43px;" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
+        
+        <div class="mt-4">
+            <x-input-label for="Phone" :value="__('Phone')" />
+            <x-text-input id="Phone" name="Phone" type="text" class="form-control text-center border-color-1 rounded-xs " :value="old('Phone', $user->Phone)" required autofocus autocomplete="Phone" style="width: 50%;height:43px;" />
+            <x-input-error class="mt-2" :messages="$errors->get('Phone')" />
+        </div>
+    </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />

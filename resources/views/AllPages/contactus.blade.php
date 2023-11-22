@@ -25,16 +25,21 @@
     <!-- Page Header End -->
 
     <div class="volunteer-form">
-        @if (Session::get('message_sent'))
+        @if (Session::has('message_sent'))
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
-                Swal.fire("Message", "{{ Session::get('message_sent') }}", 'success', {
-                    showConfirmButton: true,
-                    confirmButtonText: "OK",
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Message',
+                        text: "{{ Session::get('message_sent') }}",
+                        icon: 'success',
+                        showConfirmButton: true,
+                        confirmButtonText: "OK",
+                    });
                 });
             </script>
-
+        @endif
     </div>
-    @endif
     <!-- Contact Start -->
     <div class="container-xxl py-5">
         <div class="container">
