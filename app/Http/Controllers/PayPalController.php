@@ -87,3 +87,5 @@ class PayPalController extends Controller
             ->with('error', $response['message'] ?? 'You have canceled the transaction.');
     }
 }
+
+
