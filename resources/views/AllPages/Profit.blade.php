@@ -46,6 +46,7 @@
     <!--profit End -->
     
     <div class="container text-center" id="forms">
+        
         <form>
             
         </form>
@@ -95,6 +96,10 @@
                     formsContainer.innerHTML = formHTML;
                 });
             });
+
+            
+
+
             formtext1=  `
                             <h2>Organic Form</h2>
                             <form class="custom-form">
@@ -270,6 +275,32 @@
 
 </script>
 
+
+
+
+{{-- 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Data Saved Successfully',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000 // Adjust the timer as needed
+            });
+        @elseif(session('message'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Required',
+                text: '{{ session('message') }}',
+                showConfirmButton: false,
+                timer: 3000 // Adjust the timer as needed
+            });
+        @endif
+    });
+</script> --}}
+
 <script>
    const locationsJordan = [
   { lat: 31.9515, lng: 35.9235 }, // Amman
@@ -291,7 +322,7 @@ locationsJordan.forEach((location, index) => {
 
 
 
-
+        
 
 
 

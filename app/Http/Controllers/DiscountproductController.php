@@ -479,7 +479,7 @@ class DiscountproductController extends Controller
 
             return redirect()->route('form_recycling')->with('success', 'Data has been saved successfully');
         } else {
-            return redirect()->route('login')->with('message', 'Please log in to insert data.');
+            return redirect()->route('login')->with('message', 'Please log in to insert data');
         }
     }
 

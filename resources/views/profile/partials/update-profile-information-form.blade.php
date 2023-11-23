@@ -30,7 +30,7 @@
                 <div class="form-group mt-3">
                     <label for="Image">{{ __('Upload new image') }}</label>
                     <input id="Image" name="Image" type="file" accept="images/*" class="form-control-file" :value="old('Image', $user->Image)" autocomplete="Image" />
-                    <x-input-error class="mt-2" :messages="$errors->get('Image')" />
+                    {{-- <x-input-error class="mt-2" :messages="$errors->get('Image')" /> --}}
                 </div>
             </div>
             </div>
@@ -38,20 +38,20 @@
         <div class="mt-4">
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="form-control text-center border-color-1 rounded-xs " :value="old('name', $user->name)" required autofocus autocomplete="name" style="width: 50%;height:43px;" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            {{-- <x-input-error class="mt-2" :messages="$errors->get('name')" /> --}}
         </div>
         
         <div class="mt-4">
             <x-input-label for="Phone" :value="__('Phone')" />
             <x-text-input id="Phone" name="Phone" type="text" class="form-control text-center border-color-1 rounded-xs " :value="old('Phone', $user->Phone)" required autofocus autocomplete="Phone" style="width: 50%;height:43px;" />
-            <x-input-error class="mt-2" :messages="$errors->get('Phone')" />
+            {{-- <x-input-error class="mt-2" :messages="$errors->get('Phone')" /> --}}
         </div>
     </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block form-control text-center border-color-1 rounded-xs w-full" :value="old('email', $user->email)" required autocomplete="username" style="width: 50%;height:43px;" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            {{-- <x-input-error class="mt-2" :messages="$errors->get('email')" /> --}}
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
@@ -75,15 +75,35 @@
         <div class="flex items-center gap-4 mt-2">
             <x-primary-button class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block " style="border-radius: 28px">{{ __('Save') }}</x-primary-button>
 
-            @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Saved.') }}</p>
-            @endif
+            
         </div>
     </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            @if(session('status') === 'profile-updated')
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Profile Updated',
+                    text: 'Your profile information has been updated successfully.',
+                    showConfirmButton: false,
+                    timer: 3000 // Adjust the timer as needed
+                });
+            @elseif($errors->any())
+                let errorMessage = '';
+                @foreach ($errors->all() as $error)
+                    errorMessage += '{{ $error }}\n'; // Add line breaks between errors
+                @endforeach
+    
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errorMessage,
+                    showCloseButton: true, // Optionally show a close button
+                });
+            @endif
+        });
+    </script>
+    
+    
+
 </section>

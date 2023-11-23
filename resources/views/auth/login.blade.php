@@ -94,7 +94,7 @@
         <div class="position-relative my-4">
             <x-input-label for="email" :value="__('Email')" class="input-label position-absolute px-2 bg-white z-1" />
             <x-text-input id="email" class="form-control inputbox shadow-none p-3" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            {{-- <x-input-error :messages="$errors->get('email')" class="mt-2" /> --}}
         </div>
 
         <!-- Password -->
@@ -106,7 +106,7 @@
                             name="password"
                             required autocomplete="current-password" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            {{-- <x-input-error :messages="$errors->get('password')" class="mt-2" /> --}}
         </div>
 
      
@@ -163,11 +163,29 @@
 </section>
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if($errors->any())
+            let errorMessage = '';
+            @foreach ($errors->all() as $error)
+                errorMessage += '{{ $error }}<br>'; // Add line breaks between errors
+            @endforeach
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: '<div style="font-weight: bold;">' + errorMessage + '</div>',
+                showCloseButton: true, // Optionally show a close button
+            });
+        @endif
+    });
+</script>
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

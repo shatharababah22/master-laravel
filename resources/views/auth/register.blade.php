@@ -65,7 +65,7 @@
         <div class="fw-medium p-2"><span class="brand fw-bold"><a href="index.html"><img src="./images/3.PNG" width="100px" ></a></div>
         <div class=" sign-container mx-auto">
             <div class="text-center ">
-                <h2 class="brand fs-1 my-4">Sign up for an Account</h2>
+                <h2 class="brand fs-1 my-3">Sign up for an Account</h2>
                 <div class="mb-2 mx-auto signin-border"></div>
                 <div class="d-flex justify-content-center align-items-center mt-3">
                     <div>
@@ -91,47 +91,47 @@
         <!-- Name -->
         <div class="position-relative my-4">
             <x-input-label for="name" :value="__('Name')" class="input-label position-absolute px-2 bg-white z-1"/>
-            <x-text-input id="name"  class="form-control inputbox shadow-none p-2" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <x-text-input id="name"  class="form-control inputbox shadow-none p-3" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            {{-- <x-input-error :messages="$errors->get('name')" class="mt-2" /> --}}
         </div>
 
         {{-- <!-- Email Address -->
         <div class="position-relative my-4">
             <x-input-label for="Image" :value="__('Image')" class="input-label position-absolute px-2 bg-white z-1"/>
-            <x-text-input id="Image"  class="form-control inputbox shadow-none p-2" type="file" name="Image" :value="old('Image')" required autocomplete="username" />
+            <x-text-input id="Image"  class="form-control inputbox shadow-none p-3" type="file" name="Image" :value="old('Image')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('Image')" class="mt-2" />
         </div> --}}
-
+        <div class="position-relative my-4">
+            <x-input-label for="email" :value="__('Email')" class="input-label position-absolute px-2 bg-white z-1"/>
+            <x-text-input id="email"  class="form-control inputbox shadow-none p-3" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            {{-- <x-input-error :messages="$errors->get('email')" class="mt-2" /> --}}
+        </div>
         <!-- Password -->
         <div class="position-relative my-4">
             <x-input-label for="password" :value="__('Password')" class="input-label position-absolute px-2 bg-white z-1"/>
 
-            <x-text-input id="password"  class="form-control inputbox shadow-none p-2"
+            <x-text-input id="password"  class="form-control inputbox shadow-none p-3"
                             type="password"
                             name="password"
                             required autocomplete="new-password" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            {{-- <x-input-error :messages="$errors->get('password')" class="mt-2" /> --}}
         </div>
 
         <!-- Confirm Password -->
         <div class="position-relative my-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="input-label position-absolute px-2 bg-white z-1" />
 
-            <x-text-input id="password_confirmation"  class="form-control inputbox shadow-none p-2"
+            <x-text-input id="password_confirmation"  class="form-control inputbox shadow-none p-3"
                             type="password"
                             name="password_confirmation" required autocomplete="new-password" />
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            {{-- <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" /> --}}
         </div>
 
-        <div class="position-relative my-4">
-            <x-input-label for="email" :value="__('Email')" class="input-label position-absolute px-2 bg-white z-1"/>
-            <x-text-input id="email"  class="form-control inputbox shadow-none p-2" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    
 
-        <div class="d-flex justfiy-start mt-4">
+        <div class="d-flex justfiy-start">
             <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
@@ -174,6 +174,30 @@
 
 
 
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if($errors->any())
+            let errorMessage = '';
+            @foreach ($errors->all() as $error)
+                errorMessage += '{{ $error }}<br>'; // Add line breaks between errors
+            @endforeach
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: '<div style="font-weight: bold;">' + errorMessage + '</div>',
+                showCloseButton: true, // Optionally show a close button
+            });
+        @endif
+    });
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
