@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Discountproduct;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
+
 use App\Models\Category;
 use App\Models\Cart;
 use App\Models\Order;
@@ -294,10 +296,17 @@ class DiscountproductController extends Controller
 
     public function addresess($id)
     {
-
+        $user = auth()->user();
+        $cartCount = Cartitem::where('UserID', $user->id)->count();
+    
+        if ($cartCount === 0) {
+            return redirect()->back()->with('cartEmpty', 'Please add items to your cart before proceeding.');
+        }
+    
         $addresses = Address::where('UserID', auth()->user()->id)->get();
         return view('AllPages.checkout', compact('addresses'));
     }
+    
 
 
 
@@ -308,14 +317,7 @@ class DiscountproductController extends Controller
         // Retrieve the selected address ID
         $selectedAddressId = $request->input('UserID');
 
-        $selectedPaymentMethod = $request->input('PaymentType');
-
-        // Create a new payment method record in the database
-        $paymentMethod = PaymentMethod::create([
-            'PaymentType' => $selectedPaymentMethod,
-            'UserID' => auth()->user()->id,
-        ]);
-
+  
         // Check if the user has selected an existing address
         if ($selectedAddressId) {
             // You can retrieve the selected address from the database using $selectedAddressId and set it as the "last_address" in the session.
@@ -364,44 +366,175 @@ class DiscountproductController extends Controller
             $lastAddressCity = null;
         }
 
-        $user = auth()->user();
-        $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
+        // $user = auth()->user();
+        // $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
 
-        // Calculate the total price as you were doing before
-        $totalprice = 0;
-        $shipment = 2;
-        foreach ($cart as $item) {
-            $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
-            $totalprice += $itemPrice + $shipment;
-        }
+        // // Calculate the total price as you were doing before
+        // $totalprice = 0;
+        // $shipment = 2;
+        // foreach ($cart as $item) {
+        //     $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
+        //     $totalprice += $itemPrice + $shipment;
+        // }
 
         // Create a new order record in the database
-        $order = Order::create([
-            'OrderDate' => now(),
-            'TotalAmount' => $totalprice,
-            'UserID' => $user->id,
-            'billingsId' => $lastAddress->id, // Assuming billingsId is the address ID
-            'PaymentMethodID' => $paymentMethod->id,
-        ]);
+        // $order = Order::create([
+        //     'OrderDate' => now(),
+        //     'TotalAmount' => $totalprice,
+        //     'UserID' => $user->id,
+        //     'billingsId' => $lastAddress->id, // Assuming billingsId is the address ID
+        //     'PaymentMethodID' => $paymentMethod->id,
+        // ]);
 
-        // Insert order items into the "orderitems" table
-        foreach ($cart as $item) {
-            $orderItem = OrderItem::create([
-                'Quantity' => $item->Quantity, // Replace with the correct property name
-                'Subtotal' => $item->Quantity * $item->product->Price, // Calculate subtotal based on product price
-                'OrderID' => $order->id, // Set the order ID for this order item
-                'ProductID' => $item->product->id, // Set the product ID for this order item
-            ]);
-        }
+        // // Insert order items into the "orderitems" table
+        // foreach ($cart as $item) {
+        //     $orderItem = OrderItem::create([
+        //         'Quantity' => $item->Quantity, // Replace with the correct property name
+        //         'Subtotal' => $item->Quantity * $item->product->Price, // Calculate subtotal based on product price
+        //         'OrderID' => $order->id, // Set the order ID for this order item
+        //         'ProductID' => $item->product->id, // Set the product ID for this order item
+        //     ]);
+        // }
 
-        return redirect()->route('orders', [
-            'order' => $order,
-            'cart' => $cart,
-            'lastAddressCity' => $lastAddressCity,
+        return redirect()->back()->with('lastAddressCity', $lastAddressCity)->with('success', 'Please determine the payment method');
 
-        ]);
     }
 
+    public function Paymentmethod(Request $request)
+    {
+        $selectedPaymentMethod = $request->input('PaymentType');
+    
+        $paymentMethod = PaymentMethod::create([
+            'PaymentType' => $selectedPaymentMethod,
+            'UserID' => auth()->user()->id,
+        ]);
+    
+        if ($selectedPaymentMethod == 'Cash') {
+            $lastAddress = $request->session()->get('last_address');
+    
+            $lastAddressCity = $lastAddress ? $lastAddress->city : null;
+    
+            $user = auth()->user();
+            $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
+    
+            $totalprice = 0;
+            $shipment = 2;
+    
+            foreach ($cart as $item) {
+                $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
+                $totalprice += $itemPrice;
+            }
+    
+            // Adding shipment cost once per order
+            $totalprice += $shipment * count($cart);
+    
+            $order = Order::create([
+                'OrderDate' => now(),
+                'TotalAmount' => $totalprice,
+                'UserID' => $user->id,
+                'billingsId' => $lastAddress->id ?? null, // Assuming billingsId is the address ID
+                'PaymentMethodID' => $paymentMethod->id,
+            ]);
+    
+            foreach ($cart as $item) {
+                $orderItem = OrderItem::create([
+                    'Quantity' => $item->Quantity, // Replace with the correct property name
+                    'Subtotal' => $item->Quantity * $item->product->Price, // Calculate subtotal based on product price
+                    'OrderID' => $order->id,
+                    'ProductID' => $item->product->id,
+                ]);
+            }
+
+            return redirect()->route('orders', [
+                'order' => $order,
+                'cart' => $cart,
+                'lastAddressCity' => $lastAddressCity,
+    
+            ]);
+        } else {
+
+            $lastAddress = $request->session()->get('last_address');
+    
+            $lastAddressCity = $lastAddress ? $lastAddress->city : null;
+    
+            $user = auth()->user();
+            $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
+    
+            $totalprice = 0;
+            $shipment = 2;
+    
+            foreach ($cart as $item) {
+                $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
+                $totalprice += $itemPrice;
+            }
+    
+            // Adding shipment cost once per order
+            $totalprice += $shipment * count($cart);
+    
+            $order = Order::create([
+                'OrderDate' => now(),
+                'TotalAmount' => $totalprice,
+                'UserID' => $user->id,
+                'billingsId' => $lastAddress->id ?? null, // Assuming billingsId is the address ID
+                'PaymentMethodID' => $paymentMethod->id,
+            ]);
+    
+            foreach ($cart as $item) {
+                $orderItem = OrderItem::create([
+                    'Quantity' => $item->Quantity, // Replace with the correct property name
+                    'Subtotal' => $item->Quantity * $item->product->Price, // Calculate subtotal based on product price
+                    'OrderID' => $order->id,
+                    'ProductID' => $item->product->id,
+                ]);
+            }
+            $provider = new PayPalClient;
+            $provider->setApiCredentials(config('paypal'));
+            $paypalToken = $provider->getAccessToken();
+    
+            $response = $provider->createOrder([
+                "intent" => "CAPTURE",
+                "application_context" => [
+                    "return_url" => route('successTransaction'),
+                    "cancel_url" => route('cancelTransaction'),
+                ],
+                "purchase_units" => [
+                    0 => [
+                        "amount" => [
+                            "currency_code" => "USD", // Use the appropriate currency code
+                            "value" => "1000.00" // Set the correct value for the transaction
+                        ]
+                    ]
+                ]
+            ]);
+    
+            if (isset($response['id']) && $response['id'] != null) {
+                foreach ($response['links'] as $links) {
+                    if ($links['rel'] == 'approve') {
+                        return redirect()->away($links['href']);
+                    }
+                }
+                   return redirect()->route('orders', [
+                'order' => $order,
+                'cart' => $cart,
+                'lastAddressCity' => $lastAddressCity,
+    
+            ])->with('error', 'Something went wrong.');
+            } else {
+                   return redirect()->route('orders', [
+                'order' => $order,
+                'cart' => $cart,
+                'lastAddressCity' => $lastAddressCity,
+    
+            ])->with('error', $response['message'] ?? 'Something went wrong.');
+            }
+       
+        
+        }
+       
+
+        // return view('AllPages.order', compact('order', 'lastAddressCity', 'cart'));
+    }
+    
 
 
 

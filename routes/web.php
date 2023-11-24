@@ -42,6 +42,10 @@ Route::get('/about', function () {
     return view('AllPages.about');
 })->name('about');
 
+Route::get('/success_paypal', function () {
+    return view('AllPages.popop');
+})->name('popop');
+
 
 
 
@@ -89,11 +93,13 @@ Route::delete('/deletecart/{id}', [CartitemController::class, 'destroy'])->name(
 // ....................checkout.....................
 Route::get('/adresses/{iduser}', [DiscountproductController::class, 'addresess'])->name('adresess_user');
 Route::match(['get', 'post'],'/shath', [DiscountproductController::class, 'CheckoutAddress'])->name('checkout_address');
+Route::match(['get', 'post'],'/Payment1', [DiscountproductController::class, 'Paymentmethod'])->name('Paymentmethod');
+
 Route::get('/orders/{order}', [DiscountproductController::class, 'Order'])->name('orders');
 Route::get('/confirm/{order}', [DiscountproductController::class, 'Confirm'])->name('confirm');
 
-Route::get('create-transaction', [PayPalController::class, 'createTransaction'])->name('createTransaction');
-Route::match(['get', 'post'],'process-transaction', [PayPalController::class, 'processTransaction'])->name('processTransaction');
+// Route::get('create-transaction', [PayPalController::class, 'createTransaction'])->name('createTransaction');
+// Route::match(['get', 'post'],'process-transaction', [PayPalController::class, 'processTransaction'])->name('processTransaction');
 Route::get('success-transaction', [PayPalController::class, 'successTransaction'])->name('successTransaction');
 Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])->name('cancelTransaction');
 

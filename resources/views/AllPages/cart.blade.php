@@ -53,7 +53,7 @@
                        
                       
                           <div class="container">
-                            @if (session()->has('cart') && count(session('cart')) > 0)
+                            {{-- @if (session()->has('cart') && count(session('cart')) > 0) --}}
                             {{-- @if (is_object($cart)) --}}
                             @foreach($cart as $item)
                                       <div class="row mb-4 d-flex justify-content-between align-items-center">
@@ -110,11 +110,27 @@
                                       <hr class="my-4">
                                     
                               @endforeach
-                         @endif
+                         {{-- @endif --}}
                 
                           </div>
           
-                      
+                 
+    <div class="volunteer-form">
+        @if (Session::has('cartEmpty'))
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Message',
+                        text: "{{ Session::get('cartEmpty') }}",
+                        icon: 'warning',
+                        showConfirmButton: true,
+                        confirmButtonText: "OK",
+                    });
+                });
+            </script>
+        @endif
+    </div>     
       
                    
       

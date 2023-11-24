@@ -209,7 +209,25 @@
                     
                         <div class="col-xl-6">
                           <div class="card-body p-md-5 text-black">
-                            <form method="POST" action="{{ route('checkout_address') }}">
+
+                            
+    <div class="volunteer-form">
+      @if (Session::has('success'))
+          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                  Swal.fire({
+                      title: 'Message',
+                      text: "{{ Session::get('success') }}",
+                      icon: 'success',
+                      showConfirmButton: true,
+                      confirmButtonText: "OK",
+                  });
+              });
+          </script>
+      @endif
+  </div>
+                            <form id="deliveryForm" method="POST" action="{{ route('checkout_address') }}">
                               @csrf
                               <div class="row mb-2">
                                   <h3 class="mb-4 text-uppercase col-md-6">Delivery Info</h3>
@@ -249,33 +267,52 @@
                               <div class="form-outline mb-4">
                                   <input type="tel" id="phone" class="form-control form-control-lg" name="mobile" placeholder="Phone number" />
                               </div>
-                              <div class="col-md-12 mb-4">
-                                <span class="me-2" style="display: inline-block;">Payment method</span>
-                                <div class="icons" style="display: inline-block;">
-                                    <label>
-                                        <input type="radio" name="PaymentType" value="Card">
-                                        <img src="{{ asset('images/card.png') }}" width="40">
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="PaymentType" value="Cash">
-                                        <img src="{{ asset('images/payment-method.png') }}" width="40">
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="PaymentType" value="Visa">
-                                        <img src="{{ asset('images/visa.png') }}" width="40">
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="PaymentType" value="Paypal">
-                                        <img src="{{ asset('images/paypal (1).png') }}" width="40">
-                                    </label>
-                                </div>
-                                <span id="selectedPaymentMethod" style="display: none;">You selected: <span id="selectedPaymentType"></span></span>
-                            </div>
                               <div class="d-flex justify-content-end">
-                                  <button type="submit" class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block">Next <i class="fa fa-arrow-right ms-3"></i></button>
+                                <button type="submit" id="showPaymentModalBtn" class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block">Next <i class="fa fa-arrow-right ms-3"></i></button>
+                            </div>
+
+                            </form>
+                            <div class="modal" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <form id="paymentForm" method="POST" action="{{ route('Paymentmethod') }}">
+                                    <div class="modal-header">
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      @csrf
+                                      <div class="col-md-12 mb-4">
+                                        <span class="me-2" style="display: inline-block; font-weight: bold; font-style: italic; font-family: 'Arial', sans-serif;">Payment method</span>                                          <div class="icons" style="display: inline-block;">
+                                          
+                                              <label><a class="btn btn-primary" style="width: 150px">
+                                                  <input type="radio" name="PaymentType" value="Cash" onclick="updateSelectedPaymentType(this.value)">
+                                                  <img src="{{ asset('images/payment-method.png') }}" width="40"></a>
+                                              </label>
+                                           
+                                             
+                                              <label><a class="btn btn-primary"  style="width: 150px">
+                                                  <input type="radio" name="PaymentType" value="Paypal" onclick="updateSelectedPaymentType(this.value)">
+                                                  <img src="{{ asset('images/pay.png') }}" width="40">
+                                              </label></a>
+                                          </div>
+                                        </br>
+                                          <span id="selectedPaymentMethod" class="mt-2">You selected: <span id="selectedPaymentType"></span></span>
+                                          <input type="hidden" name="selectedPaymentType" id="hiddenSelectedPaymentType">
+                                      </div>
+                                                                     </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                  </form>
+                                </div>
                               </div>
+                            </div>
+                          
+                     
+                           
                               
-                          </form>
+                     
                           
                           </div>
                         </div>
@@ -402,47 +439,76 @@
                     document.getElementById('email').value = selectedOption.dataset.email;
                     document.getElementById('phone').value = selectedOption.dataset.mobile;
                 });
-            });
 
-            const paymentRadios = document.querySelectorAll('input[name="PaymentType"]');
-    const selectedPaymentType = document.getElementById('selectedPaymentType');
-    const selectedPaymentMethod = document.getElementById('selectedPaymentMethod');
+                //     });
+// });
 
-    paymentRadios.forEach((radio) => {
-    radio.addEventListener('change', function () {
-        if (radio.checked) {
-            const selectedValue = radio.value;
-            selectedPaymentType.textContent = selectedValue;
-            selectedPaymentMethod.style.display = 'block';
+const deliveryForm = document.getElementById('deliveryForm');
+    const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
 
-            // Show SweetAlert confirmation
-            Swal.fire({
-                title: 'Are you sure?',
-                text: `You have selected ${selectedValue}. Do you want to proceed?`,
-                icon: 'warning',
-                customClass: {
-                    icon: 'custom-warning-icon' // Apply the custom icon class
-                },
-                showCancelButton: true,
-                confirmButtonColor: '#6BA60E',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, proceed!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Confirmed!',
-                        'You can now proceed with your payment.',
-                        'success'
-                    )
-                } else {
-                
-                    radio.checked = false;
-                    selectedPaymentMethod.style.display = 'none';
-                }
-            });
-        }
+    // Handle the submission of the first form
+    deliveryForm.addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Perform any form validation here if needed
+
+      // Show the modal after the first form is submitted
+      paymentModal.show();
     });
-});
+
+    // Optional: You might want to handle the hiding of the modal after the second form submission
+    const paymentForm = document.getElementById('paymentForm');
+    paymentForm.addEventListener('submit', function () {
+      // Perform any additional actions after the second form is submitted
+
+      // Hide the modal
+      paymentModal.hide();
+    });
+    
+            });
+     
+                              function updateSelectedPaymentType(value) {
+                                  document.getElementById('selectedPaymentType').innerText = value;
+                                  document.getElementById('hiddenSelectedPaymentType').value = value;
+                              }
+                      
+//             const paymentRadios = document.querySelectorAll('input[name="PaymentType"]');
+//     const selectedPaymentType = document.getElementById('selectedPaymentType');
+//     const selectedPaymentMethod = document.getElementById('selectedPaymentMethod');
+
+//     paymentRadios.forEach((radio) => {
+//     radio.addEventListener('change', function () {
+//         if (radio.checked) {
+//             const selectedValue = radio.value;
+//             selectedPaymentType.textContent = selectedValue;
+//             selectedPaymentMethod.style.display = 'block';
+
+//             // Show SweetAlert confirmation
+//             Swal.fire({
+//                 title: 'Are you sure?',
+//                 text: `You have selected ${selectedValue}. Do you want to proceed?`,
+//                 icon: 'warning',
+//                 customClass: {
+//                     icon: 'custom-warning-icon' // Apply the custom icon class
+//                 },
+//                 showCancelButton: true,
+//                 confirmButtonColor: '#6BA60E',
+//                 cancelButtonColor: '#d33',
+//                 confirmButtonText: 'Yes, proceed!'
+//             }).then((result) => {
+//                 if (result.isConfirmed) {
+//                     Swal.fire(
+//                         'Confirmed!',
+//                         'You can now proceed with your payment.',
+//                         'success'
+//                     )
+//                 } else {
+                
+//                     radio.checked = false;
+//                     selectedPaymentMethod.style.display = 'none';
+//                 }
+//             });
+//         }
 
 
 </script>
