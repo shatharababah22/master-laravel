@@ -8,7 +8,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\GoogleController;
+
 
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminController;
@@ -19,7 +19,7 @@ use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController;
 use App\Http\Controllers\CartitemController;
 use App\Http\Controllers\DiscountproductController;
-
+use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Route;
 
 
