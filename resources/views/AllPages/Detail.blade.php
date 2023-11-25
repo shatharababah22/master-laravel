@@ -206,13 +206,34 @@
                               <i class="fas fa-star" data-rating="4" id="star-4"></i>
                               <i class="fas fa-star" data-rating="5" id="star-5"></i>
                           </div>
-                          <input type="hidden" name="Rating" id="rating-input" value="0">
-                          
+                          {{-- <input type="hidden" name="Rating" value='{{ old('Rating') }}' id="rating-input" value="0"> --}}
+                          <input type="hidden" name="Rating" id="rating-input" value="{{ old('Rating', '0') }}">
+
                           
                         </div>
                         
                           
                         </div>
+
+                        <div class="volunteer-form">
+                          @if (Session::has('success'))
+                              <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                              <script>
+                                  document.addEventListener('DOMContentLoaded', function () {
+                                      Swal.fire({
+                                          title: 'Message',
+                                          text: "{{ Session::get('success') }}",
+                                          icon: 'success',
+                                          showConfirmButton: true,
+                                          confirmButtonText: "OK",
+                                      });
+                                  });
+                              </script>
+                          @endif
+                      </div>
+
+                   
+                    
                         {{-- <div class="d-flex align-items-center">
                           <ul class="rating mb-3 d-flex list-unstyled">
                               <!-- Add input field for rating -->
@@ -220,11 +241,17 @@
                           </ul>
                       </div> --}}
                         {{-- <label for="comments" class="mt-2">Message</label> --}}
-                        <textarea name="comments" id="comments" cols="30" rows="5" class="form-control mt-2" value='{{ old('comments') }}' placeholder="Your comment" required></textarea>
+                        <textarea name="comments" id="comments" cols="30" rows="5" class="form-control mt-2" placeholder="Your comment" required>{{ old('comments') }}</textarea>
+
+                        {{-- <textarea name="comments"  id="comments" cols="30" rows="5" class="form-control mt-2" value='{{ old('comments') }}' placeholder="Your comment" required></textarea> --}}
                       </div>
-                    <div class="form-group">
-                        <p class="text-secondary mt-2">If you have a <a href="#" class="alert-link">gravatar account</a> your address will be used to display your profile picture.</p>
-                    </div>
+                      @if(auth()->check())
+                  
+                      @else
+                      <div class="form-group">
+                        <p class="text-secondary mt-2"><a href="{{ route('login') }}" class="alert-link">Please log in before leaving a comment.</a></p>
+                    </div>                  @endif
+
                     <div id="post1">
                         <button type="submit" class="btn btn-primary py-sm-3 px-sm-4 mt-2">Submit</button>
                     </div>

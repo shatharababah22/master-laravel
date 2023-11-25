@@ -311,94 +311,64 @@ class DiscountproductController extends Controller
 
 
 
+public function CheckoutAddress(Request $request)
+{
+    // Retrieve the selected address ID
+    $selectedAddressId = $request->input('UserID');
 
-    public function CheckoutAddress(Request $request)
-    {
-        // Retrieve the selected address ID
-        $selectedAddressId = $request->input('UserID');
+    // Check if the user has selected an existing address
+    if ($selectedAddressId) {
+        // Retrieve the selected address from the database using $selectedAddressId
+        $selectedAddress = Address::find($selectedAddressId);
 
-  
-        // Check if the user has selected an existing address
-        if ($selectedAddressId) {
-            // You can retrieve the selected address from the database using $selectedAddressId and set it as the "last_address" in the session.
-            $selectedAddress = Address::find($selectedAddressId);
+        if ($selectedAddress) {
+            $request->session()->put('last_address', $selectedAddress);
+        }
+    } else {
+        // If a new address is provided, validate and store it
+        $validatedData = $request->validate([
+            'city' => 'required',
+            'street' => 'required',
+            'address1' => 'required',
+            'email' => 'required|email',
+            'mobile' => 'required',
+        ]);
 
-            if ($selectedAddress) {
-                $request->session()->put('last_address', $selectedAddress);
-            }
-        } else {
-            // If a new address is provided, check if it already exists in the database
-            $input = $request->all();
-            $existingAddress = Address::where([
+        $existingAddress = Address::where([
+            'UserID' => auth()->user()->id,
+            'email' => $validatedData['email'],
+            'mobile' => $validatedData['mobile'],
+            'street' => $validatedData['street'],
+            'city' => $validatedData['city'],
+            'address1' => $validatedData['address1'],
+        ])->first();
+
+        if (!$existingAddress) {
+            // Create and store the new address
+            $newAddress = Address::create([
                 'UserID' => auth()->user()->id,
-                'email' => $input['email'],
-                'mobile' => $input['mobile'],
-                'street' => $input['street'],
-                'city' => $input['city'],
-                'address1' => $input['address1'],
-            ])->first();
+                'email' => $validatedData['email'],
+                'mobile' => $validatedData['mobile'],
+                'street' => $validatedData['street'],
+                'city' => $validatedData['city'],
+                'address1' => $validatedData['address1'],
+            ]);
 
-            // If the address doesn't exist, create and store it
-            if (!$existingAddress) {
-                $newAddress = Address::create([
-                    'UserID' => auth()->user()->id,
-                    'email' => $input['email'],
-                    'mobile' => $input['mobile'],
-                    'street' => $input['street'],
-                    'city' => $input['city'],
-                    'address1' => $input['address1'],
-                ]);
-
-                // Store the address information in the session
-                $request->session()->put('last_address', $newAddress);
-            } else {
-                // Address already exists, use the existing address
-                $request->session()->put('last_address', $existingAddress);
-            }
-        }
-
-        $lastAddress = $request->session()->get('last_address');
-
-        // Check if the last address is available
-        if ($lastAddress) {
-            $lastAddressCity = $lastAddress->city;
+            $request->session()->put('last_address', $newAddress);
         } else {
-            $lastAddressCity = null;
+            // Address already exists, use the existing address
+            $request->session()->put('last_address', $existingAddress);
         }
-
-        // $user = auth()->user();
-        // $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
-
-        // // Calculate the total price as you were doing before
-        // $totalprice = 0;
-        // $shipment = 2;
-        // foreach ($cart as $item) {
-        //     $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
-        //     $totalprice += $itemPrice + $shipment;
-        // }
-
-        // Create a new order record in the database
-        // $order = Order::create([
-        //     'OrderDate' => now(),
-        //     'TotalAmount' => $totalprice,
-        //     'UserID' => $user->id,
-        //     'billingsId' => $lastAddress->id, // Assuming billingsId is the address ID
-        //     'PaymentMethodID' => $paymentMethod->id,
-        // ]);
-
-        // // Insert order items into the "orderitems" table
-        // foreach ($cart as $item) {
-        //     $orderItem = OrderItem::create([
-        //         'Quantity' => $item->Quantity, // Replace with the correct property name
-        //         'Subtotal' => $item->Quantity * $item->product->Price, // Calculate subtotal based on product price
-        //         'OrderID' => $order->id, // Set the order ID for this order item
-        //         'ProductID' => $item->product->id, // Set the product ID for this order item
-        //     ]);
-        // }
-
-        return redirect()->back()->with('lastAddressCity', $lastAddressCity)->with('success', 'Please determine the payment method');
-
     }
+
+    $lastAddress = $request->session()->get('last_address');
+    $lastAddressCity = $lastAddress ? $lastAddress->city : null;
+
+    // Redirect back and provide the last address city
+    return redirect()->route('paymentmethodmain')->with('lastAddressCity', $lastAddressCity)->with('success', 'Please determine the payment method');
+}
+
+
 
     public function Paymentmethod(Request $request)
     {

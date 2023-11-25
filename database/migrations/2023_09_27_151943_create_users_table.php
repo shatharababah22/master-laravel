@@ -24,8 +24,8 @@ return new class extends Migration
       
             $table->id();
             $table->string('name');
-         
-            $table->string('password');
+            $table->string('google_id')->nullable();
+            $table->string('password')->nullable();
             $table->string('Firstname')->nullable();
             $table->string('Lastname')->nullable();
             $table->bigInteger('Phone')->nullable();

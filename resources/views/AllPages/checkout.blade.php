@@ -272,42 +272,7 @@
                             </div>
 
                             </form>
-                            <div class="modal" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-                                  <form id="paymentForm" method="POST" action="{{ route('Paymentmethod') }}">
-                                    <div class="modal-header">
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      @csrf
-                                      <div class="col-md-12 mb-4">
-                                        <span class="me-2" style="display: inline-block; font-weight: bold; font-style: italic; font-family: 'Arial', sans-serif;">Payment method</span>                                          <div class="icons" style="display: inline-block;">
-                                          
-                                              <label><a class="btn btn-primary" style="width: 150px">
-                                                  <input type="radio" name="PaymentType" value="Cash" onclick="updateSelectedPaymentType(this.value)">
-                                                  <img src="{{ asset('images/payment-method.png') }}" width="40"></a>
-                                              </label>
-                                           
-                                             
-                                              <label><a class="btn btn-primary"  style="width: 150px">
-                                                  <input type="radio" name="PaymentType" value="Paypal" onclick="updateSelectedPaymentType(this.value)">
-                                                  <img src="{{ asset('images/pay.png') }}" width="40">
-                                              </label></a>
-                                          </div>
-                                        </br>
-                                          <span id="selectedPaymentMethod" class="mt-2">You selected: <span id="selectedPaymentType"></span></span>
-                                          <input type="hidden" name="selectedPaymentType" id="hiddenSelectedPaymentType">
-                                      </div>
-                                                                     </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                  </form>
-                                </div>
-                              </div>
-                            </div>
+                           
                           
                      
                            
@@ -429,86 +394,47 @@
            <link href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
            {{-- <script src="https://unpkg.com/sweetalert@2"></script> --}}
-           <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                document.getElementById('addressSelect').addEventListener('change', function () {
-                    const selectedOption = this.options[this.selectedIndex];
-                    document.getElementById('city').value = selectedOption.dataset.city;
-                    document.getElementById('street').value = selectedOption.dataset.street;
-                    document.getElementById('address1').value = selectedOption.dataset.address;
-                    document.getElementById('email').value = selectedOption.dataset.email;
-                    document.getElementById('phone').value = selectedOption.dataset.mobile;
-                });
+      <script>
 
-                //     });
-// });
 
-const deliveryForm = document.getElementById('deliveryForm');
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('addressSelect').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        document.getElementById('city').value = selectedOption.dataset.city;
+        document.getElementById('street').value = selectedOption.dataset.street;
+        document.getElementById('address1').value = selectedOption.dataset.address;
+        document.getElementById('email').value = selectedOption.dataset.email;
+        document.getElementById('phone').value = selectedOption.dataset.mobile;
+    });
+
+    const deliveryForm = document.getElementById('deliveryForm');
     const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
 
     // Handle the submission of the first form
     deliveryForm.addEventListener('submit', function (event) {
-      event.preventDefault(); // Prevent the default form submission
+        event.preventDefault(); // Prevent the default form submission
 
-      // Perform any form validation here if needed
+        // Perform any form validation here if needed
 
-      // Show the modal after the first form is submitted
-      paymentModal.show();
+        // Show the modal after the first form is submitted
+        paymentModal.show();
     });
 
     // Optional: You might want to handle the hiding of the modal after the second form submission
     const paymentForm = document.getElementById('paymentForm');
     paymentForm.addEventListener('submit', function () {
-      // Perform any additional actions after the second form is submitted
+        // Perform any additional actions after the second form is submitted
 
-      // Hide the modal
-      paymentModal.hide();
+        // Hide the modal
+        paymentModal.hide();
     });
-    
-            });
-     
-                              function updateSelectedPaymentType(value) {
-                                  document.getElementById('selectedPaymentType').innerText = value;
-                                  document.getElementById('hiddenSelectedPaymentType').value = value;
-                              }
-                      
-//             const paymentRadios = document.querySelectorAll('input[name="PaymentType"]');
-//     const selectedPaymentType = document.getElementById('selectedPaymentType');
-//     const selectedPaymentMethod = document.getElementById('selectedPaymentMethod');
 
-//     paymentRadios.forEach((radio) => {
-//     radio.addEventListener('change', function () {
-//         if (radio.checked) {
-//             const selectedValue = radio.value;
-//             selectedPaymentType.textContent = selectedValue;
-//             selectedPaymentMethod.style.display = 'block';
+    function updateSelectedPaymentType(value) {
+        document.getElementById('selectedPaymentType').innerText = value;
+        document.getElementById('hiddenSelectedPaymentType').value = value;
+    }
+});
 
-//             // Show SweetAlert confirmation
-//             Swal.fire({
-//                 title: 'Are you sure?',
-//                 text: `You have selected ${selectedValue}. Do you want to proceed?`,
-//                 icon: 'warning',
-//                 customClass: {
-//                     icon: 'custom-warning-icon' // Apply the custom icon class
-//                 },
-//                 showCancelButton: true,
-//                 confirmButtonColor: '#6BA60E',
-//                 cancelButtonColor: '#d33',
-//                 confirmButtonText: 'Yes, proceed!'
-//             }).then((result) => {
-//                 if (result.isConfirmed) {
-//                     Swal.fire(
-//                         'Confirmed!',
-//                         'You can now proceed with your payment.',
-//                         'success'
-//                     )
-//                 } else {
-                
-//                     radio.checked = false;
-//                     selectedPaymentMethod.style.display = 'none';
-//                 }
-//             });
-//         }
 
 
 </script>

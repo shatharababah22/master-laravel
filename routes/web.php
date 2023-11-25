@@ -8,6 +8,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GoogleController;
+
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TestimonialController;
@@ -47,7 +49,9 @@ Route::get('/success_paypal', function () {
 })->name('popop');
 
 
-
+Route::get('/paymentmethod', function () {
+    return view('AllPages.payment_method');
+})->name('paymentmethodmain');
 
 // ...............Profile ..................
 Route::middleware('auth')->group(function () {
@@ -142,7 +146,8 @@ Route::get('/recyclings-page', function () {
 
 
 
-
+Route::get('auth/google',[GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback',[GoogleController::class, 'handleGoogleCallback']);
 
 
 
