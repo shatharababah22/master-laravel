@@ -78,7 +78,7 @@
                         <a class="btn btn-square btn-5x rounded-circle me-2" style="width: 3rem; height: 3rem; border-color: rgb(236, 223, 125);" href=""><i class="fab fa-linkedin-in fa-2x" style="color: rgb(236, 223, 125)"></i></a>
                     </div>
                     <div>
-                        <a class="btn btn-square rounded-circle me-2" style="width: 3rem; height: 3rem; border-color: rgb(236, 223, 125);" href=""><i class="fab fa-google fa-2x" style="color:rgb(236, 223, 125)"></i></a>
+                        <a href="{{ route('auth.google') }}" class="btn btn-square rounded-circle me-2" style="width: 3rem; height: 3rem; border-color: rgb(236, 223, 125);" href=""><i class="fab fa-google fa-2x" style="color:rgb(236, 223, 125)"></i></a>
                     </div>
                 </div>
                 <div class="pt-4">
@@ -135,6 +135,12 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
+
+        {{-- <div class="flex items-center justify-end mt-4 align-middle ">
+            <a href="{{ route('auth.google') }}">
+                <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" style="margin-left: 3em;">
+            </a>
+        </div> --}}
     </form>
                 
             </div>

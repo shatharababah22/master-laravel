@@ -17,7 +17,7 @@ use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController;
 use App\Http\Controllers\CartitemController;
 use App\Http\Controllers\DiscountproductController;
-
+use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -141,13 +141,8 @@ Route::get('/recyclings-page', function () {
 
 
 
-
-
-
-
-
-
-
+Route::get('auth/google',[GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback',[GoogleController::class, 'handleGoogleCallback']);
 
 
 
