@@ -8,8 +8,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
-
-
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TestimonialController;
@@ -44,9 +42,9 @@ Route::get('/about', function () {
     return view('AllPages.about');
 })->name('about');
 
-Route::get('/success_paypal', function () {
-    return view('AllPages.popop');
-})->name('popop');
+// Route::get('/success_paypal', function () {
+//     return view('AllPages.popop');
+// })->name('popop');
 
 
 Route::get('/paymentmethod', function () {
@@ -97,7 +95,11 @@ Route::delete('/deletecart/{id}', [CartitemController::class, 'destroy'])->name(
 // ....................checkout.....................
 Route::get('/adresses/{iduser}', [DiscountproductController::class, 'addresess'])->name('adresess_user');
 Route::match(['get', 'post'],'/shath', [DiscountproductController::class, 'CheckoutAddress'])->name('checkout_address');
-Route::match(['get', 'post'],'/Payment1', [DiscountproductController::class, 'Paymentmethod'])->name('Paymentmethod');
+Route::match(['get', 'post'],'/Payment_Cash', [DiscountproductController::class, 'Paymentmethod'])->name('Paymentmethod');
+
+
+Route::match(['get', 'post'],'/Payment_paypal', [DiscountproductController::class, 'Paymentmethod_paypal'])->name('Paymentmethod_paypal');
+
 
 Route::get('/orders/{order}', [DiscountproductController::class, 'Order'])->name('orders');
 Route::get('/confirm/{order}', [DiscountproductController::class, 'Confirm'])->name('confirm');

@@ -372,14 +372,14 @@ public function CheckoutAddress(Request $request)
 
     public function Paymentmethod(Request $request)
     {
-        $selectedPaymentMethod = $request->input('PaymentType');
+        // $selectedPaymentMethod = $request->input('PaymentType');
     
         $paymentMethod = PaymentMethod::create([
-            'PaymentType' => $selectedPaymentMethod,
+            'PaymentType' => 'Cash',
             'UserID' => auth()->user()->id,
         ]);
     
-        if ($selectedPaymentMethod == 'Cash') {
+     
             $lastAddress = $request->session()->get('last_address');
     
             $lastAddressCity = $lastAddress ? $lastAddress->city : null;
@@ -421,85 +421,7 @@ public function CheckoutAddress(Request $request)
                 'lastAddressCity' => $lastAddressCity,
     
             ]);
-        } else {
-
-            $lastAddress = $request->session()->get('last_address');
-    
-            $lastAddressCity = $lastAddress ? $lastAddress->city : null;
-    
-            $user = auth()->user();
-            $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
-    
-            $totalprice = 0;
-            $shipment = 2;
-    
-            foreach ($cart as $item) {
-                $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
-                $totalprice += $itemPrice;
-            }
-    
-            // Adding shipment cost once per order
-            $totalprice += $shipment * count($cart);
-    
-            $order = Order::create([
-                'OrderDate' => now(),
-                'TotalAmount' => $totalprice,
-                'UserID' => $user->id,
-                'billingsId' => $lastAddress->id ?? null, // Assuming billingsId is the address ID
-                'PaymentMethodID' => $paymentMethod->id,
-            ]);
-    
-            foreach ($cart as $item) {
-                $orderItem = OrderItem::create([
-                    'Quantity' => $item->Quantity, // Replace with the correct property name
-                    'Subtotal' => $item->Quantity * $item->product->Price, // Calculate subtotal based on product price
-                    'OrderID' => $order->id,
-                    'ProductID' => $item->product->id,
-                ]);
-            }
-            $provider = new PayPalClient;
-            $provider->setApiCredentials(config('paypal'));
-            $paypalToken = $provider->getAccessToken();
-    
-            $response = $provider->createOrder([
-                "intent" => "CAPTURE",
-                "application_context" => [
-                    "return_url" => route('successTransaction'),
-                    "cancel_url" => route('cancelTransaction'),
-                ],
-                "purchase_units" => [
-                    0 => [
-                        "amount" => [
-                            "currency_code" => "USD", // Use the appropriate currency code
-                            "value" => "1000.00" // Set the correct value for the transaction
-                        ]
-                    ]
-                ]
-            ]);
-    
-            if (isset($response['id']) && $response['id'] != null) {
-                foreach ($response['links'] as $links) {
-                    if ($links['rel'] == 'approve') {
-                        return redirect()->away($links['href']);
-                    }
-                }
-                   return redirect()->route('orders', [
-                'order' => $order,
-                'cart' => $cart,
-                'lastAddressCity' => $lastAddressCity,
-    
-            ])->with('error', 'Something went wrong.');
-            } else {
-                   return redirect()->route('orders', [
-                'order' => $order,
-                'cart' => $cart,
-                'lastAddressCity' => $lastAddressCity,
-    
-            ])->with('error', $response['message'] ?? 'Something went wrong.');
-            }
-       
         
-        }
        
 
         // return view('AllPages.order', compact('order', 'lastAddressCity', 'cart'));
@@ -507,7 +429,46 @@ public function CheckoutAddress(Request $request)
     
 
 
+    public function Paymentmethod_paypal(Request $request)
+    {
 
+       
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $paypalToken = $provider->getAccessToken();
+
+        $response = $provider->createOrder([
+            "intent" => "CAPTURE",
+            "application_context" => [
+                "return_url" => route('successTransaction'),
+                "cancel_url" => route('cancelTransaction'),
+            ],
+            "purchase_units" => [
+                0 => [
+                    "amount" => [
+                        "currency_code" => "USD", // Use the appropriate currency code
+                        "value" => "1000.00" // Set the correct value for the transaction
+                    ]
+                ]
+            ]
+        ]);
+
+        if (isset($response['id']) && $response['id'] != null) {
+            foreach ($response['links'] as $links) {
+                if ($links['rel'] == 'approve') {
+                    return redirect()->away($links['href']);
+                }
+            }
+               return redirect()->route('home'
+
+        )->with('error', 'Something went wrong.');
+        } else {
+            return redirect()->route('home'
+
+            )->with('error', 'Something went wrong.');
+
+    }
+    }
     public function Order(Order $order)
     {
         $user = auth()->user();

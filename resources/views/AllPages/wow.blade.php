@@ -104,6 +104,8 @@
                 </div>
                 <p class="mr-4" style="margin-left: 50px">You will receive a shipping confirmation email when the item is successfully shipped.</p>
                 <p class="font-weight-bold" style="margin-left: 50px">Thank you for shopping with us!</p>
+                <a href="./about.html" class="btn btn-primary py-sm-3 px-sm-4 mt-4">Read More</a>
+                <a href="./about.html" class="btn btn-primary py-sm-3 px-sm-4 mt-4">Read More</a>
             </div>
         </div>
     </div>
