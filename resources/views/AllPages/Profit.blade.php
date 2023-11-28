@@ -26,7 +26,22 @@
 
 
 
-
+<div class="volunteer-form">
+    @if (Session::has('success'))
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: 'Message',
+                    text: "{{ Session::get('success') }}",
+                    icon: 'success',
+                    showConfirmButton: true,
+                    confirmButtonText: "OK",
+                });
+            });
+        </script>
+    @endif
+</div>
 
 
     <!--profit Start -->

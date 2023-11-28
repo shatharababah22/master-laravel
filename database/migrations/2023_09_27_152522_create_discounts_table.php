@@ -19,9 +19,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('Percent');
-            $table->boolean('active');
-            $table->date('StartDate');
-            $table->date('EndDate');
+            $table->boolean('active')->nullable();
+            $table->unsignedBigInteger('CategoryID');
+            $table->foreign('CategoryID')->references('id')->on('categories');
+            $table->unsignedBigInteger('UserID');
+            $table->foreign('UserID')->references('id')->on('users');
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

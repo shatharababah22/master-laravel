@@ -17,7 +17,7 @@ class Recycling extends Model
              "Amount",
              "phone",
              "UserID",
-         
+                      
              
    ];
 

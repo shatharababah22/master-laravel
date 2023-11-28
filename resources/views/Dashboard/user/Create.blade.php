@@ -16,6 +16,30 @@ User
 
     <div class="d-flex justify-content-center align-items-center" style="min-height: 50vh;">
         <div class="signup-content ">
+
+            <div class="volunteer-form">
+                @if ($errors->any())
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var errorMessage = '';
+                            @foreach ($errors->all() as $error)
+                                errorMessage += '{{ $error }}\n'; // Use '\n' for line break
+                            @endforeach
+            
+                            Swal.fire({
+                                title: 'Validation Error',
+                                text: errorMessage,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                    </script>
+                @endif
+            </div>
+            
+            
+
             <form method="post" action="{{route('user_admin.store')}}" enctype="multipart/form-data" id="signup-form" class="signup-form " >
                 @csrf
                 @method('post')
@@ -64,7 +88,7 @@ User
             
             <!-- Add another input field here -->
             <div class="col-md-6">
-                <input class="form-control inputadd" name="Birthday" value='{{ old('Birthday') }}' type="birthday" placeholder="Birthday" data-sb-validations="required" />
+                <input class="form-control inputadd" name="Birthday" value='{{ old('Birthday') }}' type="date" placeholder="Birthday" data-sb-validations="required" />
            
             </div>
         </div>
@@ -89,7 +113,6 @@ User
 
 
 </div>
-
 
 
 

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Address;
 use App\Models\Orderitem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -17,13 +18,24 @@ class OrderController extends Controller
      */
     public function index()
     {  
-        $orders = Order::select('orders.OrderDate','orders.id','orders.TotalAmount',
-        'orders.Status','users.Email','addresses.address1')
-        ->join('users', 'orders.UserID', '=', 'users.id')
-        ->join('addresses', 'orders.billingsId', '=', 'addresses.id')
+        $orders = Order::join('paymentmethods', 'orders.PaymentMethodID', '=', 'paymentmethods.id')
+        ->join('orderitems', 'orders.id', '=', 'orderitems.OrderID')
+        ->join('users', 'users.id', '=', 'orders.UserID')
+        ->select(
+            'orders.id',
+            'orders.OrderDate',
+            'orders.TotalAmount',
+            'paymentmethods.PaymentType as PaymentType',
+            'users.email', // Include the email column
+            DB::raw('COUNT(orderitems.id) as items_count')
+        )
+        ->groupBy('orders.id', 'orders.OrderDate', 'orders.TotalAmount', 'paymentmethods.PaymentType', 'users.email')
         ->get();
-        return view("Dashboard.orders.order")->with("orders",$orders);
+    
+        
+        return view("Dashboard.orders.order")->with("orders", $orders);
     }
+    
 
     /**
      * Show the form for creating a new resource.

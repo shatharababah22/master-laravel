@@ -62,6 +62,33 @@
     font-weight: bold;
     color: #1c690c;
 }
+
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
     </style>
 
 
@@ -202,6 +229,7 @@
                     <thead>
                         <tr>
                             <th>Types</th>
+                            
                             <th>Quantity (In kileo)</th>
                             <th>Max Quantity (In kileo) <small>To get 30%</small></th>
                             <th>Max Quantity (In kileo) <small>To get 50%</small></th>
@@ -210,59 +238,74 @@
                     </thead>
                     <tbody>
                       @foreach($Recyclings as $item)
-                @if(in_array($item->types, ['plastic', 'organic', 'paper', 'glass']))
-                    <tr class="active-row">
-                        <td>{{$item->types}}</td>
-                        <td>{{$item->Amount}}</td>
-                        <td>
-                              @if($item->types == 'plastic')
-                                  {{$kiloesForRecycling['plastic'][30]}} <!-- Display kiloes related to plastic for 30% -->
-                              @elseif($item->types == 'organic')
-                                  {{$kiloesForRecycling['organic'][30]}} <!-- Display kiloes related to organic for 30% -->
-                              @elseif($item->types == 'paper')
-                                  {{$kiloesForRecycling['paper'][30]}} <!-- Display kiloes related to paper for 30% -->
-                              @elseif($item->types == 'glass')
-                                  {{$kiloesForRecycling['glass'][30]}} <!-- Display kiloes related to glass for 30% -->
-                              @else
-                                  <!-- Handle other types similarly if you have specific kiloes for them -->
-                              @endif
-                          </td>
-                          <td>
-                              @if($item->types == 'plastic')
-                                  {{$kiloesForRecycling['plastic'][50]}} <!-- Display kiloes related to plastic for 50% -->
-                              @elseif($item->types == 'organic')
-                                  {{$kiloesForRecycling['organic'][50]}} <!-- Display kiloes related to organic for 50% -->
-                              @elseif($item->types == 'paper')
-                                  {{$kiloesForRecycling['paper'][50]}} <!-- Display kiloes related to paper for 50% -->
-                              @elseif($item->types == 'glass')
-                                  {{$kiloesForRecycling['glass'][50]}} <!-- Display kiloes related to glass for 50% -->
-                              @else
-                                  <!-- Handle other types similarly if you have specific kiloes for them -->
-                              @endif
-                          </td>
-                          <td>
-                              @if($item->types == 'plastic')
-                                  {{$kiloesForRecycling['plastic'][80]}} <!-- Display kiloes related to plastic for 80% -->
-                              @elseif($item->types == 'organic')
-                                  {{$kiloesForRecycling['organic'][80]}} <!-- Display kiloes related to organic for 80% -->
-                              @elseif($item->types == 'paper')
-                                  {{$kiloesForRecycling['paper'][80]}} <!-- Display kiloes related to paper for 80% -->
-                              @elseif($item->types == 'glass')
-                                  {{$kiloesForRecycling['glass'][80]}} <!-- Display kiloes related to glass for 80% -->
-                              @else
-                                  <!-- Handle other types similarly if you have specific kiloes for them -->
-                              @endif
-                          </td>
-                      </tr>
+                      @if(in_array($item->types, ['plastic', 'organic', 'paper', 'glass']))
+                          @php
+                              $maxQuantity30 = $kiloesForRecycling[$item->types][30] ?? 0;
+                              $maxQuantity50 = $kiloesForRecycling[$item->types][50] ?? 0;
+                              $maxQuantity80 = $kiloesForRecycling[$item->types][80] ?? 0;
+                          @endphp
+                          <tr class="active-row">
+                              <td>{{$item->types}}</td>
+                              <td>{{$item->Amount}}</td>
+                              <td>
+                                  @if($item->types == 'plastic')
+                                      {{$maxQuantity30}}
+                                  @elseif($item->types == 'organic')
+                                      {{$maxQuantity30}}
+                                  @elseif($item->types == 'paper')
+                                      {{$maxQuantity30}}
+                                  @elseif($item->types == 'glass')
+                                      {{$maxQuantity30}}
+                                  @endif
+                              </td>
+                              <td>
+                                  @if($item->types == 'plastic')
+                                      {{$maxQuantity50}}
+                                  @elseif($item->types == 'organic')
+                                      {{$maxQuantity50}}
+                                  @elseif($item->types == 'paper')
+                                      {{$maxQuantity50}}
+                                  @elseif($item->types == 'glass')
+                                      {{$maxQuantity50}}
+                                  @endif
+                              </td>
+                              <td>
+                                  @if($item->types == 'plastic')
+                                      {{$maxQuantity80}}
+                                  @elseif($item->types == 'organic')
+                                      {{$maxQuantity80}}
+                                  @elseif($item->types == 'paper')
+                                      {{$maxQuantity80}}
+                                  @elseif($item->types == 'glass')
+                                      {{$maxQuantity80}}
+                                  @endif
+                              </td>
+                          </tr>
+                          @if($item->Amount >= $maxQuantity30 && $item->Amount < $maxQuantity50)
+                          <div class="alert success">
+                              Congratulations on reaching {{$item->types}} target for 30% discount! Discount: 30%
+                          </div>
+                      @elseif($item->Amount >= $maxQuantity50 && $item->Amount < $maxQuantity80)
+                          <div class="alert warning">
+                              Congratulations on reaching {{$item->types}} target for 50% discount! Discount: 50%
+                          </div>
+                      @elseif($item->Amount >= $maxQuantity80)
+                          <div class="alert danger">
+                              Congratulations on reaching {{$item->types}} target for 80% discount! Discount: 80%
+                          </div>
+                      @endif
+              
                       @endif
                   @endforeach
+                  
+              
                   
                        
               
                     </tbody>
                 </table>
               </div>
-              <h4>Recyclings Table</h4>
+              <h4>Orders Table</h4>
               <div class="row gutters-sm">
                 <table class="styled-table">
                     <thead>

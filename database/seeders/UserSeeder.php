@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         {
            User::create([
                 'name' => 'Shatha',
-                'email' => 'rababahshatha18@gmail.com',
+                'email' => 'rababahshathaa18@gmail.com',
                 'Phone' => '0790751376',
                 'Birthday' => '2000-12-14',
                 'Firstname' => 'Shatha', // Corrected column name

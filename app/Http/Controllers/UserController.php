@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Support\Facades\Validator;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -36,6 +39,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+        
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'max:30', 'regex:/^[a-zA-Z\s]+$/'],
+            'Firstname' => ['required', 'max:30', 'regex:/^[a-zA-Z\s]+$/'],
+            'Lastname' => ['required', 'max:30', 'regex:/^[a-zA-Z\s]+$/'],
+            'email' => 'required|email|unique:users',
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+            ]
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors()->all());
+        }
+
         $input = $request->all();
         if ($request->has('password')) {
             $input['password'] = bcrypt($request->input('password'));

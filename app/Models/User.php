@@ -28,7 +28,7 @@ class User extends Authenticatable
               "password",
               "Phone",
               "Birthday",
-              "google_id"
+              "google_id",
               
     ];
 

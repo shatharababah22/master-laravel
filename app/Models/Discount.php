@@ -9,15 +9,16 @@ class Discount extends Model
 {
     use HasFactory;
     
+    // id	name	Percent	active	CategoryID	UserID	created_at	updated_at	
 
     protected $fillable = [
       
              "name",
              "Percent",
-             "LastName",
              "active",
-             "StartDate",
-             "EndDate"
+             "CategoryID",
+             "UserID",
+        
              
    ];
 

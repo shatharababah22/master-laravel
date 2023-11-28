@@ -189,7 +189,7 @@
                       </select>
                     </div>
       
-                 
+{{--                  
                     @php
                     $appliedDiscount = null;
                     $discountCode = request()->input('discount');
@@ -214,8 +214,8 @@
                         }
                     }
                 @endphp
-      
-               <div class="mb-5">
+       --}}
+               {{-- <div class="mb-5">
                    <div class="form-outline">
                        <h5 class="text-uppercase mb-3">Give code</h5>
                        <div class="mb-5">
@@ -228,7 +228,7 @@
                            </div>
                        </div>
                    </div>
-               </div>
+               </div> --}}
                <hr class="my-2">
                   
                <div class="d-flex justify-content-between mb-5">
@@ -289,24 +289,24 @@
                         }
                         
                         $appliedDiscount = null;
-                        $discountCode = request()->input('discount');
+                        // $discountCode = request()->input('discount');
                         
-                        if (!empty($discountCode)) {
-                            if (request()->has('apply_discount')) {
-                                $discount = App\Models\Discount::where('Name', $discountCode)->first();
-                                if ($discount) {
-                                    if ($appliedDiscount && $appliedDiscount->Name === $discountCode) {
-                                        $message = 'Oops, the discount has already been used!';
-                                    } else {
-                                        $appliedDiscount = $discount;
-                                        $totalPrice *= (1 - ($discount->Percent / 100));
-                                        $message = 'Discount applied successfully!';
-                                    }
-                                } else {
-                                    $message = 'Invalid discount code. Please try again.';
-                                }
-                            }
-                        }
+                        // if (!empty($discountCode)) {
+                        //     if (request()->has('apply_discount')) {
+                        //         $discount = App\Models\Discount::where('Name', $discountCode)->first();
+                        //         if ($discount) {
+                        //             if ($appliedDiscount && $appliedDiscount->Name === $discountCode) {
+                        //                 $message = 'Oops, the discount has already been used!';
+                        //             } else {
+                        //                 $appliedDiscount = $discount;
+                        //                 $totalPrice *= (1 - ($discount->Percent / 100));
+                        //                 $message = 'Discount applied successfully!';
+                        //             }
+                        //         } else {
+                        //             $message = 'Invalid discount code. Please try again.';
+                        //         }
+                        //     }
+                        // }
                     @endphp
                         
                         <h5 class="text-uppercase">items {{ $cartCount }}</h5>
@@ -333,7 +333,7 @@
                         <div class="form-outline">
                          
         
-                          <div class="mb-5">
+                          {{-- <div class="mb-5">
                               <div class="form-outline">
                                   <h5 class="text-uppercase mb-3">Give code</h5>
                                   <div class="mb-5">
@@ -346,7 +346,7 @@
                                       </div>
                                   </div>
                               </div>
-                          </div>
+                          </div> --}}
                      
                           
         {{--                   

@@ -42,6 +42,10 @@ Route::get('/about', function () {
     return view('AllPages.about');
 })->name('about');
 
+Route::get('/about1', function () {
+    return view('Emails.discount');
+});
+
 // Route::get('/success_paypal', function () {
 //     return view('AllPages.popop');
 // })->name('popop');
@@ -61,7 +65,7 @@ Route::get('/profile_user', [DiscountproductController::class, 'user_address'])-
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 
@@ -78,7 +82,7 @@ Route::post('/productdetail/comment/{id_comment}', [DiscountproductController::c
 
 
 //...............cart.....................
-Route::post('/productdetail/add/{id}', [DiscountproductController::class,'add_cart'])->name('addcart');
+Route::post('/productdetail/add/{id}', [DiscountproductController::class, 'add_cart'])->name('addcart');
 Route::post('/discountcoupon', [CartitemController::class, 'index'])->name('discountcoupon');
 Route::get('/cart', [CartitemController::class, 'index'])->name('cart');
 Route::put('/updatecart/{id}', [CartitemController::class, 'update'])->name('updatecart');
@@ -94,11 +98,11 @@ Route::delete('/deletecart/{id}', [CartitemController::class, 'destroy'])->name(
 
 // ....................checkout.....................
 Route::get('/adresses/{iduser}', [DiscountproductController::class, 'addresess'])->name('adresess_user');
-Route::match(['get', 'post'],'/shath', [DiscountproductController::class, 'CheckoutAddress'])->name('checkout_address');
-Route::match(['get', 'post'],'/Payment_Cash', [DiscountproductController::class, 'Paymentmethod'])->name('Paymentmethod');
+Route::match(['get', 'post'], '/shath', [DiscountproductController::class, 'CheckoutAddress'])->name('checkout_address');
+Route::match(['get', 'post'], '/Payment_Cash', [DiscountproductController::class, 'Paymentmethod'])->name('Paymentmethod');
 
 
-Route::match(['get', 'post'],'/Payment_paypal', [DiscountproductController::class, 'Paymentmethod_paypal'])->name('Paymentmethod_paypal');
+Route::match(['get', 'post'], '/Payment_paypal', [DiscountproductController::class, 'Paymentmethod_paypal'])->name('Paymentmethod_paypal');
 
 
 Route::get('/orders/{order}', [DiscountproductController::class, 'Order'])->name('orders');
@@ -112,14 +116,14 @@ Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])
 
 // .....................admin..........................
 Route::resource('category', CategoryController::class);
-Route::resource('productadmin',ProductController::class);
-Route::resource('user_admin',UserController::class);
-Route::resource('admin',AdminController::class);
-Route::resource('discount',DiscountController::class);
-Route::resource('comments',ReviewController::class);
-Route::resource('order',OrderController::class);
-Route::resource('test',TestimonialController::class);
-Route::resource('review',DiscountproductController::class);
+Route::resource('productadmin', ProductController::class);
+Route::resource('user_admin', UserController::class);
+Route::resource('admin', AdminController::class);
+Route::resource('discount', DiscountController::class);
+Route::resource('comments', ReviewController::class);
+Route::resource('order', OrderController::class);
+Route::resource('test', TestimonialController::class);
+Route::resource('review', DiscountproductController::class);
 
 
 
@@ -130,15 +134,14 @@ Route::middleware('admin')->group(function () {
     Route::get('/dash', function () {
         return view('Dashboard.Home');
     });
-    
 });
 Route::get('/dash', [AdminLoginController::class, 'showLoginForm']);
 Route::get('/adminlogout', [AdminLoginController::class, 'logout'])->name("admin.logout");
-Route::match(['get', 'post'],'/dash/login', [AdminLoginController::class, 'login'])->name("admin.login");
+Route::match(['get', 'post'], '/dash/login', [AdminLoginController::class, 'login'])->name("admin.login");
 
 
 // ...................Recycling_form.................
-Route::match(['get', 'post'],'/recyclings', [DiscountproductController::class, 'Recycling'])->name("form_recycling");
+Route::match(['get', 'post'], '/recyclings', [DiscountproductController::class, 'Recycling'])->name("form_recycling");
 
 Route::get('/recyclings-page', function () {
     return view('AllPages.form');
@@ -148,14 +151,9 @@ Route::get('/recyclings-page', function () {
 
 
 
-Route::get('auth/google',[GoogleController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('auth/google/callback',[GoogleController::class, 'handleGoogleCallback']);
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 
 
-
-
-
-
-
-
+Route::get('/home_master', [DiscountproductController::class, 'Home_admin']);

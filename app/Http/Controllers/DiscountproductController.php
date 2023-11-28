@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Discountproduct;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use Illuminate\Support\Facades\Crypt;
 
 use App\Models\Category;
 use App\Models\Cart;
@@ -18,7 +19,9 @@ use App\Models\Paymentmethod;
 use App\Models\Recycling;
 use App\Models\Review;
 use App\Models\User;
+use App\Models\Admin;
 use App\Models\Address;
+use App\Models\Discount;
 use App\Models\Testimonial;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -298,141 +301,141 @@ class DiscountproductController extends Controller
     {
         $user = auth()->user();
         $cartCount = Cartitem::where('UserID', $user->id)->count();
-    
+
         if ($cartCount === 0) {
             return redirect()->back()->with('cartEmpty', 'Please add items to your cart before proceeding.');
         }
-    
+
         $addresses = Address::where('UserID', auth()->user()->id)->get();
         return view('AllPages.checkout', compact('addresses'));
     }
-    
 
 
 
 
-public function CheckoutAddress(Request $request)
-{
-    // Retrieve the selected address ID
-    $selectedAddressId = $request->input('UserID');
 
-    // Check if the user has selected an existing address
-    if ($selectedAddressId) {
-        // Retrieve the selected address from the database using $selectedAddressId
-        $selectedAddress = Address::find($selectedAddressId);
+    public function CheckoutAddress(Request $request)
+    {
+        // Retrieve the selected address ID
+        $selectedAddressId = $request->input('UserID');
 
-        if ($selectedAddress) {
-            $request->session()->put('last_address', $selectedAddress);
-        }
-    } else {
-        // If a new address is provided, validate and store it
-        $validatedData = $request->validate([
-            'city' => 'required',
-            'street' => 'required',
-            'address1' => 'required',
-            'email' => 'required|email',
-            'mobile' => 'required',
-        ]);
+        // Check if the user has selected an existing address
+        if ($selectedAddressId) {
+            // Retrieve the selected address from the database using $selectedAddressId
+            $selectedAddress = Address::find($selectedAddressId);
 
-        $existingAddress = Address::where([
-            'UserID' => auth()->user()->id,
-            'email' => $validatedData['email'],
-            'mobile' => $validatedData['mobile'],
-            'street' => $validatedData['street'],
-            'city' => $validatedData['city'],
-            'address1' => $validatedData['address1'],
-        ])->first();
+            if ($selectedAddress) {
+                $request->session()->put('last_address', $selectedAddress);
+            }
+        } else {
+            // If a new address is provided, validate and store it
+            $validatedData = $request->validate([
+                'city' => 'required',
+                'street' => 'required',
+                'address1' => 'required',
+                'email' => 'required|email',
+                'mobile' => 'required',
+            ]);
 
-        if (!$existingAddress) {
-            // Create and store the new address
-            $newAddress = Address::create([
+            $existingAddress = Address::where([
                 'UserID' => auth()->user()->id,
                 'email' => $validatedData['email'],
                 'mobile' => $validatedData['mobile'],
                 'street' => $validatedData['street'],
                 'city' => $validatedData['city'],
                 'address1' => $validatedData['address1'],
-            ]);
+            ])->first();
 
-            $request->session()->put('last_address', $newAddress);
-        } else {
-            // Address already exists, use the existing address
-            $request->session()->put('last_address', $existingAddress);
+            if (!$existingAddress) {
+                // Create and store the new address
+                $newAddress = Address::create([
+                    'UserID' => auth()->user()->id,
+                    'email' => $validatedData['email'],
+                    'mobile' => $validatedData['mobile'],
+                    'street' => $validatedData['street'],
+                    'city' => $validatedData['city'],
+                    'address1' => $validatedData['address1'],
+                ]);
+
+                $request->session()->put('last_address', $newAddress);
+            } else {
+                // Address already exists, use the existing address
+                $request->session()->put('last_address', $existingAddress);
+            }
         }
+
+        $lastAddress = $request->session()->get('last_address');
+        $lastAddressCity = $lastAddress ? $lastAddress->city : null;
+
+        // Redirect back and provide the last address city
+        return redirect()->route('paymentmethodmain')->with('lastAddressCity', $lastAddressCity)->with('success', 'Please determine the payment method');
     }
-
-    $lastAddress = $request->session()->get('last_address');
-    $lastAddressCity = $lastAddress ? $lastAddress->city : null;
-
-    // Redirect back and provide the last address city
-    return redirect()->route('paymentmethodmain')->with('lastAddressCity', $lastAddressCity)->with('success', 'Please determine the payment method');
-}
 
 
 
     public function Paymentmethod(Request $request)
     {
         // $selectedPaymentMethod = $request->input('PaymentType');
-    
+
         $paymentMethod = PaymentMethod::create([
             'PaymentType' => 'Cash',
             'UserID' => auth()->user()->id,
         ]);
-    
-     
-            $lastAddress = $request->session()->get('last_address');
-    
-            $lastAddressCity = $lastAddress ? $lastAddress->city : null;
-    
-            $user = auth()->user();
-            $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
-    
-            $totalprice = 0;
-            $shipment = 2;
-    
-            foreach ($cart as $item) {
-                $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
-                $totalprice += $itemPrice;
-            }
-    
-            // Adding shipment cost once per order
-            $totalprice += $shipment * count($cart);
-    
-            $order = Order::create([
-                'OrderDate' => now(),
-                'TotalAmount' => $totalprice,
-                'UserID' => $user->id,
-                'billingsId' => $lastAddress->id ?? null, // Assuming billingsId is the address ID
-                'PaymentMethodID' => $paymentMethod->id,
-            ]);
-    
-            foreach ($cart as $item) {
-                $orderItem = OrderItem::create([
-                    'Quantity' => $item->Quantity, // Replace with the correct property name
-                    'Subtotal' => $item->Quantity * $item->product->Price, // Calculate subtotal based on product price
-                    'OrderID' => $order->id,
-                    'ProductID' => $item->product->id,
-                ]);
-            }
 
-            return redirect()->route('orders', [
-                'order' => $order,
-                'cart' => $cart,
-                'lastAddressCity' => $lastAddressCity,
-    
+
+        $lastAddress = $request->session()->get('last_address');
+
+        $lastAddressCity = $lastAddress ? $lastAddress->city : null;
+
+        $user = auth()->user();
+        $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
+
+        $totalprice = 0;
+        $shipment = 2;
+
+        foreach ($cart as $item) {
+            $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
+            $totalprice += $itemPrice;
+        }
+
+        // Adding shipment cost once per order
+        $totalprice += $shipment * count($cart);
+
+        $order = Order::create([
+            'OrderDate' => now(),
+            'TotalAmount' => $totalprice,
+            'UserID' => $user->id,
+            'billingsId' => $lastAddress->id ?? null, // Assuming billingsId is the address ID
+            'PaymentMethodID' => $paymentMethod->id,
+        ]);
+
+        foreach ($cart as $item) {
+            $orderItem = OrderItem::create([
+                'Quantity' => $item->Quantity, // Replace with the correct property name
+                'Subtotal' => $item->Quantity * $item->product->Price, // Calculate subtotal based on product price
+                'OrderID' => $order->id,
+                'ProductID' => $item->product->id,
             ]);
-        
-       
+        }
+
+        return redirect()->route('orders', [
+            'order' => $order,
+            'cart' => $cart,
+            'lastAddressCity' => $lastAddressCity,
+
+        ]);
+
+
 
         // return view('AllPages.order', compact('order', 'lastAddressCity', 'cart'));
     }
-    
+
 
 
     public function Paymentmethod_paypal(Request $request)
     {
 
-       
+
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
@@ -459,15 +462,16 @@ public function CheckoutAddress(Request $request)
                     return redirect()->away($links['href']);
                 }
             }
-               return redirect()->route('home'
-
-        )->with('error', 'Something went wrong.');
-        } else {
-            return redirect()->route('home'
+            return redirect()->route(
+                'home'
 
             )->with('error', 'Something went wrong.');
+        } else {
+            return redirect()->route(
+                'home'
 
-    }
+            )->with('error', 'Something went wrong.');
+        }
     }
     public function Order(Order $order)
     {
@@ -514,14 +518,28 @@ public function CheckoutAddress(Request $request)
     public function Recycling(Request $request)
     {
         if (auth()->check()) {
-            $validatedData = $request->validate([
+            
+           $request->validate([
                 'types' => 'required',
                 'Amount' => 'required|numeric',
-                'phone' => 'required',
+                'phone' => 
+                'required', 'numeric', 'digits:10', 'regex:/^07/' // Ensure the number starts with '07'
+                ,
             ]);
+            
+            // if ($image = $request->file('image')) {
+            //     $destinationPath = 'images/';
+            //     $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            //     $image->move($destinationPath, $profileImage);
+            //     $input['image'] = "$profileImage";
+            // }else{
+            //     $input['image']=$request->image;
+    
+            // }
+     
 
             $userID = auth()->id();
-            $userType = $validatedData['types'];
+            $userType = $request->types;
 
             // Check if a record exists for the same user and type
             $existingRecord = Recycling::where('UserID', $userID)
@@ -530,13 +548,14 @@ public function CheckoutAddress(Request $request)
 
             if ($existingRecord) {
                 // If a record exists, update the "Amount"
-                $existingRecord->increment('Amount', $validatedData['Amount']);
+                $existingRecord->increment('Amount', $request->Amount);
             } else {
                 // If no record exists, create a new record
                 Recycling::create([
-                    'types' => $userType,
-                    'Amount' => $validatedData['Amount'],
-                    'phone' => $validatedData['phone'],
+                    'types' => $request->types,
+                    'Amount' => $request->Amount,
+                    'phone' => $request->phone,
+                    // 'image' => $request->image,
                     'UserID' => $userID,
                 ]);
             }
@@ -547,50 +566,184 @@ public function CheckoutAddress(Request $request)
         }
     }
 
+  
+
+ 
+    
     public function user_address()
     {
-
-
-
         $addresses = Address::where('UserID', auth()->user()->id)->get();
         $Recyclings = Recycling::where('UserID', auth()->user()->id)->get();
-
+    
         $Orders = Order::where('orders.UserID', auth()->user()->id)
             ->join('paymentmethods', 'orders.PaymentMethodID', '=', 'paymentmethods.id')
             ->join('orderitems', 'orders.id', '=', 'orderitems.OrderID')
             ->select('orders.id', 'orders.OrderDate', 'orders.TotalAmount', 'paymentmethods.PaymentType as PaymentType', DB::raw('COUNT(orderitems.id) as items_count'))
             ->groupBy('orders.id', 'orders.OrderDate', 'orders.TotalAmount', 'paymentmethods.PaymentType')
             ->get();
-            $kiloesForTypes = [
-                'organic' => [30, 50, 80], // Define percentages for each type
-                'plastic' => [30, 50, 80],
-                'paper' => [30, 50, 80],
-                'glass' => [30, 50, 80],
-                // Add more types if needed
+    
+        $kiloesForTypes = [
+            'organic' => [30, 50, 80], // Define percentages for each type
+            'plastic' => [30, 50, 80],
+            'paper' => [30, 50, 80],
+            'glass' => [30, 50, 80],
+            // Add more types if needed
+        ];
+    
+        $defaultValues = [
+            'organic' => [
+                30 => 10,
+                50 => 20,
+                80 => 30
+            ],
+            'plastic' => [
+                30 => 15,
+                50 => 25,
+                80 => 35
+            ],
+            'paper' => [
+                30 => 12,
+                50 => 22,
+                80 => 32
+            ],
+            'glass' => [
+                30 => 18,
+                50 => 28,
+                80 => 38
+            ],
+            // Add more types and default values if needed
+        ];
+    
+        // Rest of your existing code...
+        $kiloesForRecycling = [];
+        $maxQuantities = [
+            'organic' => isset($kiloesForRecycling['organic']) ? $kiloesForRecycling['organic'][80] : 0,
+            'plastic' => isset($kiloesForRecycling['plastic']) ? $kiloesForRecycling['plastic'][80] : 0,
+            'paper' => isset($kiloesForRecycling['paper']) ? $kiloesForRecycling['paper'][80] : 0,
+            'glass' => isset($kiloesForRecycling['glass']) ? $kiloesForRecycling['glass'][80] : 0,
+            // Add more types if needed
+        ];
+        $existingDiscounts = Discount::where('UserID', auth()->user()->id)->get();
+
+      
+        if ($existingDiscounts->isEmpty()) {
+            $discounts = []; // Initialize an empty array to store discounts
+            $categoryIDs = [
+                'organic' => 1, // Example category IDs for each type, replace these with actual IDs
+                'plastic' => 2,
+                'paper' => 3,
+                'glass' => 4,
+                // Add more types if needed with respective IDs
             ];
+            
+            $user = auth()->user();
+            $discountName = $user->name . '\'s_Discount_' . $user->id; // Example combination of user details
+            $encryptedName = md5($discountName).$user->name;
+            $discounts = []; // Initialize an empty array to store discounts
+            foreach ($Recyclings as $recycling) {
+                if ($recycling->types) {
+                    $maxQuantity50 = $defaultValues[$recycling->types][50] ?? 0;
+                    $maxQuantity30 = $defaultValues[$recycling->types][30] ?? 0;
+                    $maxQuantity80 = $defaultValues[$recycling->types][80] ?? 0;
+            
+                    // Retrieve the category ID for the current recycling type
+                    $categoryID = $categoryIDs[$recycling->types] ?? null;
+            
+                    if ($recycling->Amount >= $maxQuantity50) {
+                        $discounts[] = [
+                            'name' => $encryptedName . '50' . $user->id,
+                            'Percent' => 50,
+                            'active' => true,
+                            'CategoryID' => $categoryID,
+                            'UserID' => $user->id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    }
+            
+                    // Adjusted condition to check $maxQuantity30 instead of $maxQuantity50
+                    if ($recycling->Amount >= $maxQuantity30) {
+                        $discounts[] = [
+                            'name' => $encryptedName . '30' . $user->id,
+                            'Percent' => 30,
+                            'active' => true,
+                            'CategoryID' => $categoryID,
+                            'UserID' => $user->id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    }
         
-            $kiloesForRecycling = [];
-        
-            foreach ($kiloesForTypes as $type => $percentages) {
-                foreach ($percentages as $percent) {
-                    $kiloesForRecycling[$type][$percent] = $this->fetchKiloesForRecycling($type, $percent);
+                    if ($recycling->Amount >= $maxQuantity80) {
+                        $discounts[] = [
+                            'name' => $encryptedName . '80' . $user->id,
+                            'Percent' => 80,
+                            'active' => true,
+                            'CategoryID' => $categoryID,
+                            'UserID' => $user->id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    }
                 }
+            
             }
+            
         
-            // Now you have an array $kiloesForRecycling containing kiloes for each type and percentage
+           
         
-            return view('AllPages.profile_user', compact('addresses', 'Recyclings', 'Orders', 'kiloesForRecycling'));
+            Discount::insert($discounts);
+        
+
         }
-        
-        private function fetchKiloesForRecycling($type, $percent)
-        {
-            return Coupon::where('percent', $percent)
-                ->whereHas('recycling', function ($query) use ($type) {
-                    $query->where('types', $type);
-                })
-                ->pluck('Kiloes')
-                ->first() ?? "Default Value for $type $percent%";
+
+       
+     
+        foreach ($defaultValues as $type => $percentages) {
+            foreach ($percentages as $percent => $kiloes) {
+                $kiloesForRecycling[$type][$percent] = $this->fetchKiloesForRecycling($type, $percent, $defaultValues);
+            }
         }
+        return view('AllPages.profile_user', compact('addresses', 'Recyclings', 'Orders', 'kiloesForRecycling'));
+    }
+    
+    private function fetchKiloesForRecycling($type, $percent, $defaultValues)
+{
+    $kiloes = Coupon::where('percent', $percent)
+        ->whereHas('recycling', function ($query) use ($type) {
+            $query->where('types', $type);
+        })
+        ->pluck('Kiloes')
+        ->first();
+
+    if ($kiloes === null) {
+        return $defaultValues[$type][$percent] ?? "Default Value for $type $percent%";
+    }
+
+    return $kiloes;
+}
+
+
+// public function Home_admin()
+// {
+//     if(session()->has('adminid')) {
+//         $adminId = session('adminid');
+//         $admin = Admin::find($adminId);
+//         dd($admin);
+//         if ($admin) {
+//             // Debugging purpose
+//             dd($admin); // Check the contents of $admin before passing it to the view
+            
+//             return view('Dashboard.Master', ['admin' => $admin]); // Sending admin data to the view
+//         } else {
+//             return redirect('/login')->with('fail', 'Admin not found.');
+//         }
+//     } else {
+//         return redirect('/login')->with('fail', 'You need to log in first.');
+//     }
+// }
+
+
 
 
 

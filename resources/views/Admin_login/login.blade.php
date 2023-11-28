@@ -63,6 +63,24 @@ body{
                             </a>
                             <h3 style="color: darkolivegreen;">Sign In</h3>
                         </div>
+
+                        <div class="volunteer-form">
+                            @if (Session::has('fail'))
+                                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        Swal.fire({
+                                            title: 'Message',
+                                            text: "{{ Session::get('fail') }}",
+                                            icon: 'error', // Corrected typo here
+                                            showConfirmButton: true,
+                                            confirmButtonText: "OK",
+                                        });
+                                    });
+                                </script>
+                            @endif
+                        </div>
+                        
                         <form method="POST" action="{{ route('admin.login') }}">
                             @csrf
                      

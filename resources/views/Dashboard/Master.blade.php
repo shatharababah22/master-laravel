@@ -56,7 +56,11 @@
             </div>
         </div>
         <!-- Spinner End -->
+        @php
+                            
+        $admin = \App\Models\Admin::find(session()->get("adminid"))
 
+    @endphp
 
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
@@ -66,13 +70,18 @@
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="images/shatha.jpg" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle" src="/images/{{ $admin->Image }}" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
-                    <div class="ms-2 mb-2">
-                        <h6 class="mb-0">Shatha Rababah</h6>
-                        <span>Shatha Rababah</span>
+               
+
+                             <div class="ms-2 mb-2">
+                    
+                           <h6 class="mb-0">{{$admin->name}}</h6>
+                        <span>{{ $admin->name }}</span>
                     </div>
+                      
+                 
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
