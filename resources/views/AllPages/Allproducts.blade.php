@@ -213,9 +213,9 @@
                                                                     {{-- <small class="mr-2">
                                                                         <i class="fas fa-gem " style="color: rgba(6, 128, 0, 0.952);font-size:18px;"></i>
                                                                     </small> --}}
-                                                                    <div class="media-body font-size-1 ">
+                                                                    {{-- <div class="media-body font-size-1 ">
                                                                         <i class="fas fa-gem " style="color: rgba(6, 128, 0, 0.952);font-size:17px;"></i>            {{ $product->Brand }}
-                                                                    </div>
+                                                                    </div> --}}
                                                                 </li>
                                                            
                                                             </ul>

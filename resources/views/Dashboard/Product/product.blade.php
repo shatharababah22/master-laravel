@@ -39,18 +39,14 @@ Category
               <th>Name</th>
               <th>Images1</th>
               <th>Images2</th>
-              <th>Images3</th>
-              <th>Images4</th>
-              <th>Images5</th>
-              
+          
               <th>Description</th>
               <th>Price</th>
               <th>Stockquantity</th>
               <th>Made_from</th>
-              <th>Brand</th>
+      
               <th>Item_id</th>
-              <th>NOTES</th>
-              <th>status </th>
+         
             
               <th>Action</th>
            
@@ -73,12 +69,6 @@ Category
                       src="{{ asset('images/' . $product->image1) }}" alt=""></td>
                       <td><img class="pic"
                       src="{{ asset('images/' . $product->image2) }}" alt=""></td>
-                      <td><img class="pic"
-                      src="{{ asset('images/' . $product->image3) }}" alt=""></td>
-                      <td><img class="pic"
-                      src="{{ asset('images/' . $product->image4) }}" alt=""></td>
-                      <td><img class="pic"
-                      src="{{ asset('images/' . $product->image5) }}" alt=""></td>
         <td class="d- text-muted" >
                     {{ $product->description}}
                   </td>
@@ -91,18 +81,12 @@ Category
                   <td class="d- text-muted">
                     {{ $product->MADEFROM}}
                   </td>
-                  <td class="d- text-muted">
-                    {{ $product->Brand}}
-                  </td>
+              
                   <td class="d- text-muted">
                     {{ $product->ItemId}}
                   </td>
-                  <td class="d- text-muted">
-                    {{ $product->NOTES}}	
-                  </td>
-                  <td class="d- text-muted">
-                    {{ $product->status}}	
-                  </td>                
+              
+                                 
                   <td>
                     <div style="display: grid; grid-template-columns: 50px auto;">
                         <button type="button" class="btn btn-success  btnedit"><a href="{{ route('productadmin.edit',$product->id) }}" ><i class="bi-pencil-square"></i></a> </button>                        

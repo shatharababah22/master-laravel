@@ -58,11 +58,7 @@ Category
             </div>
         </div>
 
-        <div class="form-floating mb-3 ">
-            <input class="form-control inputadmin" id="decription" name="NOTES" value="{{$productadmin->NOTES }}" type="text" placeholder="Notes" data-sb-validations="required" />
-            <label for="decription">Notes</label>
-        
-        </div>
+  
 
         <div class="form-group row mb-3">
             <div class="col-md-6">
@@ -71,22 +67,7 @@ Category
             </div>
             
             <!-- Add another input field here -->
-            <div class="col-md-6">
-                <input class="form-control inputadd" name="Brand" value="{{$productadmin->Brand }}" type="text" placeholder="Brand" data-sb-validations="required" />
-           
-            </div>
-        </div>
-        
-        
-        <div class="form-group row mb-3">
-            <div class="col-md-6">
-                <select class="form-control inputadd" name="status" data-sb-validations="required">
-                    <option value="">Select the status</option>
-                    <option value="Option 1" {{ $productadmin->MADEFROM == 'Option 1' ? 'selected' : '' }}>Option 1</option>
-                    <option value="Option 2" {{ $productadmin->MADEFROM == 'Option 2' ? 'selected' : '' }}>Option 2</option>
-                </select>
-            </div>
-            
+          
             <div class="col-md-6">
                 <select class="form-control inputadd" name="CategoryID" data-sb-validations="required">
                     @foreach ($categories as $item)
@@ -95,9 +76,10 @@ Category
                 @endforeach
                 </select>
             </div>
-
-
         </div>
+        
+        
+    
         
 
 
@@ -115,25 +97,7 @@ Category
                 <img src="/images/{{ $productadmin->image2 }}" width="200px" class="mt-3 mb-2">
             </div>
         </div>
-        <div id="fileInputsContainer">
-            <div>
-                <input class="form-control inputadmin" name="image3" value="{{$productadmin->image3}}" type="file" data-sb-validations="required" />
-                <img src="/images/{{ $productadmin->image3 }}" width="200px" class="mt-3 mb-2">
-            </div>
-        </div>
-        <div id="fileInputsContainer">
-            <div>
-                <input class="form-control inputadmin" name="image4" value="{{$productadmin->image4}}" type="file" data-sb-validations="required" />
-                <img src="/images/{{ $productadmin->image4 }}" width="200px" class="mt-3 mb-2">
-            </div>
-        </div>
-        <div id="fileInputsContainer">
-            <div>
-                <input class="form-control inputadmin" name="image5" value="{{$productadmin->image5}}" type="file" data-sb-validations="required" />
-                <img src="/images/{{ $productadmin->image5 }}" width="200px" class="mt-3 mb-2">
-            </div>
-        </div>
-        
+       
         {{-- <button type="button" id="addFileInput" class="btn btn-success mt-2">Add another photo</button> --}}
         
 

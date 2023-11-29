@@ -37,27 +37,34 @@
      
             <aside class="col-lg-6">
               <div class="border rounded-4 mb-3 d-flex justify-content-center">
-                <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp">
-                  <img style="max-width: 100%; max-height: 95vh; margin: auto;" class="rounded-4 fit" src="{{ asset('images/' . $product->image1) }}" />
-                </a>
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                      <div class="carousel-item active">
+                          <a data-fslightbox="mygallery" class="rounded-4" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp">
+                              <img style="max-width: 100%; max-height: 95vh; margin: auto;" class="rounded-4 fit" src="{{ asset('images/' . $product->image1) }}" />
+                          </a>
+                      </div>
+                      <div class="carousel-item">
+                          <a data-fslightbox="mygallery" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp" class="item-thumb">
+                              <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image2) }}"/>
+                          </a>
+                      </div>
+                      <!-- Add more carousel items for other images -->
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                  </button>
               </div>
-              <div class="d-flex justify-content-center mb-3">
-                <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp" class="item-thumb">
-                  <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image2) }}"/>
-                </a>
-                <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big2.webp" class="item-thumb">
-                    <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image3) }}"/></a>
-                </a>
-                <a data-fslightbox="mygalley" class="border mx-1 rounded-2" data-type="image" href="./images/s7.PNG" class="item-thumb">
-                    <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image4) }}"/></a>
-                <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big4.webp" class="item-thumb">
-                    <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image5) }}"/></a>
-                </a>
+              
+       
 
-                </a>
-                <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp" class="item-thumb">
-                    <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image5) }}"/></a>
-                </a>
+         
+           
               </div>
               <!-- thumbs-wrap.// -->
               <!-- gallery-wrap .end// -->
@@ -70,41 +77,68 @@
                 
                 </h4>
                 <div class="d-flex flex-row my-3">
-                  <div class=" mb-1 me-3" style="color: green; font-size: 17px;">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                    <span class="ms-1">
-                      4.5
-                    </span>
-                  </div>
+                  <div class="mb-1 me-3" style="color: green; font-size: 17px;">
+                    @php
+                    $totalRating = 0;
+                    $totalReviews = count($reviews);
+                    
+                    // Calculate the total rating
+                    foreach($reviews as $review) {
+                        $totalRating += $review->Rating; // Replace 'Rating' with the correct property name
+                    }
+                    
+                    // Calculate the average rating
+                    $averageRating = ($totalReviews > 0) ? round($totalRating / $totalReviews, 1) : 0;
+                    $fullStars = floor($averageRating);
+                    $halfStar = ceil($averageRating) > $fullStars;
+                    $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                    @endphp
+                    
+                    @for ($i = 0; $i < $fullStars; $i++)
+                        <i class="fa fa-star"></i>
+                    @endfor
+                    
+                    @if ($halfStar)
+                        <i class="fas fa-star-half-alt"></i>
+                        @php $emptyStars--; @endphp
+                    @endif
+                    
+                    @for ($i = 0; $i < $emptyStars; $i++)
+                        <i class="far fa-star"></i>
+                    @endfor
+                    
+                    <span class="ms-1">{{ $averageRating }}</span>
+                </div>
+                
+                
+              
+              
+                              
                   <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>{{ $product->Stockquantity}}</span>
                   <span class="text-success ms-2">In stock</span>
                 </div>
       
                 <div class="mb-3">
-                  <span class="h5"><span class="del">{{ $product->Price}}</span>  </span>
-                  <span class="text-muted">JOD5.75</span>
+                  <span class="h5"><span class="del">{{ $product->Price}}</span>
+                  <span class="text-muted">JOD{{ $product->Price}}</span>
                 </div>
       
                 <p>
-                    Consider this buttery-soft scarf, made from an earth-friendly cashmere alternative, your new go-to accessory for wrapping yourself in luxurious comfort while also being kind to the planet.
-                </p>
+                  {{ $product->description}}     
+                           </p>
       
                 <div class="row">
                   <dt class="col-3"  style="color: green;">MADE FROM:</dt>
                   <dd class="col-9">{{ $product->MADEFROM}}</dd>
       
-                  <dt class="col-3"  style="color: green;">NOTES</dt>
-                  <dd class="col-9"> {{ $product->NOTES}}	</dd>
+                  {{-- <dt class="col-3"  style="color: green;">NOTES</dt>
+                  <dd class="col-9"> {{ $product->NOTES}}	</dd> --}}
       
                   <dt class="col-3"  style="color: green;">ITEM ID</dt>
                   <dd class="col-9">{{ $product->ItemId}}</dd>
       
-                  <dt class="col-3"  style="color: green;">Brand</dt>
-                  <dd class="col-9">{{ $product->Brand}}</dd>
+                  {{-- <dt class="col-3"  style="color: green;">Brand</dt>
+                  <dd class="col-9">{{ $product->Brand}}</dd> --}}
                 </div>
       
                 <hr />

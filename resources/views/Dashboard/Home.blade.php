@@ -16,37 +16,37 @@ Dashboard
             <div class="row g-4 mt-4" >
                 <div class="col-sm-6 col-xl-3">
                     <div class=" rounded d-flex align-items-center justify-content-between p-4" style="background-color: rgba(169, 169, 169, 0.064);">
-                        <i class="fa fa-chart-line fa-3x " style="color: #103e13e3;"></i>
+                        <i class="fa fa-recycle fa-3x " style="color: #103e13e3;"></i>
                         <div class="ms-2">
-                            <p class="mb-2">Today Sale</p>
-                            <h6 class="mb-0 text-dark">JOD 200</h6>
+                            <p class="mb-2">Recycled Items</p>
+                            <h6 class="mb-0 text-dark">{{ $products }}</h6>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
                     <div class=" rounded d-flex align-items-center justify-content-between p-4" style="background-color: rgba(169, 169, 169, 0.064);">
-                        <i class="fa fa-chart-bar fa-3x " style="color: #103e13e3;"></i>
+                        <i class="fa fa-user fa-3x " style="color: #103e13e3;"></i>
                         <div class="ms-3">
-                            <p class="mb-2">Total Sale</p>
-                            <h6 class="mb-0 text-dark" >JOD 9000</h6>
+                            <p class="mb-2">Customers</p>
+                            <h6 class="mb-0 text-dark" >{{ $users }}</h6>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
                     <div class=" rounded d-flex align-items-center justify-content-between p-4" style="background-color: rgba(169, 169, 169, 0.064);">
-                        <i class="fa fa-chart-area fa-3x " style="color: #103e13e3;" ></i>
+                        <i class="fa fa-refresh fa-3x " style="color: #103e13e3;" ></i>
                         <div class="ms-3">
-                            <p class="mb-2">Today Revenue</p>
-                            <h6 class="mb-0 text-dark" >JOD 500</h6>
+                            <p class="mb-2">Total recyclers</p>
+                            <h6 class="mb-0 text-dark" >{{ $recycler }}</h6>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
                     <div class=" rounded d-flex align-items-center justify-content-between p-4" style="background-color: rgba(169, 169, 169,0.064);">
-                        <i class="fa fa-chart-pie fa-3x " style="color: #103e13e3;"></i>
+                        <i class="fa fa-shopping-cart fa-3x " style="color: #103e13e3;"></i>
                         <div class="ms-3">
-                            <p class="mb-2">Total Revenue</p>
-                            <h6 class="mb-0 text-dark">JOD 7000</h6>
+                            <p class="mb-2">Total Orders</p>
+                            <h6 class="mb-0 text-dark">{{ $allorders }}</h6>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@ Dashboard
             <div class=" text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0 text-dark">Recent Salse</h6>
-                    <a style="color: darkolivegreen;">Show All</a>
+                    {{-- <a style="color: darkolivegreen;">Show All</a> --}}
                 </div>
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -86,59 +86,28 @@ Dashboard
                             <tr class="text-white">
                                 <th scope="col"><input class="form-check-input" type="checkbox"></th>
                                 <th scope="col">Date</th>
-                                <th scope="col">Invoice</th>
-                                <th scope="col">Customer</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Email</th>
+                                <th scope="col"># Items</th>
+                                <th scope="col">Total amount</th>
+                                <th scope="col">Payment Method</th>
+                         
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($orders as  $order)
                             <tr>
                                 <td><input class="form-check-input" type="checkbox"></td>
-                                <td>01 Jan 2045</td>
-                                <td>INV-0123</td>
-                                <td>Jhon Doe</td>
-                                <td>$123</td>
-                                <td>Paid</td>
-                                <td><a class="btn btn-sm btn-success" href="">Detail</a></td>
+                                <td> {{ $order->OrderDate }}</td>
+                                <td>{{ $order->email }}</td>
+                                <td>{{ $order->items_count}}</td>
+                                <td>{{ $order->TotalAmount}}</td>
+                                <td>{{ $order->PaymentType }}</td>
+                              
+                               
                             </tr>
-                            <tr>
-                                <td><input class="form-check-input" type="checkbox"></td>
-                                <td>01 Jan 2045</td>
-                                <td>INV-0123</td>
-                                <td>Jhon Doe</td>
-                                <td>$123</td>
-                                <td>Paid</td>
-                                <td><a class="btn btn-sm btn-success" href="">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-check-input" type="checkbox"></td>
-                                <td>01 Jan 2045</td>
-                                <td>INV-0123</td>
-                                <td>Jhon Doe</td>
-                                <td>$123</td>
-                                <td>Paid</td>
-                                <td><a class="btn btn-sm btn-success" href="">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-check-input" type="checkbox"></td>
-                                <td>01 Jan 2045</td>
-                                <td>INV-0123</td>
-                                <td>Jhon Doe</td>
-                                <td>$123</td>
-                                <td>Paid</td>
-                                <td><a class="btn btn-sm btn-success" href="">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-check-input" type="checkbox"></td>
-                                <td>01 Jan 2045</td>
-                                <td>INV-0123</td>
-                                <td>Jhon Doe</td>
-                                <td>$123</td>
-                                <td>Paid</td>
-                                <td><a class="btn btn-sm btn-success" href="">Detail</a></td>
-                            </tr>
+                            @endforeach
+                          
+                     
                         </tbody>
                     </table>
                 </div>
@@ -148,9 +117,9 @@ Dashboard
 
 
         <!-- Widgets Start -->
-        <div class="container-fluid pt-4 px-4">
+        <div class="container-fluid pt-4 px-4" style="margin-left: 18%">
             <div class="row g-4">
-                <div class="col-sm-12 col-md-6 col-xl-4">
+                {{-- <div class="col-sm-12 col-md-6 col-xl-4">
                     <div class="h-100  rounded p-4" style="background-color: rgba(169, 169, 169, 0.064);">
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <h6 class="mb-0 text-dark">Messages</h6>
@@ -197,7 +166,7 @@ Dashboard
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <div class="h-100  rounded p-4" style="background-color: rgba(169, 169, 169, 0.064);">
                         <div class="d-flex align-items-center justify-content-between mb-4">
@@ -208,61 +177,37 @@ Dashboard
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-6 col-xl-4">
+                <div class="col-sm-12 col-md-6 col-xl-4 " >
                     <div class="h-100  rounded p-4" style="background-color: rgba(169, 169, 169, 0.064);">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h6 class="mb-0 text-dark">To Do List</h6>
                             <a href="" style="color: darkolivegreen;">Show All</a>
                         </div>
-                        <div class="d-flex mb-2">
-                            <input class="form-control bg-transparent  border-1" type="text" placeholder="Enter task">
-                            <button type="button" class="btn btn-success ms-2"  >Add</button>
-                        </div>
+                        <form method="post" action="{{ route('todos.store') }}">
+                            @csrf
+                            <div class="input-group">
+                                <input name="todo1" class="form-control bg-transparent border-1 pt-1 " type="text" placeholder="Enter task">
+                                <button type="submit" class="btn ms-1 mb-1" style="background-color:darkgreen; color: rgb(229, 230, 229); height:40px;">Add</button>
+                            </div>
+                        </form>
+                        @if (is_array($todos) || is_object($todos))
+                        @foreach($todos as $todo)
                         <div class="d-flex align-items-center border-bottom py-2">
-                            <input class="form-check-input m-0 bg-transparent" type="checkbox">
+                            <input class="form-check-input m-0 bg-transparent" type="checkbox" name="todo1">
                             <div class="w-100 ms-3">
                                 <div class="d-flex w-100 align-items-center justify-content-between">
-                                    <span>Short task goes here...</span>
-                                    <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                                    <span>{{ $todo }}</span>
+                                    <form method="post" action="{{ route('todos.destroy', $todo) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center border-bottom py-2">
-                            <input class="form-check-input m-0 bg-transparent" type="checkbox">
-                            <div class="w-100 ms-3">
-                                <div class="d-flex w-100 align-items-center justify-content-between">
-                                    <span>Short task goes here...</span>
-                                    <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center border-bottom py-2">
-                            <input class="form-check-input m-0 bg-success "  type="checkbox" checked>
-                            <div class="w-100 ms-3">
-                                <div class="d-flex w-100 align-items-center justify-content-between">
-                                    <span><del>Short task goes here...</del></span>
-                                    <button class="btn btn-sm text-success"><i class="fa fa-times"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center border-bottom py-2">
-                            <input class="form-check-input m-0 bg-transparent" type="checkbox">
-                            <div class="w-100 ms-3">
-                                <div class="d-flex w-100 align-items-center justify-content-between">
-                                    <span>Short task goes here...</span>
-                                    <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center pt-2">
-                            <input class="form-check-input m-0 bg-transparent" type="checkbox">
-                            <div class="w-100 ms-3">
-                                <div class="d-flex w-100 align-items-center justify-content-between">
-                                    <span>Short task goes here...</span>
-                                    <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+                    @endif 
+                       
                     </div>
                 </div>
             </div>

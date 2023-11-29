@@ -39,8 +39,18 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-       
-    
+
+        
+        $this->validate($request, [
+            'Name' => 'required',
+            'Price' => 'required|numeric',
+            'description' => 'required',
+            'Stockquantity' => 'required|numeric',
+            'CategoryID' => 'required',
+        ]);
+
+
+        // dd($input);
         $imageNames = [];
 
         for ($i = 1; $i <= 5; $i++) {
@@ -55,7 +65,6 @@ class ProductController extends Controller
             }
         }
     
-        // Create the product with the provided data including image names
         Product::create([
             // 'id' => $input['id'],
             'Name' => $input['Name'],
@@ -64,14 +73,8 @@ class ProductController extends Controller
             'Stockquantity' => $input['Stockquantity'],
             'image1' => isset($imageNames[0]) ? $imageNames[0] : null,
             'image2' => isset($imageNames[1]) ? $imageNames[1] : null,
-            'image3' => isset($imageNames[2]) ? $imageNames[2] : null,
-            'image4' => isset($imageNames[3]) ? $imageNames[3] : null,
-            'image5' => isset($imageNames[4]) ? $imageNames[4] : null,
             'MADEFROM' => $input['MADEFROM'],
-            'Brand' => $input['Brand'],
             'ItemId' => $input['ItemId'],
-            'NOTES' => $input['NOTES'],
-            'status' => $input['status'],
             'CategoryID' => $input['CategoryID'],
         ]);
     
@@ -119,50 +122,33 @@ return view('Dashboard.Product.Edit', compact('productadmin', 'categories'));
      */
     public function update(Request $request, Product $product)
     {
-        // Get all the input data from the request
         $input = $request->all();
     
-        // Update each column one by one based on the input data
-        $product->update([
-            'Name' => $input['Name'],
-            'Price' => $input['Price'],
-            'description' => $input['description'],
-            'Stockquantity' => $input['Stockquantity'],
-            'MADEFROM' => $input['MADEFROM'],
-            'Brand' => $input['Brand'],
-            'ItemId' => $input['ItemId'],
-            'NOTES' => $input['NOTES'],
-            'status' => $input['status'],
-            'CategoryID' => $input['CategoryID'],
-        ]);
-    
-        // Handle image uploads
-        $imageNames = [];
-    
-        for ($i = 1; $i <= 5; $i++) {
-            $image = $request->file("image{$i}");
-    
-            if ($image) {
-                $imageName = time() . "_{$i}." . $image->getClientOriginalExtension();
-                $image->move(public_path('images/'), $imageName);
-    
-                // Store the image name in the array with the loop index as the key
-                $imageNames[] = $imageName;
-            }
+        if ($image1 = $request->file('image1')) {
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis') . "." . $image1->getClientOriginalExtension();
+            $image1->move($destinationPath, $profileImage);
+            $input['image1'] = $destinationPath . $profileImage; // Update input with full image path
         }
     
-        // Update image columns separately
-        $imageColumns = ['image1', 'image2', 'image3', 'image4', 'image5'];
-    
-        foreach ($imageColumns as $key => $column) {
-            if (isset($imageNames[$key])) {
-                $product->update([$column => $imageNames[$key]]);
-            }
+        if ($image2 = $request->file('image2')) {
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis') . "." . $image2->getClientOriginalExtension();
+            $image2->move($destinationPath, $profileImage);
+            $input['image2'] = $destinationPath . $profileImage; // Update input with full image path
         }
+    
+        $product->update($input);
+
+        
+        // dd($input); // You can uncomment this line for debugging purposes
     
         return redirect()->route('productadmin.index')
-                        ->with('success', 'Product updated successfully.');
+            ->with('success', 'Product updated successfully.');
     }
+    
+    
+    
     
     /**
      * Remove the specified resource from storage.

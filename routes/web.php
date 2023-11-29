@@ -13,11 +13,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PayPalController;
-
+use App\Http\Controllers\WishlistproductController;
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController;
 use App\Http\Controllers\CartitemController;
 use App\Http\Controllers\DiscountproductController;
 use App\Http\Controllers\GoogleController;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Route;
 
 
@@ -124,18 +125,22 @@ Route::resource('comments', ReviewController::class);
 Route::resource('order', OrderController::class);
 Route::resource('test', TestimonialController::class);
 Route::resource('review', DiscountproductController::class);
+Route::resource('adminprofile', WishlistproductController::class);
 
 
 
 
 // ...................admin_login.................
 Route::middleware('admin')->group(function () {
-
     Route::get('/dash', function () {
         return view('Dashboard.Home');
     });
 });
-Route::get('/dash', [AdminLoginController::class, 'showLoginForm']);
+
+Route::get('/dash', [AdminLoginController::class, 'showLoginForm'])->name('todos.index');
+Route::post('/dash/store', [AdminLoginController::class, 'store'])->name('todos.store');
+Route::delete('/dash/{todo1}', [AdminLoginController::class, 'destroy'])->name('todos.destroy');
+
 Route::get('/adminlogout', [AdminLoginController::class, 'logout'])->name("admin.logout");
 Route::match(['get', 'post'], '/dash/login', [AdminLoginController::class, 'login'])->name("admin.login");
 

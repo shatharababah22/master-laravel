@@ -65,8 +65,8 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar " style="background-color: white;">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <img  src="./images/3.PNG" width="100px">
+                <a href="{{ route('todos.index') }}" class="navbar-brand mx-4 mb-3">
+                    <img src="{{ asset('/images/3.PNG') }}" width="100px">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
@@ -84,14 +84,8 @@
                  
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    {{-- <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user me-2"></i>Profile</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                        </div>
-                    </div> --}}
+                    <a href="{{ route('todos.index') }}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                
                     <a href="category" class="nav-item nav-link"><i class="bi bi-diagram-3 me-2"></i>Category</a>
                     <a href="productadmin" class="nav-item nav-link"><i class="bi bi-box me-2"></i>Product</a>
                     <a href="user_admin" class="nav-item nav-link"><i class="bi bi-person me-2"></i>User</a>
@@ -190,14 +184,14 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="images/shatha.jpg" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="/images/{{ $admin->Image }}" alt="" style="width: 40px; height: 40px;">
                             
                         </a>
                         <div class="dropdown-menu dropdown-menu-end  border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="adminprofile" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
                             <a href="{{ route('admin.logout') }}"  class="dropdown-item">Log Out</a>
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </nav>
@@ -212,7 +206,8 @@
     </div>
 
         
-    <script>
+    <script> 
+
         // Get all delete buttons with the 'delete-button' class
         const deleteButtons = document.querySelectorAll('.delete-button');
     
@@ -241,7 +236,24 @@
                 });
             });
         });
+
+
+
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLocation = window.location.href;
+    
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    
+            navLinks.forEach(link => {
+                if (link.href === currentLocation) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+    
     <!-- JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js" integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

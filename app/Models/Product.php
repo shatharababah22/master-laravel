@@ -14,19 +14,13 @@ class Product extends Model
         "description",
         "image1",
         "image2",
-        "image3",
-        "image5",
-        "image5",
-        "stockquantity",
+        "Stockquantity",
         "Price",
         "CategoryID",
         "MADEFROM",
-        "STATUS",
-        "Brand",
-        "NOTES",
         "ItemId",
        
-
+  
 
     ];
 
