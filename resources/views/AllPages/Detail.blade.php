@@ -39,16 +39,16 @@
               <div class="border rounded-4 mb-3 d-flex justify-content-center">
                 <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                   <div class="carousel-inner">
-                      <div class="carousel-item active">
-                          <a data-fslightbox="mygallery" class="rounded-4" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp">
-                              <img style="max-width: 100%; max-height: 95vh; margin: auto;" class="rounded-4 fit" src="{{ asset('images/' . $product->image1) }}" />
-                          </a>
-                      </div>
-                      <div class="carousel-item">
-                          <a data-fslightbox="mygallery" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp" class="item-thumb">
-                              <img width="60" height="60" class="rounded-2" src="{{ asset('images/' . $product->image2) }}"/>
-                          </a>
-                      </div>
+                    <div class="carousel-item active">
+                      <a data-fslightbox="mygallery" class="rounded-4" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp">
+                          <img style="width: 500px; height: 450px; margin: auto;" class="rounded-4 fit" src="{{ asset('images/' . $product->image1) }}" />
+                      </a>
+                  </div>
+                  <div class="carousel-item">
+                      <a data-fslightbox="mygallery" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp" class="item-thumb">
+                          <img style="width: 500px; height: 450px;" class="rounded-2" src="{{ asset('images/' . $product->image2) }}"/>
+                      </a>
+                  </div>
                       <!-- Add more carousel items for other images -->
                   </div>
                   <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">

@@ -67,9 +67,15 @@ class DiscountproductController extends Controller
         $totalQuantity = Orderitem::sum('Quantity');
         $products_count = Product::count();
 
+        $recycler = DB::table('users')
+        ->join('recyclings', 'users.id', '=', 'recyclings.UserID')
+        ->select('users.id')
+        ->distinct()
+        ->count();
 
         view()->share([
             'categories' => $categories,
+            'recycler' => $recycler,
             'Testimonials' => $Testimonials,
             'products' => $products,
             'users' => $users,
@@ -473,6 +479,7 @@ class DiscountproductController extends Controller
             )->with('error', 'Something went wrong.');
         }
     }
+
     public function Order(Order $order)
     {
         $user = auth()->user();
@@ -568,180 +575,133 @@ class DiscountproductController extends Controller
 
   
 
- 
-    
     public function user_address()
     {
+        // Fetch user-related data
         $addresses = Address::where('UserID', auth()->user()->id)->get();
         $Recyclings = Recycling::where('UserID', auth()->user()->id)->get();
     
-        $Orders = Order::where('orders.UserID', auth()->user()->id)
+        // Fetch user orders with details
+        $orders = Order::where('orders.UserID', auth()->user()->id)
             ->join('paymentmethods', 'orders.PaymentMethodID', '=', 'paymentmethods.id')
             ->join('orderitems', 'orders.id', '=', 'orderitems.OrderID')
             ->select('orders.id', 'orders.OrderDate', 'orders.TotalAmount', 'paymentmethods.PaymentType as PaymentType', DB::raw('COUNT(orderitems.id) as items_count'))
             ->groupBy('orders.id', 'orders.OrderDate', 'orders.TotalAmount', 'paymentmethods.PaymentType')
             ->get();
     
+        // Define recycling types and their thresholds
         $kiloesForTypes = [
-            'organic' => [30, 50, 80], // Define percentages for each type
+            'organic' => [30, 50, 80],
             'plastic' => [30, 50, 80],
             'paper' => [30, 50, 80],
             'glass' => [30, 50, 80],
             // Add more types if needed
         ];
     
+        // Define default values for recycling types
         $defaultValues = [
-            'organic' => [
-                30 => 10,
-                50 => 20,
-                80 => 30
-            ],
-            'plastic' => [
-                30 => 15,
-                50 => 25,
-                80 => 35
-            ],
-            'paper' => [
-                30 => 12,
-                50 => 22,
-                80 => 32
-            ],
-            'glass' => [
-                30 => 18,
-                50 => 28,
-                80 => 38
-            ],
+            'organic' => [30 => 10, 50 => 20, 80 => 30],
+            'plastic' => [30 => 15, 50 => 25, 80 => 35],
+            'paper' => [30 => 12, 50 => 22, 80 => 32],
+            'glass' => [30 => 18, 50 => 28, 80 => 38],
             // Add more types and default values if needed
         ];
     
-        // Rest of your existing code...
-        $kiloesForRecycling = [];
-        $maxQuantities = [
-            'organic' => isset($kiloesForRecycling['organic']) ? $kiloesForRecycling['organic'][80] : 0,
-            'plastic' => isset($kiloesForRecycling['plastic']) ? $kiloesForRecycling['plastic'][80] : 0,
-            'paper' => isset($kiloesForRecycling['paper']) ? $kiloesForRecycling['paper'][80] : 0,
-            'glass' => isset($kiloesForRecycling['glass']) ? $kiloesForRecycling['glass'][80] : 0,
-            // Add more types if needed
-        ];
+        // Check if user has existing discounts
         $existingDiscounts = Discount::where('UserID', auth()->user()->id)->get();
-
-      
+    
         if ($existingDiscounts->isEmpty()) {
-            $discounts = []; // Initialize an empty array to store discounts
             $categoryIDs = [
-                'organic' => 1, // Example category IDs for each type, replace these with actual IDs
+                'organic' => 1,
                 'plastic' => 2,
                 'paper' => 3,
                 'glass' => 4,
                 // Add more types if needed with respective IDs
             ];
-            
-            $user = auth()->user();
-            $discountName = $user->name . '\'s_Discount_' . $user->id; // Example combination of user details
-            $encryptedName = md5($discountName).$user->name;
-            $discounts = []; // Initialize an empty array to store discounts
-            foreach ($Recyclings as $recycling) {
-                if ($recycling->types) {
-                    $maxQuantity50 = $defaultValues[$recycling->types][50] ?? 0;
-                    $maxQuantity30 = $defaultValues[$recycling->types][30] ?? 0;
-                    $maxQuantity80 = $defaultValues[$recycling->types][80] ?? 0;
-            
-                    // Retrieve the category ID for the current recycling type
-                    $categoryID = $categoryIDs[$recycling->types] ?? null;
-            
-                    if ($recycling->Amount >= $maxQuantity50) {
-                        $discounts[] = [
-                            'name' => $encryptedName . '50' . $user->id,
-                            'Percent' => 50,
-                            'active' => true,
-                            'CategoryID' => $categoryID,
-                            'UserID' => $user->id,
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ];
-                    }
-            
-                    // Adjusted condition to check $maxQuantity30 instead of $maxQuantity50
-                    if ($recycling->Amount >= $maxQuantity30) {
-                        $discounts[] = [
-                            'name' => $encryptedName . '30' . $user->id,
-                            'Percent' => 30,
-                            'active' => true,
-                            'CategoryID' => $categoryID,
-                            'UserID' => $user->id,
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ];
-                    }
-        
-                    if ($recycling->Amount >= $maxQuantity80) {
-                        $discounts[] = [
-                            'name' => $encryptedName . '80' . $user->id,
-                            'Percent' => 80,
-                            'active' => true,
-                            'CategoryID' => $categoryID,
-                            'UserID' => $user->id,
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ];
-                    }
-                }
-            
-            }
-            
-        
-           
-        
-            Discount::insert($discounts);
-        
-
-        }
-
-       
-     
-        foreach ($defaultValues as $type => $percentages) {
-            foreach ($percentages as $percent => $kiloes) {
-                $kiloesForRecycling[$type][$percent] = $this->fetchKiloesForRecycling($type, $percent, $defaultValues);
-            }
-        }
-        return view('AllPages.profile_user', compact('addresses', 'Recyclings', 'Orders', 'kiloesForRecycling'));
-    }
     
-    private function fetchKiloesForRecycling($type, $percent, $defaultValues)
+            $user = auth()->user();
+    
+            foreach ($Recyclings as $recycling) {
+                if ($recycling->types && isset($categoryIDs[$recycling->types])) {
+                    $this->createDiscount($recycling, $categoryIDs[$recycling->types]);
+                }
+            }
+        }
+    
+        // Fetch kiloes for each recycling type and percentage
+        $kiloesForRecycling = $this->fetchKiloesForRecycling($defaultValues);
+    
+        // Pass data to the view
+        return view('AllPages.profile_user', compact('addresses', 'Recyclings', 'orders', 'kiloesForRecycling'));
+    }
+
+private function fetchKiloesForRecycling($defaultValues)
 {
-    $kiloes = Coupon::where('percent', $percent)
+    $kiloesForRecycling = [];
+
+    foreach ($defaultValues as $type => $percentages) {
+        foreach ($percentages as $percent => $kiloes) {
+            $kiloesForRecycling[$type][$percent] = $this->fetchKiloesFromCoupon($type, $percent) ?? $kiloes;
+        }
+    }
+
+    return $kiloesForRecycling;
+}
+
+private function fetchKiloesFromCoupon($type, $percent)
+{
+    return Coupon::where('percent', $percent)
         ->whereHas('recycling', function ($query) use ($type) {
             $query->where('types', $type);
         })
         ->pluck('Kiloes')
         ->first();
+}
+private function createDiscount($recycling, $categoryID)
+{
+    $user = auth()->user();
+    $discountName = $user->name . '\'s_Discount_' . $user->id;
+    $encryptedName = md5($discountName) . $user->name;
 
-    if ($kiloes === null) {
-        return $defaultValues[$type][$percent] ?? "Default Value for $type $percent%";
+    // Determine the appropriate percentage based on recycling amount thresholds
+    $percent = 0;
+    
+    // Check and create discounts for each applicable threshold
+    if ($recycling->Amount >= 80) {
+        $percent = 80;
+        $this->saveDiscount($percent, $user, $categoryID, $encryptedName);
     }
 
-    return $kiloes;
+    if ($recycling->Amount >= 50) {
+        $percent = 50;
+        $this->saveDiscount($percent, $user, $categoryID, $encryptedName);
+    }
+
+    if ($recycling->Amount >= 30) {
+        $percent = 30;
+        $this->saveDiscount($percent, $user, $categoryID, $encryptedName);
+    }
+}
+
+private function saveDiscount($percent, $user, $categoryID, $encryptedName)
+{
+    if ($percent > 0) {
+        Discount::create([
+            'name' => $encryptedName . $percent . $user->id,
+            'Percent' => $percent,
+            'active' => true,
+            'CategoryID' => $categoryID,
+            'UserID' => $user->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
 }
 
 
-// public function Home_admin()
-// {
-//     if(session()->has('adminid')) {
-//         $adminId = session('adminid');
-//         $admin = Admin::find($adminId);
-//         dd($admin);
-//         if ($admin) {
-//             // Debugging purpose
-//             dd($admin); // Check the contents of $admin before passing it to the view
-            
-//             return view('Dashboard.Master', ['admin' => $admin]); // Sending admin data to the view
-//         } else {
-//             return redirect('/login')->with('fail', 'Admin not found.');
-//         }
-//     } else {
-//         return redirect('/login')->with('fail', 'You need to log in first.');
-//     }
-// }
+
+
+
 
 
 

@@ -106,10 +106,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $productadmin)
+    public function edit(Product $product)
     {
         $categories = Category::all();
-return view('Dashboard.Product.Edit', compact('productadmin', 'categories'));
+return view('Dashboard.Product.Edit', compact('product', 'categories'));
 
     }
 
@@ -123,28 +123,32 @@ return view('Dashboard.Product.Edit', compact('productadmin', 'categories'));
     public function update(Request $request, Product $product)
     {
         $input = $request->all();
-    
-        if ($image1 = $request->file('image1')) {
-            $destinationPath = 'images/';
-            $profileImage = date('YmdHis') . "." . $image1->getClientOriginalExtension();
-            $image1->move($destinationPath, $profileImage);
-            $input['image1'] = $destinationPath . $profileImage; // Update input with full image path
-        }
-    
-        if ($image2 = $request->file('image2')) {
-            $destinationPath = 'images/';
-            $profileImage = date('YmdHis') . "." . $image2->getClientOriginalExtension();
-            $image2->move($destinationPath, $profileImage);
-            $input['image2'] = $destinationPath . $profileImage; // Update input with full image path
-        }
-    
-        $product->update($input);
 
-        
-        // dd($input); // You can uncomment this line for debugging purposes
-    
-        return redirect()->route('productadmin.index')
-            ->with('success', 'Product updated successfully.');
+if ($image1 = $request->file('image1')) {
+    $destinationPath = 'images/';
+    $profileImage = date('YmdHis') . "." . $image1->getClientOriginalExtension();
+    $image1->move($destinationPath, $profileImage);
+    $input['image1'] = $destinationPath . $profileImage; // Update input with full image path
+}
+
+if ($image2 = $request->file('image2')) {
+    $destinationPath = 'images/';
+    $profileImage = date('YmdHis') . "." . $image2->getClientOriginalExtension();
+    $image2->move($destinationPath, $profileImage);
+    $input['image2'] = $destinationPath . $profileImage; // Update input with full image path
+}
+
+$product->update($input);
+
+// dd($input); // Uncomment for debugging purposes
+
+return redirect()->route('productadmin.index')
+    ->with('success', 'Product updated successfully.');
+
+
+
+
+
     }
     
     

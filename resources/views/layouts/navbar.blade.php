@@ -88,20 +88,19 @@
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
                 <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
-                <a href="All-product.html" class="nav-item nav-link">Our Products</a>
                 <a href="#courses" class="nav-item nav-link">Courses</a>
-               
-                {{-- <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                @php
+   use App\Models\Category;
+    $categories = Category::all();
+                @endphp
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">All Categories</a>
                     <div class="dropdown-menu bg-light m-0">
-                        <a href="service.html" class="dropdown-item">Services</a>
-                        <a href="team.html" class="dropdown-item">Our Team</a>
-                        <a href="" class="dropdown-item">How I can recycle</a>
-                        
-                        <a href="#testimonial" class="dropdown-item">Testimonial</a>
-                       
+                        @foreach ($categories as $category)
+                        <a href="{{ route('allproduct', ['Category_ID' => $category->id]) }}" class="dropdown-item">{{$category->Name}}</a>
+                       @endforeach
                     </div>
-                </div> --}}
+                </div> 
                 <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
             @if (Auth::check())
                 @php
@@ -136,13 +135,13 @@
                                     <i class="fa fa-arrow-right ms-3"></i> </a>
                         </form> --}}
                               <!-- Avatar -->
-                              <div class="dropdown me-2">
+                              <div class="dropdown me-2 mb-1">
                                 <button class="btn b dropdown-toggle custom-button1 " type="button" id="navbarDropdownMenuAvatar" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="/images/{{ Auth::user()->Image }}" class="rounded-circle "  width="48" alt="Black and White Portrait of a Man" loading="lazy">
                                 </button>
                                 
                                 
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                                <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdownMenuAvatar">
                                     <li><a href="{{ route('profile.general', [Auth::user()]) }}"
                                         class="nav-item ms-3">My profile</a></li>
                                   <li>

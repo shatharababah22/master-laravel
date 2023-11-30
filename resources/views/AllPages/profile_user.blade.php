@@ -314,6 +314,7 @@
                             <th># items</th>
                             <th>Total price</th>
                             <th>Payment method</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -327,6 +328,8 @@
                           <td>{{ $order->items_count}}</td>
                           <td>{{$order->TotalAmount}}</td>
                           <td>{{$order->PaymentType}}</td>
+                          <td><button type="button" class="btn  btnedit order-details" style="background-color: #348E38" data-order-id="{{ $order->id }}"><i class="bi bi-eye" style="color: #e2e8f0"></i></button></td>
+
                       </tr>
                   
                       <tr class="order-items-row" id="order-items-{{$order->id}}" style="display: none;">
@@ -387,24 +390,26 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-          var orderDetails = document.querySelectorAll(".order-details");
-  
-          orderDetails.forEach(function (element) {
-              element.addEventListener("click", function () {
-                  var orderId = this.getAttribute("data-order-id");
-                  var orderItemsRow = document.getElementById("order-items-" + orderId);
-  
-                  // Toggle the visibility of the order items row
-                  if (orderItemsRow.style.display === "none") {
-                      orderItemsRow.style.display = "table-row";
-                  } else {
-                      orderItemsRow.style.display = "none";
-                  }
-              });
-          });
-      });
-  </script>
-  
+        
 
+
+        var orderDetails = document.querySelectorAll(".order-details");
+    
+        orderDetails.forEach(function (element) {
+            element.addEventListener("click", function () {
+                var orderId = this.getAttribute("data-order-id");
+                var orderItemsRow = document.getElementById("order-items-" + orderId);
+    
+                // Toggle the visibility of the order items row for the corresponding order
+                if (orderItemsRow.style.display === "none" || orderItemsRow.style.display === "") {
+                    orderItemsRow.style.display = "table-row";
+                } else {
+                    orderItemsRow.style.display = "none";
+                }
+            });
+        });
+    });
+    
+    </script>
 
 @endsection

@@ -148,9 +148,12 @@
                                         <div class="col-md-6 col-xl-4 mb-3 mb-md-4 pb-1"  id="product-{{ $product->id }}" >
                                             <div class="card transition-3d-hover shadow-hover-2 h-100">
                                                 <div class="position-relative">
-                                                    <a href="{{ route('productdetail', ['id_product' => $product->id]) }}" style="background-color: #dbdbdb9e;">
-                                                        <img class="card-img-top" src="{{ asset('images/' . $product->image1) }}">
+                                               
+                                                    <a href="{{ route('productdetail', ['id_product' => $product->id]) }}" style="background-color: #dbdbdb9e; display: block; width: 100%;">
+                                                        <img class="card-img-top" src="{{ asset('images/' . $product->image1) }}" style="width: 100%; height: 300px; object-fit: cover;">
                                                     </a>
+                                               
+                                                
                                                     {{-- <div class="position-absolute top-0 left-0 pt-3 pr-3">
                                                         <i class="me-1 fa fa-heart fa-lg" style="color: rgba(6, 128, 0, 0.952);"></i>
                                                     </div> --}}

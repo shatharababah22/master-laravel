@@ -18,7 +18,7 @@
                                 <div class="col-lg-8">
                                     <h1 class="display-1  mb-4 animated slideInDown header header1" style="color: rgb(15,66,41);">PRO Company</h1>
                                     <qoute class="paraghra">"Embrace the chance to support our planet's well-being by choosing recycled products, empowering environmental preservation. Join the movement to safeguard our Earth's future while shopping consciously."</qoute><br>
-                                    <a href="./about.html" class="btn btn-primary py-sm-3 px-sm-4 mt-4">Read More</a>
+                                    <a href="{{ route('about') }}" class="btn btn-primary py-sm-3 px-sm-4 mt-4">Read More</a>
                                 </div>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                                     <qoute class="paraghra"> Explore our collection and discover how each item can contribute to a cleaner,
                                         healthier planet. By embracing recycled products, you're making a
                                          statement that transcends trends and fosters lasting change.</qoute><br>
-                                    <a href="All-product.html" class="btn btn-primary btn-box py-sm-3 px-sm-4 mt-4">Shop Now</a>
+                                    <a href="{{ route('allproduct', ['Category_ID' => 1]) }}" class="btn btn-primary btn-box py-sm-3 px-sm-4 mt-4">Shop Now</a>
                                 </div>
                             </div>
                         </div>
@@ -186,14 +186,16 @@
                 <span class="fs-5 fw-semi-bold text-light">Count of Products</span>
             </div>
             <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
-                <h1 class="display-4 text-white" data-toggle="counter-up">24</h1>
-                <span class="fs-5 fw-semi-bold text-light">Eco-Friendly Awards</span>
+                <h1 class="display-4 text-white" data-toggle="counter-up">{{$recycler}}</h1>
+                <span class="fs-5 fw-semi-bold text-light">Number of Recyclers</span>
             </div>
         </div>
     </div>
 </div>
+<!-- Facts End -->
 
-    <!-- Facts End -->
+
+
 
 
 
@@ -236,11 +238,9 @@
 </div>
 <!-- Catgories End -->
 
-<br><br><br><br>
+<br><br>
 
 
-
-{{-- <p>Debug: {{ route('allproduct', ['category_id' => $category->id]) }}</p> --}}
 
 
     <!-- Service Start -->
@@ -791,8 +791,6 @@
         </div>
      </section>
      <!-- end client section -->
-
-
 
 
 

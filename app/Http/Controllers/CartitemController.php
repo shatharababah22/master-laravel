@@ -39,53 +39,7 @@ else{
     }
 
 
-    // public function deletecart($id)
-    // {
-    //     if (auth()->user()) {
-    //         $product = Cartitem::find($id);
-    
-    //         if ($product) {
-    //             $product->delete();
-    //             return redirect()->back()->with('success', 'Product deleted successfully');
-    //         } else {
-    //             return redirect()->back()->with('error', 'Product not found or already deleted');
-    //         }
-    //     } else {
-    //         $cart = session('cart');
-    
-    //         if (isset($cart[$id])) {
-    //             unset($cart[$id]);
-    //             session()->put('cart', $cart);
-    //             return redirect()->back()->with('success', 'Product deleted successfully');
-    //         } else {
-    //             return redirect()->back()->with('error', 'Product not found or already deleted');
-    //         }
-    //     }
-    // }
-    
-    
-   // Import the Discount model
-
-
-
-
-    // public function delete_cart($id)
-    // {
-    //     if (auth()->user()) {
-    //         // If the user is authenticated, you may perform your delete operation here.
-    //         // For now, let's just return a response.
-    //         return redirect()->back()->with('success', 'Product deleted successfully');
-    //     } else {
-    //         $cart = session('cart');
-    //         if (isset($cart[$id])) {
-    //             unset($cart[$id]);
-    //             session()->put('cart', $cart);
-    //         }
-    
-    //         return redirect()->back()->with('success', 'Product deleted successfully');
-    //     }
-    // }
-
+  
     /**
      * Show the form for creating a new resource.
      *
