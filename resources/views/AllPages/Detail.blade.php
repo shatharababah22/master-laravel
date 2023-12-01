@@ -312,28 +312,26 @@
               <div class="carousel-item active">
                   <div class="row">
                     @foreach ($relatedProducts as $product)
-                        
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-grid">
+                            <div class="product-image" style="width: 100%; height: 100%;">
+                                <a href="#" class="image" style="display: block; width: 100%; height: 100%;">
+                                    <img class="pic-1 rounded-3" src="{{ asset('images/' . $product->image1) }}" style="width: 100%; height: 100%;" alt="Product Image">
+                                    <img class="pic-2 rounded-3" src="{{ asset('images/' . $product->image2) }}" style="width: 100%; height: 100%;" alt="Product Image">
+                                </a>
+                                <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                                <ul class="product-links">
+                                    <li><a href="{{ route('productdetail', ['id_product' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
+                                    <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
+                                    <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
                 
-                      <div class="col-md-3 col-sm-6">
-                          <div class="product-grid">
-                              <div class="product-image">
-                                  <a href="#" class="image">
-                                    <img class="pic-1 rounded-3" src="{{ asset('images/' . $product->image1) }}">
-                                    <img class="pic-2 rounded-3" src="{{ asset('images/' . $product->image2) }}">
-                                  </a>
-                                  <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
-                                      <i class="far fa-heart"></i>
-                                  </a>
-                                  <ul class="product-links">
-                                      <li><a href="{{ route('productdetail', ['id_product' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
-                                      <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
-                                      <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
-                                  </ul>
-                              </div>
-                          </div>
-                      </div>
-                      
-                      @endforeach
                       <!-- Add other items similarly -->
                   </div>
               </div>
