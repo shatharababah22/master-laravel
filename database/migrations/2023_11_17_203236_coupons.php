@@ -19,8 +19,6 @@ return new class extends Migration
             $table->id();
             $table->string('Kiloes');
             $table->decimal('percent');
-            $table->unsignedBigInteger('type');
-            $table->foreign('type')->references('id')->on('recyclings'); // Assuming 'id' is the primary key in the 'recyclings' table
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

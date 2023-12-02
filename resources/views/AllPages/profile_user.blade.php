@@ -225,76 +225,41 @@
               </div>
              <h4>Recyclings Table</h4>
               <div class="row gutters-sm">
+
+                
                 <table class="styled-table">
                     <thead>
                         <tr>
                             <th>Types</th>
                             
                             <th>Quantity (In kileo)</th>
-                            <th>Max Quantity (In kileo) <small>To get 30%</small></th>
-                            <th>Max Quantity (In kileo) <small>To get 50%</small></th>
-                            <th>Max Quantity (In kileo) <small>To get 80%</small></th>
+                            <th>Max Quantity (In kileo) <small>To get {{ $wow }} %</small></th>
+                      
                         </tr>
                     </thead>
                     <tbody>
+<!-- Check if a discount exists before displaying the alert -->
+@if($discount)
+    <div class="alert alert-success" role="alert">
+        <strong>Congratulations!</strong> You have a discount: {{ $discount }}
+    </div>
+{{-- 
+    <div class="alert alert-info" role="alert">
+        No discount available.
+    </div> --}}
+@endif
+
+
                       @foreach($Recyclings as $item)
-                      @if(in_array($item->types, ['plastic', 'organic', 'paper', 'glass']))
-                          @php
-                              $maxQuantity30 = $kiloesForRecycling[$item->types][30] ?? 0;
-                              $maxQuantity50 = $kiloesForRecycling[$item->types][50] ?? 0;
-                              $maxQuantity80 = $kiloesForRecycling[$item->types][80] ?? 0;
-                          @endphp
+                      @if(is_object($item))
+                   
                           <tr class="active-row">
                               <td>{{$item->types}}</td>
                               <td>{{$item->Amount}}</td>
-                              <td>
-                                  @if($item->types == 'plastic')
-                                      {{$maxQuantity30}}
-                                  @elseif($item->types == 'organic')
-                                      {{$maxQuantity30}}
-                                  @elseif($item->types == 'paper')
-                                      {{$maxQuantity30}}
-                                  @elseif($item->types == 'glass')
-                                      {{$maxQuantity30}}
-                                  @endif
-                              </td>
-                              <td>
-                                  @if($item->types == 'plastic')
-                                      {{$maxQuantity50}}
-                                  @elseif($item->types == 'organic')
-                                      {{$maxQuantity50}}
-                                  @elseif($item->types == 'paper')
-                                      {{$maxQuantity50}}
-                                  @elseif($item->types == 'glass')
-                                      {{$maxQuantity50}}
-                                  @endif
-                              </td>
-                              <td>
-                                  @if($item->types == 'plastic')
-                                      {{$maxQuantity80}}
-                                  @elseif($item->types == 'organic')
-                                      {{$maxQuantity80}}
-                                  @elseif($item->types == 'paper')
-                                      {{$maxQuantity80}}
-                                  @elseif($item->types == 'glass')
-                                      {{$maxQuantity80}}
-                                  @endif
-                              </td>
+                              <td>{{ $wow1 }}</td>
                           </tr>
-                          @if($item->Amount >= $maxQuantity30 && $item->Amount < $maxQuantity50)
-                          <div class="alert success">
-                              Congratulations on reaching {{$item->types}} target for 30% discount! Discount: 30%
-                          </div>
-                      @elseif($item->Amount >= $maxQuantity50 && $item->Amount < $maxQuantity80)
-                          <div class="alert warning">
-                              Congratulations on reaching {{$item->types}} target for 50% discount! Discount: 50%
-                          </div>
-                      @elseif($item->Amount >= $maxQuantity80)
-                          <div class="alert danger">
-                              Congratulations on reaching {{$item->types}} target for 80% discount! Discount: 80%
-                          </div>
-                      @endif
-              
+              @else
+              <div>sdlkf</div>
                       @endif
                   @endforeach
                   

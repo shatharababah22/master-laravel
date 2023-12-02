@@ -148,7 +148,7 @@
                                 <div class="tab-pane fade show active" id="pills-one-example1" role="tabpanel" aria-labelledby="pills-one-example1-tab" data-target-group="groups">
                                     <!-- Product Cards Feature with Ratings -->
                                     <div class="row">
-
+                           
                                         @foreach ($allProductsPaginator as $product)
                                         <div class="col-md-6 col-xl-4 mb-3 mb-md-4 pb-1"  id="product-{{ $product->id }}" >
                                             <div class="card transition-3d-hover shadow-hover-2 h-100">
@@ -211,8 +211,9 @@
                                         </div>
                                         
                                         @endforeach
+                            
                                         
-                                      
+                                    
                                     </div>
                                
                                    

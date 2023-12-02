@@ -84,7 +84,7 @@ Route::post('/productdetail/comment/{id_comment}', [DiscountproductController::c
 
 //...............cart.....................
 Route::post('/productdetail/add/{id}', [DiscountproductController::class, 'add_cart'])->name('addcart');
-Route::post('/discountcoupon', [CartitemController::class, 'index'])->name('discountcoupon');
+Route::post('/discountcoupon', [DiscountproductController::class, 'discounts'])->name('discountcoupon');
 Route::get('/cart', [CartitemController::class, 'index'])->name('cart');
 Route::put('/updatecart/{id}', [CartitemController::class, 'update'])->name('updatecart');
 Route::delete('/deletecart/{id}', [CartitemController::class, 'destroy'])->name('deletecart');

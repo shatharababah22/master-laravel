@@ -97,7 +97,7 @@ class CategoryController extends Controller
         // ]);
 
         $input = $request->all();
-        dd($category);
+        // dd($category);
         if ($Image = $request->file('Image')) {
             $destinationPath = 'images/';
             $profileImage = date('YmdHis') . "." . $Image->getClientOriginalExtension();

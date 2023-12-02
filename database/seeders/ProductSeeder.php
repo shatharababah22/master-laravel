@@ -298,6 +298,90 @@ class ProductSeeder extends Seeder
             // Clothes
 
 
+            [
+                'Name' => 'The Canvas Transport Tote',
+                'Price' => 20, 
+                'description' => 'Madewell Canvas Transport Tote is a versatile and stylish companion for everyday adventures. Crafted from durable canvas, it offers ample space for essentials. With leather handles and a timeless design, it effortlessly blends fashion and functionality, making it an essential wardrobe staple.',
+                'image1' => 'CC1.GIF',
+                'image2' => 'CC2.GIF',
+                'Stockquantity' => 17, 
+                'CategoryID' => 4, 
+                'ItemId' => 23, 
+                'MADEFROM' => 'Made from 100% Cotton and recycled clothes',
+            ],
+            [
+                'Name' => 'Scarf',
+                'Price' => 10, 
+                'description' => '
+                The scarf is a chic accessory that effortlessly elevates your style. Whether draped, tied, or wrapped, it adds a touch of sophistication to any outfit. Crafted from luxurious materials, this versatile piece enhances warmth and complements your fashion-forward look with its texture, patterns, and colors.',
+                'image1' => 'CC3.GIF',
+                'image2' => 'CC4.GIF',
+
+                'Stockquantity' => 7, 
+                'CategoryID' => 4, 
+                'ItemId' => 24, 
+                'MADEFROM' => 'Made from recycled clothes',
+            ],
+            [
+                'Name' => 'Cap',
+                'Price' => 5, 
+                'description' =>'The cap, crafted from recycled clothes, embodies sustainable fashion. Each piece carries a unique story, repurposing materials to reduce environmental impact. Combining style with eco-consciousness, it a symbol of mindful dressing, showcasing that fashion can be both trendsetting and environmentally responsible.',
+                'image1' => 'CC5.GIF',
+                'image2' => 'CC6.GIF',
+                'Stockquantity' => 6, 
+                'CategoryID' => 4, 
+                'ItemId' => 25, 
+                'MADEFROM' => 'Made from Recycled clothes, 99% Cotton',
+            ],
+
+            
+            [
+                'Name' => 'Casual Dress',
+                'Price' => 17, 
+                'description' =>'The casual dress exudes effortless charm, perfect for relaxed occasions. Crafted with comfort in mind, its versatile design effortlessly transitions from day to night. The dress, with its flattering silhouette and quality fabric, is a go-to choice for a laid-back yet stylish look that suits various settings.',
+                'image1' => 'CC55.GIF',
+                'image2' => 'CC66.GIF',
+                'Stockquantity' => 5, 
+                'CategoryID' => 4, 
+                'ItemId' => 26, 
+                'MADEFROM' => 'Made from Recycled clothes',
+            ],
+
+
+            [
+                'Name' => 'Jeans',
+                'Price' => 13, 
+                'description' => '
+                The jeans made from recycled materials redefine sustainable style. Meticulously crafted, each pair tells a story of eco-conscious fashion. With a blend of recycled fabrics, these jeans offer both comfort and a guilt-free style statement, proving that environmental responsibility and trendsetting can seamlessly coexist.',
+                'image1' => 'CC77.GIF',
+                'image2' => 'CC10.GIF',
+                'Stockquantity' => 25, 
+                'CategoryID' => 4,
+                'ItemId' => 27, 
+                'MADEFROM' => 'Made from Recycled clothes',
+            ],
+
+            [
+                'Name' => 'Long Sleeve Blouse',
+                'Price' => 14.50, 
+                'description' => 'The long-sleeve blouse is a wardrobe staple that effortlessly combines sophistication and versatility. Crafted with attention to detail, its graceful design complements various styles. Whether for professional settings or casual outings, the blouse, with its timeless charm and comfort, is an essential piece for any fashion-forward wardrobe.',
+                'image1' => 'CC100.GIF',
+                'image2' => 'CC101.GIF',
+                'Stockquantity' => 16,
+                'CategoryID' => 4, 
+                'ItemId' => 28, 
+                'MADEFROM' => 'Made from Recycled clothes',
+            ],
+
+
+
+
+
+
+            // Organic
+
+
+
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Discount;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
@@ -14,7 +15,7 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        $discounts = Discount::all();
+        $discounts = Coupon::all();
         return view('Dashboard.Discount.discount', compact('discounts')); 
     }
 
@@ -40,7 +41,7 @@ class DiscountController extends Controller
 
        
 
-        Discount::create($input);
+        Coupon::create($input);
 
         return redirect()->route('discount.index')
                         ->with('success','Discount created successfully.');
@@ -63,7 +64,7 @@ class DiscountController extends Controller
      * @param  \App\Models\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function edit(Discount $discount)
+    public function edit(Coupon $discount)
     {
         return view('Dashboard.Discount.edit', compact('discount'));
     }
@@ -75,7 +76,7 @@ class DiscountController extends Controller
      * @param  \App\Models\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Discount $discount)
+    public function update(Request $request, Coupon $discount)
     {
         $input = $request->all();
 
@@ -94,7 +95,7 @@ class DiscountController extends Controller
      */
     public function destroy($id)
     {
-        Discount::destroy($id);
+        Coupon::destroy($id);
      
         return redirect()->route('discount.index')->with(['deleted' => 'Deleted successfully']);
     }

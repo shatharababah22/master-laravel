@@ -12,7 +12,7 @@
         padding: 20px;
         height: 500px;
         width: 70%;
-        background-image: url("https://i.pinimg.com/originals/5b/c0/83/5bc0833cd91dac56d5677bf89e383849.gif");
+        background-image: url("https://i.pinimg.com/originals/69/e8/43/69e843e0c85daa1abaefd7a3cf057dc9.gif");
         background-repeat: no-repeat;
         background-size: cover; /* Use cover to make the image cover the entire background */
     }

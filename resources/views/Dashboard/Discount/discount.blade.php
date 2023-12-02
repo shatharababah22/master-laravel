@@ -49,11 +49,8 @@ Discount
           <thead>
               <th >&nbsp;</th>
               <th>#</th>
-              <th>Name</th>
+              <th>Kileo</th>
               <th>Percent</th>
-              <th>active</th>
-              <th>Start Date</th>
-              <th>End Date</th>
               <th>Action</th>
            
            
@@ -70,14 +67,11 @@ Discount
                   <td>
                       <div>
                           
-                          <p class="m-0 fw-bold text-muted">{{$discount->name}} </p>
+                          <p class="m-0 fw-bold text-muted">{{$discount->Kiloes}} </p>
                       </div>
                   </td>
-                  <td >{{ $discount->Percent}}</td>
-                  <td >{{ $discount->active}}</td>
-                  <td >{{ $discount->StartDate}}</td>
-                  <td >{{ $discount->EndDate}}</td>
-                 
+                  <td >{{ $discount->percent}}</td>
+
                   <td>
                     <div style="display: grid; grid-template-columns: 50px auto;">
                         <button type="button" class="btn btn-success  btnedit"><a href="{{ route('discount.edit',$discount->id) }}" ><i class="bi-pencil-square"></i></a> </button>                        

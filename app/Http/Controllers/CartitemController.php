@@ -19,6 +19,7 @@ class CartitemController extends Controller
         
 if (auth()->user()) {
     $user = auth()->user();
+    $dis = session()->has('dis') ? session('dis') : 0;
 
     $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
 
@@ -29,13 +30,14 @@ if (auth()->user()) {
 else{
 
     $cart = session('cart');
+    $dis = session()->has('dis') ? session('dis') : 0;
 
 }
-   
+
 
 // dd(isset($cart->product));
 
-        return view('AllPages.cart',compact('cart'));
+        return view('AllPages.cart',compact('cart','dis'))->with('erorr', 'Your dont have any discount');
     }
 
 

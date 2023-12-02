@@ -29,19 +29,19 @@ Discount
 
             {{-- <span style="color:red">@error('name'){{ $message }} @enderror</span><br><br> --}}
 
-            <input class="form-control inputadmin " id="name" name="name" value="{{$discount->name }}" type="text" placeholder="Name" data-sb-validations="required" />
+            <input class="form-control inputadmin " id="name" name="Kiloes" value="{{$discount->Kiloes }}" type="text" placeholder="Kiloes" data-sb-validations="required" />
 
-            <label for="name">Name</label>
+            <label for="name">Kiloes</label>
 
             
         </div>
         <div class="form-floating mb-3 ">
-            <input class="form-control inputadmin" id="Percent" name="Percent" value="{{$discount->Percent }}" type="text" placeholder="Percent" data-sb-validations="required" />
+            <input class="form-control inputadmin" id="Percent" name="percent" value="{{$discount->percent }}" type="text" placeholder="Percent" data-sb-validations="required" />
             <label for="Percent">Percent</label>
         
         </div>
         
-        <div class="form-group row mb-3">
+        {{-- <div class="form-group row mb-3">
             <div class="col-md-6">
                 <input class="form-control inputadd" id="decription" name="StartDate" value="{{$discount->StartDate }}" type="date" placeholder="Start Date" data-sb-validations="required" />
             
@@ -52,15 +52,15 @@ Discount
                 <input class="form-control inputadd" name="EndDate" value="{{$discount->EndDate}}" type="date" placeholder="End Date" data-sb-validations="required" />
            
             </div>
-        </div>
-        <div class="form-floating mb-1 ">
+        </div> --}}
+        {{-- <div class="form-floating mb-1 ">
             <select class="form-control inputadd" name="active" value="{{$discount->active}}" data-sb-validations="required">
                 <option>Select the status</option>
                 <option>0</option>
                 <option>1</option>
             </select>
         
-        </div>
+        </div> --}}
 
     
         <div class="d-flex justify-content-center">

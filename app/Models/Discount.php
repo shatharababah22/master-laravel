@@ -16,7 +16,6 @@ class Discount extends Model
              "name",
              "Percent",
              "active",
-             "CategoryID",
              "UserID",
         
              

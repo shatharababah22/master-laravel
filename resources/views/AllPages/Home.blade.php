@@ -384,7 +384,7 @@
                   </span></h2>
                   <p>
                     "When you click the button, you will be directed to locations with our recycling bins. Additionally, there is a form through which you can submit items you want to recycle, whether they are related to plastic, glass, or paper.
-                     Afterwards, you will receive a discount coupon on our products based on quantity of the materials you have provided."</p>
+                     Afterwards, you will receive a discount coupon on our products based on quantity of the materials you have provided.After that you can show the quantity of recycled items from<span><a href="{{ route('profile.general') }}"> Your profile.</a>"</span></p>
               </div>
         
                   

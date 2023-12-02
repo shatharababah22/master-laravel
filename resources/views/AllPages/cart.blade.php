@@ -72,13 +72,13 @@
                                                         @method('PUT')
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <button type="button" class="btn btn-outline-secondary minus-btn" style="border-right: none;">-</button>
+                                                                <button type="button" class="btn btn-outline-secondary minus-btn" style="border-right: none;"><i class="fa fa-minus" style="color:darkgreen;font-size:17px;"></i></button>
                                                             </div>
                                                         
                                                             <input type="text" name="quantity" id="actionInput" class="form-control text-center border border-secondary" value="{{ isset($item->product) ? $item->Quantity : $item['quantity'] }}" aria-label="Example text with button addon" aria-describedby="button-addon1" />
                                                         
                                                             <div class="input-group-append">
-                                                                <button type="button" class="btn btn-outline-secondary plus-btn" style="border-left: none;">+</button>
+                                                                <button type="button" class="btn btn-outline-secondary plus-btn" style="border-left: none;"><i class="fa fa-plus" style="color:darkgreen;font-size:17px;"></i></button>
                                                             </div>
                                                         </div>
                                                         
@@ -124,13 +124,13 @@
           
                  
     <div class="volunteer-form">
-        @if (Session::has('cartEmpty'))
+        @if (Session::has('error'))
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
                     Swal.fire({
                         title: 'Message',
-                        text: "{{ Session::get('cartEmpty') }}",
+                        text: "{{ Session::get('error') }}",
                         icon: 'warning',
                         showConfirmButton: true,
                         confirmButtonText: "OK",
@@ -158,10 +158,28 @@
 
 
    
-
+        <div class="volunteer-form">
+            @if (Session::has('erorr'))
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        Swal.fire({
+                            title: 'Message',
+                            text: "{{ Session::get('erorr') }}",
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonText: "OK",
+                        });
+                    });
+                </script>
+            @endif
+        </div>
+        
         @if (auth()->user())
-        @php $totalprice = 0 @endphp
+
         @php $shipment = 2 @endphp
+       
+   
     
         <div class="row mb-4 justify-content-center align-items-center h-100 container">
             <div class="mb-5 col-lg-6"></div>
@@ -169,22 +187,50 @@
                 <div class="p-5">
                     <h3 class="mb-5 pt-1">Summary</h3>
                     <hr class="my-2">
-                    @foreach($cart as $item)
-                        <div class="row mb-4 d-flex justify-content-between align-items-center">
-                            <!-- Your item rendering code here -->
-                            @php
-                                $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
-                                $totalprice += $itemPrice+$shipment;
-                           
-                            @endphp
-                        </div>
-                      
-                    @endforeach
+     
+                
+                @if(!$dis)
+                       @php
+                    $totalPrice = 0; // Initialize $totalPrice here if not already initialized
+                @endphp
+                
+                @foreach($cart as $item)
+                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                        <!-- Your item rendering code here -->
+                        @php
+                            $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
+                            $totalPrice += $itemPrice + $shipment;
+                        @endphp
+                    </div>
+                @endforeach
+            @else
+                @php
+                    $totalPrice = 0; // This line resets $totalPrice, which is incorrect
+                @endphp
+            
+                @foreach($cart as $item)
+                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                        <!-- Your item rendering code here -->
+                        @php
+                            $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
+                            $totalPrice += $itemPrice + $shipment;
+                        @endphp
+                    </div>
+                @endforeach
+            
+                @php
+                    $discountAmount = ($dis / 100) * $totalPrice;
+                    $totalPrice -= $discountAmount;
+                @endphp
+            @endif
+            
+
+
     
                     <div class="d-flex justify-content-between mb-4">
                         @php      $cartCount = ($cart !== null) ? count($cart) : 0;   @endphp
                         <h5 class="text-uppercase">{{ $cartCount}}  items</h5>
-                        <h5>JOD {{ $totalprice }}</h5>
+                        <h5>JOD {{ $totalPrice }}</h5>
                     </div>
                     <h5 class="text-uppercase mb-3">Shipping</h5>
         
@@ -197,33 +243,7 @@
                       </select>
                     </div>
       
-{{--                  
-                    @php
-                    $appliedDiscount = null;
-                    $discountCode = request()->input('discount');
-            
-                    if (!empty($discountCode)) {
-                        if (request()->has('apply_discount')) {
-                            $discount = App\Models\Discount::where('Name', $discountCode)->first();
-            
-                            if ($discount) {
-                                // Check if the discount is valid
-                                $discountAmount = $totalprice * ($discount->Percent / 100);
-            
-                                if ($discountAmount > 0) {
-                                    $totalprice -= $discountAmount; // Apply the discount
-                                    $appliedDiscount = $discount;
-                                } else {
-                                    $message = 'Discount amount is zero or negative.';
-                                }
-                            } else {
-                                $message = 'Invalid discount code. Please try again.';
-                            }
-                        }
-                    }
-                @endphp
-       --}}
-               {{-- <div class="mb-5">
+               <div class="mb-5">
                    <div class="form-outline">
                        <h5 class="text-uppercase mb-3">Give code</h5>
                        <div class="mb-5">
@@ -231,17 +251,17 @@
                                <form method="POST" action="{{ route('discountcoupon') }}">
                                    @csrf
                                    <input type="text" name="discount" id="form3Examplea2" class="form-control form-control-lg" />
-                                   <button type="submit" name="apply_discount" id="applyDiscountButton" class="btn btn-primary mt-2">Apply Discount</button>
+                                   <button type="submit"  id="applyDiscountButton" class="btn btn-primary mt-2">Apply Discount</button>
                                </form>
                            </div>
                        </div>
                    </div>
-               </div> --}}
+               </div>
                <hr class="my-2">
                   
                <div class="d-flex justify-content-between mb-5">
                    <h5 class="text-uppercase">Total price</h5>
-                   <h5>JOD {{$totalprice }}</h5>
+                   <h5>JOD {{$totalPrice }}</h5>
                </div> 
                <a href="{{ route('adresess_user', ['iduser' => auth()->user()->id]) }}" class="btn btn-primary mx-auto py-3 px-4 mt-4" style="float: right;">Checkout</a>
             </div>
@@ -257,12 +277,7 @@
                   
              
                   
-               
-                  {{-- @if(isset($message))
-                  <div class="alert alert-danger">
-                      {{ $message }}
-                  </div>
-                  @endif  --}}
+      
                   
        
           
@@ -297,24 +312,7 @@
                         }
                         
                         $appliedDiscount = null;
-                        // $discountCode = request()->input('discount');
-                        
-                        // if (!empty($discountCode)) {
-                        //     if (request()->has('apply_discount')) {
-                        //         $discount = App\Models\Discount::where('Name', $discountCode)->first();
-                        //         if ($discount) {
-                        //             if ($appliedDiscount && $appliedDiscount->Name === $discountCode) {
-                        //                 $message = 'Oops, the discount has already been used!';
-                        //             } else {
-                        //                 $appliedDiscount = $discount;
-                        //                 $totalPrice *= (1 - ($discount->Percent / 100));
-                        //                 $message = 'Discount applied successfully!';
-                        //             }
-                        //         } else {
-                        //             $message = 'Invalid discount code. Please try again.';
-                        //         }
-                        //     }
-                        // }
+        
                     @endphp
                         
                         <h5 class="text-uppercase">items {{ $cartCount }}</h5>
@@ -341,28 +339,7 @@
                         <div class="form-outline">
                          
         
-                          {{-- <div class="mb-5">
-                              <div class="form-outline">
-                                  <h5 class="text-uppercase mb-3">Give code</h5>
-                                  <div class="mb-5">
-                                      <div class="form-outline">
-                                          <form method="POST" action="{{ route('discountcoupon') }}">
-                                              @csrf
-                                              <input type="text" name="discount" id="form3Examplea2" class="form-control form-control-lg" />
-                                              <button type="submit" name="apply_discount" id="applyDiscountButton" class="btn btn-primary mt-2">Apply Discount</button>
-                                          </form>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div> --}}
-                     
-                          
-        {{--                   
-                          @if(isset($message))
-                          <div class="alert alert-danger">
-                              {{ $message }}
-                          </div>
-                          @endif --}}
+                
                           
                           <hr class="my-2">
                           
@@ -394,7 +371,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 <script>
     $(document).ready(function () {
@@ -413,30 +390,7 @@
             updateCart(inputField);
         });
 
-        function updateCart(inputField) {
-            var form = inputField.closest('form');
-            var formData = form.serialize();
-
-            $.ajax({
-                url: form.attr('action'),
-                type: form.attr('method'),
-                data: formData,
-                success: function (response) {
-                    // Handle success if needed
-                    console.log(response);
-
-                    // Assuming the total price is present in the next column
-                    var totalPriceElement = inputField.closest('.row').find('.col-md-3 h6');
-                    var newTotalPrice = parseFloat(response.price); // Adjust this based on your response data
-
-                    totalPriceElement.text('JOD ' + newTotalPrice.toFixed(2));
-                },
-                error: function (error) {
-                    // Handle error if needed
-                    console.error(error);
-                }
-            });
-        }
+   
     });
 </script>
 
