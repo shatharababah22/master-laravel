@@ -129,10 +129,11 @@ class DiscountproductController extends Controller
 
         // Handle price range and other filters as you are already doing.
 
-        $allProductsCollection = $query->orderBy('id')->paginate($perPage);
-        $categoryProductCounts = $query->count();
+        $allProductsPaginator = $query->orderBy('id')->paginate($perPage);
+        $allProductsCollection = $allProductsPaginator->items();
+        $categoryProductCounts = $allProductsPaginator->total();
 
-        return view('AllPages.Allproducts', compact('allProductsCollection', 'categories', 'categoryProductCounts'));
+        return view('AllPages.Allproducts', compact('allProductsPaginator', 'categories', 'categoryProductCounts'));
     }
 
 
