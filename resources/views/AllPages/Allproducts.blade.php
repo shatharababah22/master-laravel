@@ -42,14 +42,14 @@
         <!-- ========== MAIN CONTENT ========== -->
         <main id="content" role="main">
             <div class="container pt-5 pt-xl-8" >
-                <div class="row mb-5 mb-md-8 mt-xl-1 pb-md-1">
-                    <div class="col-lg-4 col-xl-3 order-lg-1 width-md-50">
-                        <div class="navbar-expand-lg navbar-expand-lg-collapse-block">
+                <div class="row mb-4 mb-md-8 mt-xl-1 pb-md-1">
+                    <div class="col-lg-4 col-xl-3 order-lg-1 width-md-50" >
+                        <div class="navbar-expand-lg navbar-expand-lg-collapse-block"  >
                             <button class="btn d-lg-none mb-5 p-0 collapsed" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                                 <i class="far fa-caret-square-down text-primary font-size-20 card-btn-arrow ml-0"></i>
                                 <span class="text-primary ml-2">Sidebar</span>
                             </button>
-                            <div id="sidebar" class="collapse navbar-collapse">
+                            <div id="sidebar"  style="background-color: rgba(233, 241, 236, 0.299);">
                                 <div class="mb-6 w-100">
                                     <div class="pb-4 mb-2">
                                      
@@ -59,11 +59,14 @@
                                                     <form method="get" action="{{ route('search') }}">
                                                         @csrf
                                                         {{-- <span class="d-block font-size-lg-15 font-size-18 font-weight-bold text-dark ms-1 mb-1">Search now:</span> --}}
-                                                        <div class="search-input-container col-12 mt-4">
+                                                        <div class="search-input-container col-12 mt-4" >
                                                             <input type="text" name="search" id="search" class="form-control text-center border border-color-1 rounded-xs  "
                                                                 aria-label="Example text with button addon" value="{{ request('search') }}" placeholder="Search here" />
                                                             <i class="fas fa-search search-icon" style="font-size: 25px;"></i>
                                                         </div>
+
+
+                                                        
                                                     </form>
                                                     
                                                     
@@ -85,8 +88,8 @@
 </form>
 
 
-<form>
-    <span class="d-block font-size-lg-15 font-size-18 font-weight-bold text-dark ms-1 mb-1">Choose the brand:</span>
+
+    {{-- <span class="d-block font-size-lg-15 font-size-18 font-weight-bold text-dark ms-1 mb-1">Choose the brand:</span>
     <div style="width: 98%;margin-left:3px;">
 <select name="min_price" class="form-control text-center border border-color-1 rounded-xs" aria-label="Minimum Price" style="background-color: white">
     <option value="">Select Minimum Price</option>
@@ -95,8 +98,8 @@
 
     <!-- Add more options as needed -->
 </select>
-    </div>
-</form>
+    </div> --}}
+
 
 
 <div class="card-collapse" id="cityCategoryHeadingOne">
@@ -129,7 +132,8 @@
                     <div class="col-lg-8 col-xl-9 order-md-1 order-lg-2">
                         <!-- Shop-control-bar Title -->
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h3 class="font-size-21 font-weight-bold mb-0 text-lh-1">{{ $categoryProductCounts}} results found.</h3>
+                            <h3 class="font-size-21 font-weight-bold mb-0 text-lh-1">Showing {{ $allProductsPaginator->count() }} of {{ $allProductsPaginator->total() }} products
+                            </h3>
                      
                         </div>
                         <!-- End shop-control-bar Title -->
@@ -145,7 +149,7 @@
                                     <!-- Product Cards Feature with Ratings -->
                                     <div class="row">
 
-                                        @foreach ($allProductsCollection as $product)
+                                        @foreach ($allProductsPaginator as $product)
                                         <div class="col-md-6 col-xl-4 mb-3 mb-md-4 pb-1"  id="product-{{ $product->id }}" >
                                             <div class="card transition-3d-hover shadow-hover-2 h-100">
                                                 <div class="position-relative">
@@ -229,7 +233,7 @@
         <!-- ========== END MAIN CONTENT ========== -->
 
         <div style="margin-left: 56%; margin-right: 35%; text-align: center;">
-            {!! $allProductsCollection->withQueryString()->links('pagination::bootstrap-5') !!}
+            {!! $allProductsPaginator->withQueryString()->links('pagination::bootstrap-5') !!}
         </div>
         
 

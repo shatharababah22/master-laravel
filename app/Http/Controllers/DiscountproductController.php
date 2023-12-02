@@ -85,17 +85,17 @@ class DiscountproductController extends Controller
     {
         $perPage = 6;
         $categories = Category::all();
-
+    
         $query = DB::table('products')
             ->where('CategoryID', $Category_ID);
-
-
-
-        $allProductsCollection = $query->orderBy('id')->paginate($perPage);
-        $categoryProductCounts = $query->count();
-
-        return view('AllPages.Allproducts', compact('allProductsCollection', 'categories', 'categoryProductCounts'));
+    
+        $allProductsPaginator = $query->orderBy('id')->paginate($perPage);
+        $allProductsCollection = $allProductsPaginator->items();
+        $categoryProductCounts = $allProductsPaginator->total();
+    
+        return view('AllPages.Allproducts', compact('allProductsPaginator', 'categories', 'categoryProductCounts'));
     }
+    
 
 
     public function search(Request $request)

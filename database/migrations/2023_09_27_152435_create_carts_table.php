@@ -13,14 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-
-        Schema::create('carts', function (Blueprint $table) {
-            $table->id();
-           
-        });
-
-        Schema::enableForeignKeyConstraints();
+        Schema::dropIfExists('carts');
     }
 
     /**
@@ -30,6 +23,15 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carts');
+
+
+        Schema::disableForeignKeyConstraints();
+
+        Schema::create('carts', function (Blueprint $table) {
+            $table->id();
+           
+        });
+
+        Schema::enableForeignKeyConstraints();
     }
 };

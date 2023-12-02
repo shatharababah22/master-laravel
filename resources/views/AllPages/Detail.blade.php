@@ -314,10 +314,10 @@
                     @foreach ($relatedProducts as $product)
                     <div class="col-md-3 col-sm-6">
                       <div class="product-grid">
-                        <div class="product-image" style=" height: 350px; width: 100%;">
+                        <div class="product-image" style=" height: 330px; width: 100%;">
                             <a href="#" class="image">
-                                <img class="pic-1" src="{{ asset('images/' . $product->image1) }}" style=" height: 350px; width: 100%;">
-                                <img class="pic-2" src="{{ asset('images/' . $product->image2) }}" style=" height: 350px; width: 100%;">
+                                <img class="pic-1" src="{{ asset('images/' . $product->image1) }}" style=" height: 330px; width: 100%;">
+                                <img class="pic-2" src="{{ asset('images/' . $product->image2) }}" style=" height: 330px; width: 100%;">
                             </a>
                             <a href="#" class="product-like-icon" data-tip="+Cart">
                                 <form method="POST" action="{{ route('addcart', ['id' => $product->id]) }}">

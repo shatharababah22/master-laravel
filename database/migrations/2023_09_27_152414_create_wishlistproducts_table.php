@@ -14,6 +14,18 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('wishlistproducts');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+      
+
         Schema::disableForeignKeyConstraints();
 
         Schema::create('wishlistproducts', function (Blueprint $table) {
@@ -26,16 +38,6 @@ return new class extends Migration
         });
 
         Schema::enableForeignKeyConstraints();
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('wishlistproducts');
     }
 
 };
