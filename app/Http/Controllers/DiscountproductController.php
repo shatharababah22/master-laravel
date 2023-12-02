@@ -35,6 +35,7 @@ class DiscountproductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $categories = Category::all();
@@ -85,17 +86,17 @@ class DiscountproductController extends Controller
     {
         $perPage = 6;
         $categories = Category::all();
-    
+
         $query = DB::table('products')
             ->where('CategoryID', $Category_ID);
-    
+
         $allProductsPaginator = $query->orderBy('id')->paginate($perPage);
-        $allProductsCollection = $allProductsPaginator->items();
-        $categoryProductCounts = $allProductsPaginator->total();
-    
-        return view('AllPages.Allproducts', compact('allProductsPaginator', 'categories', 'categoryProductCounts'));
+
+        // $categoryProductCounts = $allProductsPaginator->total();
+
+        return view('AllPages.Allproducts', compact('allProductsPaginator', 'categories'));
     }
-    
+
 
 
     public function search(Request $request)
@@ -297,6 +298,7 @@ class DiscountproductController extends Controller
             if ($selectedAddress) {
                 $request->session()->put('last_address', $selectedAddress);
             }
+            
         } else {
             // If a new address is provided, validate and store it
             $validatedData = $request->validate([

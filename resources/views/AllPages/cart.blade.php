@@ -54,7 +54,7 @@
                       
                           <div class="container">
                             {{-- @if (session()->has('cart') && count(session('cart')) > 0) --}}
-                            {{-- @if (is_object($cart)) --}}
+                     
                             @foreach($cart as $item)
                                       <div class="row mb-4 d-flex justify-content-between align-items-center">
                                         <div class="col-md-2 col-lg-2 col-xl-2">

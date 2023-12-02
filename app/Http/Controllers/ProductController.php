@@ -16,8 +16,6 @@ class ProductController extends Controller
     public function index()
     {
     
-
-
         $products = Product::select(
             '*',
             DB::raw('concat(LEFT(description, 105)) as truncated_description'),
