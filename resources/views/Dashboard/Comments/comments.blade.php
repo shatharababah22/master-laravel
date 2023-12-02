@@ -68,7 +68,7 @@ Comments
                   <td >{{ $comment->id}}</td>
                   <td >{{ $comment->Name}}</td>
                   <td >{{ $comment->Email}}</td>
-                  <td >{{ $comment->comments}}</td>
+                  <td ><div style="width: 200px;">{{ $comment->comments}}</div></td>
                   <td >{{ $comment->Rating}}</td>
                   <td >{{ $comment->date}}</td>
                   

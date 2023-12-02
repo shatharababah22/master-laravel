@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     /**
@@ -15,8 +15,17 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('Dashboard.Product.product', compact('products')); 
+    
+
+
+        $products = Product::select(
+            '*',
+            DB::raw('concat(LEFT(description, 105)) as truncated_description'),
+            DB::raw('SUBSTRING(description, 50, 1000) as showmore_description')
+        )->get();
+
+
+        return view('Dashboard.Product.product', compact('products'));
     }
 
     /**
@@ -40,7 +49,7 @@ class ProductController extends Controller
     {
         $input = $request->all();
 
-        
+
         $this->validate($request, [
             'Name' => 'required',
             'Price' => 'required|numeric',
@@ -55,16 +64,16 @@ class ProductController extends Controller
 
         for ($i = 1; $i <= 5; $i++) {
             $image = $request->file("image{$i}");
-    
+
             if ($image) {
                 $imageName = time() . "_{$i}." . $image->getClientOriginalExtension();
                 $image->move(public_path('images/'), $imageName);
-    
+
                 // Store the image name in the array with the loop index as the key
                 $imageNames[] = $imageName;
             }
         }
-    
+
         Product::create([
             // 'id' => $input['id'],
             'Name' => $input['Name'],
@@ -77,15 +86,15 @@ class ProductController extends Controller
             'ItemId' => $input['ItemId'],
             'CategoryID' => $input['CategoryID'],
         ]);
-    
+
         return redirect()->route('productadmin.index')
-                        ->with('success', 'Product created successfully.');
+            ->with('success', 'Product created successfully.');
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     /**
      * Display the specified resource.
      *
@@ -97,8 +106,8 @@ class ProductController extends Controller
         //
     }
 
-  
-    
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -106,11 +115,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $productadmin)
     {
-        $categories = Category::all();
-return view('Dashboard.Product.Edit', compact('product', 'categories'));
+        // $product=Product::find($product);
 
+        $categories = Category::all();
+        return view('Dashboard.Product.Edit', compact('productadmin', 'categories'));
     }
 
     /**
@@ -120,40 +130,44 @@ return view('Dashboard.Product.Edit', compact('product', 'categories'));
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $productadmin)
     {
         $input = $request->all();
 
-if ($image1 = $request->file('image1')) {
-    $destinationPath = 'images/';
-    $profileImage = date('YmdHis') . "." . $image1->getClientOriginalExtension();
-    $image1->move($destinationPath, $profileImage);
-    $input['image1'] = $destinationPath . $profileImage; // Update input with full image path
-}
+        $productadmin->update([
+            'Name' => $input['Name'],
+            'Price' => $input['Price'],
+            'description' => $input['description'],
+            'Stockquantity' => $input['Stockquantity'],
+            'MADEFROM' => $input['MADEFROM'],
+            'ItemId' => $input['ItemId'],
+            'CategoryID' => $input['CategoryID'],
+        ]);
 
-if ($image2 = $request->file('image2')) {
-    $destinationPath = 'images/';
-    $profileImage = date('YmdHis') . "." . $image2->getClientOriginalExtension();
-    $image2->move($destinationPath, $profileImage);
-    $input['image2'] = $destinationPath . $profileImage; // Update input with full image path
-}
-
-$product->update($input);
-
-// dd($input); // Uncomment for debugging purposes
-
-return redirect()->route('productadmin.index')
-    ->with('success', 'Product updated successfully.');
-
-
-
-
-
+    //     // Update image1 if provided
+        if ($image1 = $request->file('image1')) {
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis') . "." . $image1->getClientOriginalExtension();
+            $image1->move($destinationPath, $profileImage);
+            $productadmin->update(['image1' => $destinationPath . $profileImage]);
+        }
+    
+        // Update image2 if provided
+        if ($image2 = $request->file('image2')) {
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis') . "." . $image2->getClientOriginalExtension();
+            $image2->move($destinationPath, $profileImage);
+            $productadmin->update(['image2' => $destinationPath . $profileImage]);
+        }
+    
+        return redirect()->route('productadmin.index')
+            ->with('success', 'Product updated successfully.');
     }
     
-    
-    
-    
+
+
+
+
     /**
      * Remove the specified resource from storage.
      *
@@ -163,7 +177,7 @@ return redirect()->route('productadmin.index')
     public function destroy($id)
     {
         Product::destroy($id);
-     
+
         return redirect()->route('productadmin.index')->with(['deleted' => 'Deleted successfully']);
     }
 }

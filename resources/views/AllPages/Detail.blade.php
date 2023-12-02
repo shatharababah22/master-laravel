@@ -119,8 +119,8 @@
                 </div>
       
                 <div class="mb-3">
-                  <span class="h5"><span class="del">{{ $product->Price}}</span>
-                  <span class="text-muted">JOD{{ $product->Price}}</span>
+                  {{-- <span class="h5"><span class="del">{{ $product->Price}}</span> --}}
+                  <span class="text-muted h5">JOD {{ $product->Price}}</span>
                 </div>
       
                 <p>
@@ -155,14 +155,14 @@
                   <!-- col.// -->
                   <form method="POST" action="{{ route('addcart', ['id' => $product->id]) }}">
                     @csrf
-                    <div class="col-md-4 col-6">
+               
                         <label class="mb-2 d-block">Quantity</label>
                         <div class="input-group mb-2" style="width: 170px;">
                           
                           <input type="number" class="form-control text-center border border-secondary" min="1" id="quantity" name="quantity" placeholder="1" aria-label="Example text with button addon" aria-describedby="button-addon1" />
                           
                         </div>
-                    </div>
+                  
                     <button type="submit" class="btn btn-primary">Add to Cart</button>
                     <a href="checkout.html" class="btn btn-warning shadow-0"> Buy now </a>
                 {{-- <a href="{{ route('addcart', ['id_cart' => $product->id]) }}" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a> --}}
@@ -313,22 +313,34 @@
                   <div class="row">
                     @foreach ($relatedProducts as $product)
                     <div class="col-md-3 col-sm-6">
-                        <div class="product-grid">
-                            <div class="product-image" style="width: 100%; height: 100%;">
-                                <a href="#" class="image" style="display: block; width: 100%; height: 100%;">
-                                    <img class="pic-1 rounded-3" src="{{ asset('images/' . $product->image1) }}" style="width: 100%; height: 100%;" alt="Product Image">
-                                    <img class="pic-2 rounded-3" src="{{ asset('images/' . $product->image2) }}" style="width: 100%; height: 100%;" alt="Product Image">
-                                </a>
-                                <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
-                                    <i class="far fa-heart"></i>
-                                </a>
-                                <ul class="product-links">
-                                    <li><a href="{{ route('productdetail', ['id_product' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
-                                    <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
-                                    <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
-                                </ul>
-                            </div>
+                      <div class="product-grid">
+                        <div class="product-image" style=" height: 350px; width: 100%;">
+                            <a href="#" class="image">
+                                <img class="pic-1" src="{{ asset('images/' . $product->image1) }}" style=" height: 350px; width: 100%;">
+                                <img class="pic-2" src="{{ asset('images/' . $product->image2) }}" style=" height: 350px; width: 100%;">
+                            </a>
+                            <a href="#" class="product-like-icon" data-tip="+Cart">
+                                <form method="POST" action="{{ route('addcart', ['id' => $product->id]) }}">
+                                    @csrf <!-- CSRF token for security -->
+                                    <button type="submit" style="background-color: #dbdbdb00; border: none; height: 30px;" >
+                                        <i class="fas fa-shopping-cart" style="color: rgb(79, 116, 3)"></i>
+                                    </button>
+                                </form>
+                            </a>
+                            <ul class="product-links">
+                                <li><a href="{{ route('productdetail', ['id_product' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: green;"></i></a></li>
+                            
+                                
+                                {{-- <a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: green;"></i></a></li> --}}
+                                <li><a href="{{ route('allproduct', ['Category_ID' => $product->CategoryID]) }}" style="background-color: #dbdbdb9e;" ><i class="fa fa-random" style="color: green;"></i></a></li>
+                            </ul>
+                            
                         </div>
+                        <div class="product-content">
+                            <h3 class="title"><a href="#">{{ $product->Name}}</a></h3>
+                            <div class="price"> {{ $product->Price}}</div>
+                        </div>
+                    </div>
                     </div>
                 @endforeach
                 

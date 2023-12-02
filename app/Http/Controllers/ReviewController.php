@@ -19,7 +19,7 @@ class ReviewController extends Controller
        ->join('users', 'reviews.UserID', '=', 'users.id')
        ->join('products', 'reviews.ProductID', '=', 'products.id')
        ->get();
-
+       
        return view("Dashboard.Comments.comments")->with("comments",$comments);
     }
 

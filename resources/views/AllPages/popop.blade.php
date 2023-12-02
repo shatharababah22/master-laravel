@@ -5,58 +5,66 @@
 @section('content')
 <style>
     .con {
-        margin: 5% auto;
-        background-color: #fff;
+        margin: 3% auto;
+        background-color: #9e0e0edf; /* Background color above the image */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
         padding: 20px;
+        height: 500px;
+        width: 70%;
+        background-image: url("https://i.pinimg.com/originals/5b/c0/83/5bc0833cd91dac56d5677bf89e383849.gif");
+        background-repeat: no-repeat;
+        background-size: cover; /* Use cover to make the image cover the entire background */
     }
-
-    .logo img {
-        width: 80px;
-        height: 50px;
-    }
-
-    .card {
-        border: 1px solid #ccc;
-        border-radius: 10px;
-    }
-
-    .invoice {
-        padding: 20px;
-    }
-
-    h5 {
-        color: #333;
-    }
-
-    .font-weight-bold {
-        font-weight: bold;
-        color: #555;
-    }
-
-    .payment {
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-        margin-top: 15px;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    .text-muted {
-        color: #777;
-    }
-
-    .py-2 {
-        padding: 10px 0;
-    }
-
-    .mb-0 {
-        margin-bottom: 0;
-    }
-</style>
+    
+    
+    
+        .logo img {
+            width: 80px;
+            height: 50px;
+        }
+    
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #ffffffe7;
+        }
+    
+        .invoice {
+            padding: 20px;
+        }
+    
+        h5 {
+            color: #333;
+        }
+    
+        .font-weight-bold {
+            font-weight: bold;
+            color: #555;
+        }
+    
+        .payment {
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            margin-top: 15px;
+        }
+    
+        table {
+            width: 100%;
+        }
+    
+        .text-muted {
+            color: #777;
+        }
+    
+        .py-2 {
+            padding: 10px 0;
+        }
+    
+        .mb-0 {
+            margin-bottom: 0;
+        }
+    </style>
 @if(isset($orderData1))
 <div class="container con mt-5 mb-5">
     <div class="row justify-content-center">
@@ -102,9 +110,17 @@
                         </table>
                     </div>
                 </div>
-                <p class="font-weight-bold" style="margin-left: 50px">Thank you for shopping with us!</p>
-<a href="./about.html" class="btn btn-primary py-sm-3 px-sm-4 mt-4">Read More</a>
-<a href="./about.html" class="btn btn-primary py-sm-3 px-sm-4 mt-4">Read More</a>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <a href="./about.html" class="text-decoration-none">
+                        <p class="font-weight-bold mb-0" style="margin-left: 50px">Thank you for shopping with us!</p>
+                    </a>
+                
+                    <div class="d-flex me-4">
+                        <a href="{{ route('home') }}" class="btn btn-primary py-sm-3 px-sm-4 me-2">Home</a>
+                        <a href="{{ route('profile.general') }}" class="btn btn-primary py-sm-3 px-sm-4">Your orders</a>
+                    </div>
+                </div>
+                
 
             </div>
         </div>

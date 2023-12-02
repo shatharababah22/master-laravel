@@ -115,6 +115,7 @@ Route::get('success-transaction', [PayPalController::class, 'successTransaction'
 Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])->name('cancelTransaction');
 
 
+
 // .....................admin..........................
 Route::resource('category', CategoryController::class);
 Route::resource('productadmin', ProductController::class);
@@ -129,13 +130,14 @@ Route::resource('adminprofile', WishlistproductController::class);
 
 
 
-
 // ...................admin_login.................
 Route::middleware('admin')->group(function () {
     Route::get('/dash', function () {
         return view('Dashboard.Home');
     });
 });
+
+
 
 Route::get('/dash', [AdminLoginController::class, 'showLoginForm'])->name('todos.index');
 Route::post('/dash/store', [AdminLoginController::class, 'store'])->name('todos.store');
@@ -147,7 +149,6 @@ Route::match(['get', 'post'], '/dash/login', [AdminLoginController::class, 'logi
 
 // ...................Recycling_form.................
 Route::match(['get', 'post'], '/recyclings', [DiscountproductController::class, 'Recycling'])->name("form_recycling");
-
 Route::get('/recyclings-page', function () {
     return view('AllPages.form');
 })->name('form');

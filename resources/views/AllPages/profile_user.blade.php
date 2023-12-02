@@ -305,6 +305,7 @@
                     </tbody>
                 </table>
               </div>
+
               <h4>Orders Table</h4>
               <div class="row gutters-sm">
                 <table class="styled-table">
@@ -321,7 +322,7 @@
 
                     
    
-                      @foreach($Orders ?? [] as $order)
+                      @foreach($orders ?? [] as $order)
                       {{-- {{ dd($order->orderItems) }} --}}
                       <tr class="active-row">
                           <td class="order-details" data-order-id="{{$order->id}}">{{$order->OrderDate}}</td>

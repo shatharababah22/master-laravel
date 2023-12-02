@@ -3,7 +3,28 @@
 @section('content')
 
 
+<style>
 
+
+.read-more-container{
+    display: flex;
+    flex-direction: column;
+    color: #111;
+
+}
+
+.read-more-btn{
+    color: #066922;
+}
+
+.read-more-text{
+    display: none;
+}
+
+.read-more-text--show{
+    display: inline;
+}
+</style>
 
 
     <!-- Carousel Start -->
@@ -154,7 +175,7 @@
                         and more.</p>
 
                     <div class="btn-box">
-                        <a href="./about.html" class="btn btn-primary">
+                        <a  href="{{ route('about') }}" class="btn btn-primary">
                             Read More
                         </a>
                     </div>
@@ -226,7 +247,7 @@
                         <h4 class="text-white mb-4">{{$category->Name}}</h4>
                         <div class="d-flex">
                             <a class="btn btn-lg-square rounded-circle mx-2" href="{{ route('allproduct', ['Category_ID' => $category->id]) }}"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
+                            <a class="btn btn-lg-square rounded-circle mx-2" href="https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"><i class="fa fa-link"></i></a>
                         </div>
                     </div>
                 </div>
@@ -244,7 +265,7 @@
 
 
     <!-- Service Start -->
-    <div class="container-xxl py-5">
+    <div class="container-xxl py-5" id="Services">
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <p class="fs-5 fw-bold text-primary">Our Services</p>
@@ -263,7 +284,7 @@
                             <h4 class="mb-3">Recycling Center Operations</h4>
                             <p class="mb-4">Material Sorting: Establish a recycling facility to sort and process different types of
                                  recyclable materials, such as plastics, paper, glass, and metals</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                          
                         </div>
                     </div>
                 </div>
@@ -278,7 +299,7 @@
                             </div>
                             <h4 class="mb-3">Educational Workshops and Cources</h4>
                             <p class="mb-4">Organize workshops, seminars, and school programs to educate the public about recycling and waste reduction.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                          
                         </div>
                     </div>
                 </div>
@@ -293,7 +314,7 @@
                             </div>
                             <h4 class="mb-3">Document Shredding and Paper Recycling</h4>
                             <p class="mb-4">Secure Document Shredding: Provide secure document destruction services for businesses and individuals.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                          
                         </div>
                     </div>
                 </div>
@@ -308,7 +329,7 @@
                             </div>
                             <h4 class="mb-3">Upcycling and Repurposing</h4>
                             <p class="mb-4">Partner with artists and designers to transform recycled materials into innovative products.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                          
                         </div>
                     </div>
                 </div>
@@ -323,7 +344,7 @@
                             </div>
                             <h4 class="mb-3">Recycling Pickup Points</h4>
                             <p class="mb-4">Set up convenient drop-off points where people can bring their recyclables for collection</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                          
                         </div>
                     </div>
                 </div>
@@ -338,7 +359,7 @@
                             </div>
                             <h4 class="mb-3">Retail of Recycled Products</h4>
                             <p class="mb-4">Operate a store that sells products made from recycled materials, supporting sustainable consumer choices</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                          
                         </div>
                     </div>
                 </div>
@@ -356,12 +377,12 @@
     <div class="container-fluid  my-5">
       <div class="row justify-content-md-center py-5 px-xl-5">
           <div class="col-md-6 col-12 py-5">
-              <div class="text-center mb-2 pb-2">
+              <div class="text-center  pb-2">
                   <h2 class="section-title px-5 mb-3"><span class=" px-2">Protect and Profit
                   </span></h2>
                   <p>
-                    "Hand over your waste materials, such as paper and bottles, to us, and we'll transform them into unique items
-                     that you can benefit from financially by profit a special items from our company"</p>
+                    "When you click the button, you will be directed to locations with our recycling bins. Additionally, there is a form through which you can submit items you want to recycle, whether they are related to plastic, glass, or paper.
+                     Afterwards, you will receive a discount coupon on our products based on quantity of the materials you have provided."</p>
               </div>
         
                   
@@ -396,23 +417,30 @@
     <div class="col-md-3 col-sm-6">
 
         <div class="product-grid">
-            <div class="product-image">
+            <div class="product-image" style=" height: 350px; width: 100%;">
                 <a href="#" class="image">
-                    <img class="pic-1" src="{{ asset('images/' . $product->image1) }}">
-                    <img class="pic-2" src="{{ asset('images/' . $product->image2) }}">
+                    <img class="pic-1" src="{{ asset('images/' . $product->image1) }}" style=" height: 350px; width: 100%;">
+                    <img class="pic-2" src="{{ asset('images/' . $product->image2) }}" style=" height: 350px; width: 100%;">
                 </a>
-                <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
-                    <i class="far fa-heart"></i>
+                <a href="#" class="product-like-icon" data-tip="+Cart">
+                    <form method="POST" action="{{ route('addcart', ['id' => $product->id]) }}">
+                        @csrf <!-- CSRF token for security -->
+                        <button type="submit" style="background-color: #dbdbdb00; border: none; height: 30px;" >
+                            <i class="fas fa-shopping-cart" style="color: rgb(79, 116, 3)"></i>
+                        </button>
+                    </form>
                 </a>
                 <ul class="product-links">
                     <li><a href="{{ route('productdetail', ['id_product' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: green;"></i></a></li>
-                    <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: green;"></i></a></li>
-                    <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: green;"></i></a></li>
+                
+                    
+                    {{-- <a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: green;"></i></a></li> --}}
+                    <li><a href="{{ route('allproduct', ['Category_ID' => $product->CategoryID]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: green;"></i></a></li>
                 </ul>
                 
             </div>
             <div class="product-content">
-                <h3 class="title"><a href="#">{{ $product->MADEFROM}}</a></h3>
+                <h3 class="title"><a href="#">{{ $product->Name}}</a></h3>
                 <div class="price"> {{ $product->Price}}</div>
             </div>
         </div>
@@ -420,74 +448,7 @@
 
     @endforeach
 
-    {{-- <div class="col-md-3 col-sm-6">
-        <div class="product-grid">
-            <div class="product-image">
-                <a href="#" class="image">
-                    <img class="pic-1" src="images/b10.PNG">
-                    <img class="pic-2" src="images/b10.PNG">
-                </a>
-                <span class="product-sale-label" >Sale</span>
-                <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
-                    <i class="far fa-heart"></i>
-                </a>
-                <ul class="product-links">
-                    <li><a href="Produc-details.html" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: green;"></i></a></li>
-                    <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: green;"></i></a></li>
-                    <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: green;"></i></a></li>
-                </ul>
-            </div>
-            <div class="product-content">
-                <h3 class="title"><a href="#">A glass of juice</a></h3>
-                <div class="price"><span>JOD 8.75</span>JOD 5.75</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 col-sm-6">
-        <div class="product-grid">
-            <div class="product-image">
-                <a href="#" class="image">
-                    <img class="pic-1" src="images/b10.PNG">
-                    <img class="pic-2" src="images/b10.PNG">
-                </a>
-                <a href="#" class="product-like-icon" data-tip="Add to Wishlist">
-                    <i class="far fa-heart"></i>
-                </a>
-                <ul class="product-links">
-                    <li><a href="Produc-details.html" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: green;"></i></a></li>
-                    <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: green;"></i></a></li>
-                    <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: green;"></i></a></li>
-                </ul>
-            </div>
-            <div class="product-content">
-                <h3 class="title"><a href="#">A glass of juice</a></h3>
-                <div class="price">JOD 5.75</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 col-sm-6">
-        <div class="product-grid">
-            <div class="product-image">
-                <a href="#" class="image">
-                    <img class="pic-1" src="images/b10.PNG">
-                    <img class="pic-2" src="images/b10.PNG">
-                </a>
-                <a href="#" class="product-like-icon " data-tip="Add to Wishlist">
-                    <i class="far fa-heart"></i>
-                </a>
-                <ul class="product-links">
-                    <li><a href="Produc-details.html" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: green;"></i></a></li>
-                    <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: green;"></i></a></li>
-                    <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: green;"></i></a></li>
-                </ul>
-            </div>
-            <div class="product-content">
-                <h3 class="title"><a href="#">A glass of juice</a></h3>
-                <div class="price">JOD 5.75</div>
-            </div>
-        </div>
-        
-    </div> --}}
+   
     
 
 </div>
@@ -564,7 +525,7 @@
                     <p class="mb-4">Firstly, our unwavering dedication to preserving the planet's resources
                          is evident in every aspect of our operations. By offering a diverse range of recycled items, we empower our customers to play an active role in reducing their carbon footprint and promoting a circular economy. This ethos resonates with individuals who prioritize eco-friendly
                          choices and aspire to</p>
-                    <a class="btn btn-primary py-3 px-4" href="about.html">Explore More</a>
+                    <a class="btn btn-primary py-3 px-4" href="{{ route('about') }}">Explore More</a>
                 </div>
                 <div class="col-lg-6">
                     <div class="row g-4 align-items-center">
@@ -767,7 +728,17 @@
                                 <div class="detail-box">
                                     <h5>{{ $Testimonial->Name }}</h5>
                                     <h6>{{ $Testimonial->Major }}</h6>
-                                    <p>{{ $Testimonial->comments }}</p>
+
+
+                                    <div class="causes-text read-more-container">
+                                        {{-- <h3>{{ $product->shortname }}</h3> --}}
+                                        <p>
+                                            {{ $Testimonial->truncated_description }}<span class="read-more-text">{{ $Testimonial->showmore_description }}</span>
+                                        </p>
+                                        <span class="read-more-btn">Read More...</span>
+                                    </div>
+
+                                    {{-- <p>{{ $Testimonial->comments }}</p> --}}
                                 </div>
                             </div>
                         </div>
@@ -797,7 +768,22 @@
 
 
 
+     <script src= {{ asset("js/main.js") }} ></script>
+     <script src= {{ asset("showMore.min.js") }} ></script>
 
+<script>
+ const readMoreButtons = document.querySelectorAll('.read-more-btn');
+
+readMoreButtons.forEach(button => {
+button.addEventListener('click', event => {
+ const current = event.target;
+ const currentText = current.parentNode.querySelector('.read-more-text');
+ currentText.classList.toggle('read-more-text--show');
+ current.textContent = current.textContent.includes('Read More') ? "Read Less..." : "Read More...";
+});
+});
+
+</script>
 
 
 @endsection

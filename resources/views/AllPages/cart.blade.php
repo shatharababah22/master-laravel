@@ -53,7 +53,7 @@
                        
                       
                           <div class="container">
-                            @if (session()->has('cart') && count(session('cart')) > 0)
+                            {{-- @if (session()->has('cart') && count(session('cart')) > 0) --}}
                             {{-- @if (is_object($cart)) --}}
                             @foreach($cart as $item)
                                       <div class="row mb-4 d-flex justify-content-between align-items-center">
@@ -67,20 +67,28 @@
                                           <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                             <div class="col-md-4 col-6">
                                                 <div class="input-group" style="width: 170px;">
-                                                   
                                                     <form method="POST" action="{{ route('updatecart', isset($item->product) ? $item->product->id : $item['id']) }}">
                                                         @csrf
                                                         @method('PUT')
- 
-
-
-<input type="text" name="quantity" id="actionInput" class="form-control text-center border border-secondary" value="{{ isset($item->product) ? $item->Quantity : $item['quantity'] }}" aria-label="Example text with button addon" aria-describedby="button-addon1" />
-
-       <button type="submit" class="btn btn-primary update-product" hidden>Update</button>
-</form>
-
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <button type="button" class="btn btn-outline-secondary minus-btn" style="border-right: none;">-</button>
+                                                            </div>
+                                                        
+                                                            <input type="text" name="quantity" id="actionInput" class="form-control text-center border border-secondary" value="{{ isset($item->product) ? $item->Quantity : $item['quantity'] }}" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                                                        
+                                                            <div class="input-group-append">
+                                                                <button type="button" class="btn btn-outline-secondary plus-btn" style="border-left: none;">+</button>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        
+                                        
+                                                        <button type="submit" class="btn btn-primary update-product" hidden>Update</button>
+                                                    </form>
                                                 </div>
                                             </div>
+                                            
                                         </div>
                                         
                                           <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
@@ -110,7 +118,7 @@
                                       <hr class="my-4">
                                     
                               @endforeach
-                         @endif
+                         {{-- @endif --}}
                 
                           </div>
           
@@ -379,102 +387,79 @@
 
 
    
-      <script>
-       
-    </script>
+
     
 
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-
-
-{{-- 
-      <script src="sweetalert2.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const applyDiscountButton = document.getElementById('applyDiscountButton');
+    $(document).ready(function () {
+        $('.plus-btn, .minus-btn').on('click', function (e) {
+            e.preventDefault();
 
-        applyDiscountButton.addEventListener('click', function () {
-            Swal.fire({
-                title: 'Apply Discount?',
-                text: 'Do you want to apply the discount code?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Apply',
-                cancelButtonText: 'Cancel',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Assuming the form has the id "discountForm"
-                    const form = document.getElementById('discountForm');
-                    if (form) {
-                        // Submit the form
-                        form.submit();
+            var inputField = $(this).closest('.input-group').find('input[name="quantity"]');
+            var currentQuantity = parseInt(inputField.val());
 
-                        // Display the "Wow, you get the discount!" message with a 3-second timer
-                        Swal.fire({
-                            title: 'Wow, you get the discount!',
-                            icon: 'success',
-                            timer: 3000 // Set the timer to 3 seconds (3000 milliseconds)
-                        });
-                    }
+            if ($(this).hasClass('plus-btn')) {
+                inputField.val(currentQuantity + 1);
+            } else if ($(this).hasClass('minus-btn') && currentQuantity > 1) {
+                inputField.val(currentQuantity - 1);
+            }
+
+            updateCart(inputField);
+        });
+
+        function updateCart(inputField) {
+            var form = inputField.closest('form');
+            var formData = form.serialize();
+
+            $.ajax({
+                url: form.attr('action'),
+                type: form.attr('method'),
+                data: formData,
+                success: function (response) {
+                    // Handle success if needed
+                    console.log(response);
+
+                    // Assuming the total price is present in the next column
+                    var totalPriceElement = inputField.closest('.row').find('.col-md-3 h6');
+                    var newTotalPrice = parseFloat(response.price); // Adjust this based on your response data
+
+                    totalPriceElement.text('JOD ' + newTotalPrice.toFixed(2));
+                },
+                error: function (error) {
+                    // Handle error if needed
+                    console.error(error);
                 }
             });
-        });
-    });
-</script> --}}
-
-    
-
-
-
-
-
-
-
-
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const actionInput = document.getElementById('actionInput');
-        const decrementButton = document.querySelector('.decrement-button');
-        const incrementButton = document.querySelector('.increment-button');
-
-        decrementButton.addEventListener('click', function (e) {
-            e.preventDefault();
-            const currentValue = parseInt(actionInput.value) || 0;
-            if (currentValue > 0) {
-                actionInput.value = currentValue - 1;
-            }
-        });
-
-        incrementButton.addEventListener('click', function (e) {
-            e.preventDefault();
-            const currentValue = parseInt(actionInput.value) || 0;
-            actionInput.value = currentValue + 1;
-        });
+        }
     });
 </script>
 
+    
+
+
+    
 
 
 
 
 
-{{-- 
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script>
-          $(document).ready(function () {
-              $("#incrementButton, #decrementButton").click(function () {
-                  var action = $(this).data("action");
-                  $("#actionInput").val(action);
-                  // Trigger the form submission
-                  $(this).closest("form").submit();
-              });
-          });
-      </script> --}}
+
+
+
+
+
+
+
+
+
+
+
 
 
 @endsection

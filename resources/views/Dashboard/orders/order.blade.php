@@ -75,10 +75,13 @@ Orders
                     {{ $order->items_count}}
                   </td> 
                   <td class="d- text-muted">
+            
                     {{ $order->PaymentType}}
+                  
                   </td>
                   <td class="d- text-muted">
-                    {{ $order->OrderDate}}
+                <div style="width: 110px;"> {{ $order->OrderDate}}</div>
+                   
                   </td>
                   <td class="d- text-muted">
                     {{ $order->TotalAmount}}

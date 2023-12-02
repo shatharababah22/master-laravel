@@ -4,7 +4,27 @@
 Testimonial
 @endsection
 <link href="{{ asset('css-dash/produc.css') }}" rel="stylesheet">
-
+<style>
+    .read-more-container{
+    
+        display: flex;
+        flex-direction: column;
+        color: #111;
+    
+    }
+    
+    .read-more-btn{
+        color: #066922;
+    }
+    
+    .read-more-text{
+        display: none;
+    }
+    
+    .read-more-text--show{
+        display: inline;
+    }
+      </style>
 @section('content')
 
 
@@ -74,7 +94,14 @@ Testimonial
                       </div>
                   </td>
                 
-                  <td >{{ $testimonial->comments}}</td>
+                  <td > <div class="causes-text read-more-container">
+                    {{-- <h3>{{ $product->shortname }}</h3> --}}
+                    <div class="causes-text read-more-container" style="width: 380px;">
+                        {{ $testimonial->truncated_description }}<span class="read-more-text">{{ $testimonial->showmore_description }}</span>
+          
+                    <span class="read-more-btn">Read More...</span>
+                </div>
+                </div></td>
                   <td >{{ $testimonial->Major}}</td>
            
                  
@@ -112,6 +139,22 @@ Testimonial
 
 
 
+<script src= {{ asset("js/main.js") }} ></script>
+<script src= {{ asset("showMore.min.js") }} ></script>
+
+<script>
+const readMoreButtons = document.querySelectorAll('.read-more-btn');
+
+readMoreButtons.forEach(button => {
+button.addEventListener('click', event => {
+const current = event.target;
+const currentText = current.parentNode.querySelector('.read-more-text');
+currentText.classList.toggle('read-more-text--show');
+current.textContent = current.textContent.includes('Read More') ? "Read Less..." : "Read More...";
+});
+});
+
+</script>
 
 
 

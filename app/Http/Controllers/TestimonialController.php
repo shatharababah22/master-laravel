@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class TestimonialController extends Controller
 {
     /**
@@ -15,7 +15,13 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        $testimonials = Testimonial::all();
+        // $testimonials = Testimonial::all();
+
+        $testimonials = Testimonial::select(
+            '*',
+            DB::raw('concat(LEFT(comments, 105)) as truncated_description'),
+            DB::raw('SUBSTRING(comments, 50, 1000) as showmore_description')
+        )->get();
         return view('Dashboard.Testimonial.testimonial', compact('testimonials')); 
     }
 
@@ -78,6 +84,7 @@ Testimonial::create($input);
      */
     public function edit(Testimonial $test)
     {
+  
         return view('Dashboard.Testimonial.edit', compact('test'));
     }
 

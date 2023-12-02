@@ -1,7 +1,7 @@
 
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid bg-dark text-light footer mt-5 py-4 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
@@ -21,20 +21,24 @@
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-4">About</h4>
-                    <a class="btn btn-link" href="">How I can recycle</a>
-                    <a class="btn btn-link" href="checkout.html">Payment Details</a>
-                    <a class="btn btn-link" href="Profile.html">My account</a>
+                    <a class="btn btn-link" href="https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables">How I can recycle</a>
+                    <a class="btn btn-link" href="{{ route('form') }}">To be recycler now</a>
+                    @if (Auth::check())
+                    <a class="btn btn-link" href="{{ route('profile.general') }}">My account</a>
+                    @else
+                    <a class="btn btn-link" href="/login">My account</a>
+                     @endif
                     <a class="btn btn-link" href="#courses">Courses</a>
-                    <a class="btn btn-link" href="">FAQ</a>
+  
                     
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-4">Quick Links</h4>
-                    <a class="btn btn-link" href="about.html">About Us</a>
-                    <a class="btn btn-link" href="contact.html">Contact Us</a>
-                    <a class="btn btn-link" href="service.html">Our Services</a>
-                    <a class="btn btn-link" href="">Terms & Condition</a>
-                    <a class="btn btn-link" href="contact.html">Support</a>
+                    <a class="btn btn-link" href="{{ route('about') }}">About Us</a>
+                    <a class="btn btn-link" href="{{ route('contact') }}">Contact Us</a>
+                    <a class="btn btn-link" href="#Services">Our Services</a>
+
+                    <a class="btn btn-link" href="{{ route('contact') }}">Support</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-4">Newsletter</h4>
@@ -51,7 +55,7 @@
 
 
     <!-- Copyright Start -->
-    <div class="container-fluid copyright py-4">
+    <div class="container-fluid copyright py-3">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">

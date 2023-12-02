@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('Dashboard.category.category', compact('categories')); 
+        return view('Dashboard.category.category', compact('categories'));
     }
 
     /**
@@ -55,7 +55,7 @@ class CategoryController extends Controller
         Category::create($input);
 
         return redirect()->route('category.index')
-                        ->with('success','Category created successfully.');
+            ->with('success', 'Category created successfully.');
     }
 
     /**
@@ -93,24 +93,24 @@ class CategoryController extends Controller
         //     'Name' => 'required |max:30',
         //     'description' => 'required |max:300',
         //     // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-       
+
         // ]);
 
         $input = $request->all();
-
+        dd($category);
         if ($Image = $request->file('Image')) {
             $destinationPath = 'images/';
             $profileImage = date('YmdHis') . "." . $Image->getClientOriginalExtension();
             $Image->move($destinationPath, $profileImage);
             $input['Image'] = "$profileImage";
-        }else{   
-            $input['Image']= $category->Image;
+        } else {
+            $input['Image'] = $category->Image;
         }
 
         $category->update($input);
 
         return redirect()->route('category.index')
-                        ->with('success','Category updated successfully');
+            ->with('success', 'Category updated successfully');
     }
 
     /**
@@ -122,17 +122,15 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $products = Product::select('*')
-        ->where('CategoryID', $id)
-        ->get();
-        if ($products->count()!= 0) {
-          ;
+            ->where('CategoryID', $id)
+            ->get();
+        if ($products->count() != 0) {;
 
             // Redirect to the 'category.index' route
             return redirect()->route('category.index')->with(['cancel' => 'You have items under this category']);
-           
         }
         Category::destroy($id);
-     
+
         return redirect()->route('category.index')->with(['deleted' => 'Deleted successfully']);
     }
 }

@@ -4,7 +4,27 @@
 Category
 @endsection
 <link href="{{ asset('css-dash/produc.css') }}" rel="stylesheet">
+<style>
+.read-more-container{
 
+    display: flex;
+    flex-direction: column;
+    color: #111;
+
+}
+
+.read-more-btn{
+    color: #066922;
+}
+
+.read-more-text{
+    display: none;
+}
+
+.read-more-text--show{
+    display: inline;
+}
+  </style>
 @section('content')
 
 
@@ -67,10 +87,18 @@ Category
                   <td >
                       <img class="pic"
                       src="{{ asset('images/' . $product->image1) }}" alt=""></td>
-                      <td><img class="pic"
+                      <td style=""><img class="pic"
                       src="{{ asset('images/' . $product->image2) }}" alt=""></td>
-        <td class="d- text-muted" >
-                    {{ $product->description}}
+                      <td class="d- text-muted"> <!-- Adjust the width value as needed -->
+                        <div class="causes-text read-more-container" style="width: 500px;">
+                            {{-- <h3>{{ $product->shortname }}</h3> --}}
+    
+                                {{ $product->truncated_description }}<span class="read-more-text">{{ $product->showmore_description }}</span>
+                      
+                            <span class="read-more-btn">Read More...</span>
+                        </div>
+                    </td>
+                    
                   </td>
                   <td class="d- text-muted">
                     {{ $product->Price}}
@@ -89,7 +117,7 @@ Category
                                  
                   <td>
                     <div style="display: grid; grid-template-columns: 50px auto;">
-                        <button type="button" class="btn btn-success  btnedit"><a href="{{ route('productadmin.edit',$product->id) }}" ><i class="bi-pencil-square"></i></a> </button>                        
+                        <button type="button" class="btn btn-success  btnedit"><a href="{{ route('productadmin.edit', $product->id) }}" ><i class="bi-pencil-square"></i></a> </button>                        
 
                         <form  id="delete-form-{{ $product->id }}" method="POST" action="{{ route('productadmin.destroy', $product->id) }}">
                               @csrf
@@ -120,6 +148,23 @@ Category
 
 
 
+
+<script src= {{ asset("js/main.js") }} ></script>
+<script src= {{ asset("showMore.min.js") }} ></script>
+
+<script>
+const readMoreButtons = document.querySelectorAll('.read-more-btn');
+
+readMoreButtons.forEach(button => {
+button.addEventListener('click', event => {
+const current = event.target;
+const currentText = current.parentNode.querySelector('.read-more-text');
+currentText.classList.toggle('read-more-text--show');
+current.textContent = current.textContent.includes('Read More') ? "Read Less..." : "Read More...";
+});
+});
+
+</script>
 
 
 

@@ -16,7 +16,7 @@ Category
 
     <div class="d-flex justify-content-center align-items-center" style="min-height: 50vh;">
         <div class="signup-content ">
-            <form method="post" action="{{ route('productadmin.update', ['productadmin' => $product->id]) }}" enctype="multipart/form-data" id="signup-form" class="signup-form">
+            <form method="post" action="{{ route('productadmin.update', $productadmin->id) }}" enctype="multipart/form-data" id="signup-form" class="signup-form">
                 @method('PUT')
                 @csrf
                 <h2 class="form-title mb-3" >Edit Product</h2>
@@ -29,31 +29,31 @@ Category
         <div class="form-floating mb-3 ">
             {{-- <span style="color:red">@error('name'){{ $message }} @enderror</span><br><br> --}}
 
-            <input class="form-control inputadmin " id="name" name="Name" value="{{$product->Name }}" type="text" placeholder="Name" data-sb-validations="required" />
+            <input class="form-control inputadmin " id="name" name="Name" value="{{$productadmin->Name }}" type="text" placeholder="Name" data-sb-validations="required" />
 
             <label for="name">Name</label>
 
             
         </div>
         <div class="form-floating mb-3 ">
-            <input class="form-control inputadmin" id="decription" name="description" value="{{$product->description }}" type="text" placeholder="Decription" data-sb-validations="required" />
+            <input class="form-control inputadmin" id="decription" name="description" value="{{$productadmin->description }}" type="text" placeholder="Decription" data-sb-validations="required" />
             <label for="decription">Decription</label>
         
         </div>
         
         <div class="form-group row mb-3">
             <div class="col-md-4">
-                <input class="form-control inputadd" id="decription" name="Stockquantity" value="{{$product->Stockquantity }}" type="number" placeholder="Stock quantity" data-sb-validations="required" />
+                <input class="form-control inputadd" id="decription" name="Stockquantity" value="{{$productadmin->Stockquantity }}" type="number" placeholder="Stock quantity" data-sb-validations="required" />
             
             </div>
             
             <!-- Add another input field here -->
             <div class="col-md-4">
-                <input class="form-control inputadd" name="ItemId" value="{{$product->ItemId }}" type="number" placeholder="Item Id" data-sb-validations="required" />
+                <input class="form-control inputadd" name="ItemId" value="{{$productadmin->ItemId }}" type="number" placeholder="Item Id" data-sb-validations="required" />
            
             </div>
             <div class="col-md-4">
-                <input class="form-control inputadd" name="Price" value="{{$product->Price }}" type="number" placeholder="Price" data-sb-validations="required" />
+                <input class="form-control inputadd" name="Price" value="{{$productadmin->Price }}" type="number" placeholder="Price" data-sb-validations="required" />
            
             </div>
         </div>
@@ -62,7 +62,7 @@ Category
 
         <div class="form-group row mb-3">
             <div class="col-md-6">
-                <input class="form-control inputadd" id="decription" name="MADEFROM" value="{{$product->MADEFROM }}" type="text" placeholder="Made from" data-sb-validations="required" />
+                <input class="form-control inputadd" id="decription" name="MADEFROM" value="{{$productadmin->MADEFROM }}" type="text" placeholder="Made from" data-sb-validations="required" />
             
             </div>
             
@@ -85,16 +85,16 @@ Category
 
         <div id="fileInputsContainer">
             <div>
-                <input class="form-control inputadmin" name="image1" value="{{$product->image1}}" type="file" data-sb-validations="required" />
-                <img src="/images/{{ $product->image1 }}" width="200px" class="mt-3 mb-2">
+                <input class="form-control inputadmin" name="image1" value="{{$productadmin->image1}}" type="file" data-sb-validations="required" />
+                <img src="/images/{{ $productadmin->image1 }}" width="200px" class="mt-3 mb-2">
 
             </div>
         </div>
 
         <div id="fileInputsContainer">
             <div>
-                <input class="form-control inputadmin" name="image2" value="{{$product->image2}}" type="file" data-sb-validations="required" />
-                <img src="/images/{{ $product->image2 }}" width="200px" class="mt-3 mb-2">
+                <input class="form-control inputadmin" name="image2" value="{{$productadmin->image2}}" type="file" data-sb-validations="required" />
+                <img src="/images/{{ $productadmin->image2 }}" width="200px" class="mt-3 mb-2">
             </div>
         </div>
        
@@ -118,42 +118,6 @@ Category
 
 
 </div>
-
-
-
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    let fileInputCount = 1; // Initial file input count
-
-    $('#addFileInput').click(function() {
-        fileInputCount++;
-
-        // Create a new file input field
-        const newFileInput = $('<div><input class="form-control inputadmin mt-3" name="image' + fileInputCount + '" type="file" data-sb-validations="required" /></div>');
-
-        // Append the new file input field to the container
-        $('#fileInputsContainer').append(newFileInput);
-    });
-});
-</script> --}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

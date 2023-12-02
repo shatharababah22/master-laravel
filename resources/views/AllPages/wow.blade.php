@@ -4,13 +4,20 @@
 
 @section('content')
 <style>
-    .con {
-        margin: 5% auto;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-        padding: 20px;
-    }
+.con {
+    margin: 3% auto;
+    background-color: #9e0e0edf; /* Background color above the image */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+    height: 500px;
+    width: 70%;
+    background-image: url("https://i.pinimg.com/originals/5b/c0/83/5bc0833cd91dac56d5677bf89e383849.gif");
+    background-repeat: no-repeat;
+    background-size: cover; /* Use cover to make the image cover the entire background */
+}
+
+
 
     .logo img {
         width: 80px;
@@ -20,6 +27,7 @@
     .card {
         border: 1px solid #ccc;
         border-radius: 10px;
+        background-color: #ffffffe7;
     }
 
     .invoice {
@@ -102,10 +110,17 @@
                         </table>
                     </div>
                 </div>
-                <p class="mr-4" style="margin-left: 50px">You will receive a shipping confirmation email when the item is successfully shipped.</p>
-                <p class="font-weight-bold" style="margin-left: 50px">Thank you for shopping with us!</p>
-                <a href="./about.html" class="btn btn-primary py-sm-3 px-sm-4 mt-4">Read More</a>
-                <a href="./about.html" class="btn btn-primary py-sm-3 px-sm-4 mt-4">Read More</a>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <a href="./about.html" class="text-decoration-none">
+                        <p class="font-weight-bold mb-0" style="margin-left: 50px">Thank you for shopping with us!</p>
+                    </a>
+                
+                    <div class="d-flex me-4">
+                        <a href="{{ route('home') }}" class="btn btn-primary py-sm-3 px-sm-4 me-2">Home</a>
+                        <a href="{{ route('profile.general') }}" class="btn btn-primary py-sm-3 px-sm-4">Your orders</a>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>

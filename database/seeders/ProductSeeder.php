@@ -101,6 +101,8 @@ class ProductSeeder extends Seeder
 
 
 
+
+
             
             [
                 'Name' => 'Candle Holder',
@@ -172,12 +174,140 @@ class ProductSeeder extends Seeder
                 'ItemId' => 12, 
                 'MADEFROM' => 'Made from Recycled Plastic',
             ],
+            // Glass
+            [
+                'Name' => 'SOUL bottle earrings',
+                'Price' => 5.75, 
+                'description' => 'Crafted with love and care, each pair of SOUL Bottle Earrings is a testament to our commitment to the environment. We believe in turning ordinary into extraordinary, and that precisely what these earrings represent.',
+                'image1' => 'GG1.PNG',
+                'image2' => 'GG2.PNG',
+                'Stockquantity' => 10, 
+                'CategoryID' => 2, 
+                'ItemId' => 13, 
+                'MADEFROM' => 'Made from upcycled glass bottles',
+            ],
+            [
+                'Name' => 'Upcycled Bombay Sapphire Gin Glass,',
+                'Price' => 25, 
+                'description' =>'With every pair of Upcycled Bombay Sapphire Gin Glass Earrings, you contribute to a collective impact. Picture a group of 5 glasses, once enjoyed in moments of camaraderie and celebration, now transformed into a set of exquisite earrings. This group sale adds a layer of communal storytelling to your individual style, as each earring resonates with the shared memories of those who enjoyed the gin together',
+                'image1' => 'GG3.PNG',
+                'image2' => 'GG4.PNG',
+
+                'Stockquantity' => 15, 
+                'CategoryID' => 2, 
+                'ItemId' => 14, 
+                'MADEFROM' => 'Made from upcycled glass',
+            ],
+            [
+                'Name' => 'The Fiesta Juice Glasse-set of 4',
+                'Price' => 2.75, 
+                'description' => 'Crafted with a modern and ergonomic design, these stemless glasses offer a comfortable and secure grip. The absence of stems not only adds a contemporary flair but also enhances stability, making these glasses perfect for both casual gatherings and formal occasions.',
+                'image1' => 'GG5.PNG',
+                'image2' => 'GG6.PNG',
+                'Stockquantity' => 20, 
+                'CategoryID' => 2, 
+                'ItemId' => 15, 
+                'MADEFROM' => 'from recycled glass, this stemless set of four is ready to party.',
+            ],
+            [
+                'Name' => 'Heart of Memories Glass Window Charm',
+                'Price' => 21.598, 
+                'description' => 'Crafted with meticulous attention to detail, the Heart of Memories Glass Window Charm features a timeless heart-shaped design, encasing a mesmerizing glimpse into the past.',
+                'image1' => 'GG8.PNG',
+                'image2' => 'GG9.PNG',
+                'Stockquantity' => 12, 
+                'CategoryID' => 2, 
+                'ItemId' => 16, 
+                'MADEFROM' => 'Made from upcycled glass, Waste',
+            ],
 
 
+            [
+                'Name' => 'Recycled Natural Handmade Stone Vase',
+                'Price' => 30, 
+                'description' => 'Crafted with care from recycled materials, each Natural Handmade Stone Vase tells a story of renewal and eco-conscious design. The recycled stones, once weathered and worn, are now reborn as elegant vessels that bring a touch of nature serenity into your living space. ',
+                'image1' => 'GG9.PNG',
+                'image2' => 'GG10.PNG',
+                'Stockquantity' => 20, 
+                'CategoryID' =>2, 
+                'ItemId' => 17, 
+                'MADEFROM' => 'Made from recycled glass, stones',
+            ],
+            [
+                'Name' => 'Handcrafted Recycled Plastic MacBook Laptop Stand',
+                'Price' => 2.35, 
+                'description' => 'This handmade bottle colour glass vase will bring a touch of class to any home.
+                Decorate a console table, mantelpiece or side table, or home office with the quintessence of artisan elegance.',
+                'image1' => 'GG11.PNG',
+                'image2' => 'GG12.PNG',
+                'Stockquantity' => 3,
+                'CategoryID' => 2, 
+                'ItemId' => 18, 
+                'MADEFROM' => 'Made from recycled Glass',
+            ],
+
+            
+            [
+                'Name' => '45 Blue Recycled Glass Beads',
+                'Price' => 23, 
+                'description' => 'Introducing our 45 Blue Recycled Glass Bracelet, a striking fusion of eco-friendly design and vibrant elegance. This bracelet is more than just an accessory; it a wearable work of art that embodies the beauty of recycled materials and sustainable fashion.',
+                'image1' => 'GG13.PNG',
+                'image2' => 'GG14.PNG',
+                'Stockquantity' => 3,
+                'CategoryID' => 2, 
+                'ItemId' => 19, 
+                'MADEFROM' => 'Made from recycled Glass',
+            ],
+            [
+                'Name' => 'Recycled Blown Glass Pendant with Chain',
+                'Price' => 27, 
+                'description' => 'Recycled blown glass has been discarded by glass blowers- makes jewelry as a result! Very unique piece- and 1 of a kind!',
+                'image1' => 'GG15.PNG',
+                'image2' => 'GG16.PNG',
+                'Stockquantity' => 11,
+                'CategoryID' => 2, 
+                'ItemId' => 20, 
+                'MADEFROM' => 'Made from recycled Glass',
+            ],
+            [
+                'Name' => 'Set of 4 Suquare Colorful Clear Glass Plate',
+                'Price' => 27, 
+                'description' => 'Crafted from recycled glass, each plate carries a unique story of transformation and renewal. The stunning array of colors is a testament to the beauty found in repurposed materials,
+                 creating a visual tapestry that adds an eco-chic flair to your dining experience.',
+                'image1' => 'GG17.PNG',
+                'image2' => 'GG18.PNG',
+                'Stockquantity' => 14,
+                'CategoryID' => 2, 
+                'ItemId' => 21, 
+                'MADEFROM' => 'Made from recycled Glass',
+            ],
+            
+            [
+                'Name' => 'Fused Glass Set of 4 Clear Bowls',
+                'Price' => 27, 
+                'description' => 'Crafted from recycled glass, each plate carries a unique story of transformation and renewal. The stunning array of colors is a testament to the beauty found in repurposed materials,
+                creating a visual tapestry that adds an eco-chic flair to your dining experience.',
+                'image1' => 'GG19.PNG',
+                'image2' => 'GG20.PNG',
+                'Stockquantity' => 11,
+                'CategoryID' => 2, 
+                'ItemId' => 22, 
+                'MADEFROM' => 'Made from recycled Glass',
+            ],
+
+            // Clothes
+
+
+
+
+
+
+
+             
         ];
 
 
-        // Loop through the testimonials and create records in the database
+      
         foreach ($products as $product) {
             Product::create($product);
         }

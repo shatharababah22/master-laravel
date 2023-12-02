@@ -20,6 +20,12 @@
     color: white;
 }
 
+/* .table thead td {
+    padding: 80px;
+    font-size: 18px;
+    color: white;
+} */
+
 .table tbody td input[type="checkbox"] {
     appearance: none;
     width: 20px;

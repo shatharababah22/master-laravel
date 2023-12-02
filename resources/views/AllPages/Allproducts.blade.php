@@ -22,6 +22,7 @@
 
 
 
+
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
@@ -154,22 +155,7 @@
                                                     </a>
                                                
                                                 
-                                                    {{-- <div class="position-absolute top-0 left-0 pt-3 pr-3">
-                                                        <i class="me-1 fa fa-heart fa-lg" style="color: rgba(6, 128, 0, 0.952);"></i>
-                                                    </div> --}}
-                                                    
-                                                    {{-- <div class="position-absolute bottom-0 left-0 right-0">
-                                                        <div class="px-3 pb-2">
-                                                            <a href="../yacht/yacht-single-v1.html">
-                                                                <span class="text-white font-weight-bold font-size-17">{{ $product->Name }}</span>
-                                                            </a>
-                                                            <div class="text-white my-2">
-                                                                <span class="mr-1 font-size-14">From</span>
-                                                                <span class="font-weight-bold font-size-19">JOD {{ $product->Price }}</span>
-                                                          
-                                                            </div>
-                                                        </div>
-                                                    </div> --}}
+                                          
                                                 </div>
                                                 <div class="card-body px-4 pt-3 pb-2 border-bottom">
                                                     <a href="../yacht/yacht-single-v1.html" class="d-block">
@@ -177,70 +163,45 @@
                                                            {{ $product->Name }}
                                                         </div>
                                                     </a>
-                                                    <a href="../yacht/yacht-single-v1.html" class="d-block">
-                                                        <div class="d-flex align-items-center font-size-14 text-gray-1 mt-1">
-                                                          JOD {{ $product->Price }}
+                                                    <a href="../yacht/yacht-single-v1.html" class="d-block mt-2">
+                                                        <div class="d-flex align-items-center justify-content-between font-size-14 text-gray-1 mt-1">
+                                                      
+                                                    
+                                                            <div class="media-body font-size-1">
+                                                                <i class="fas fa-box" style="color: rgba(6, 128, 0, 0.952); font-size:17px;"></i>
+                                                                {{ $product->Stockquantity }}
+                                                            </div>
+
+                                                            <div class="media-body font-size-1">
+                                                                JOD {{ $product->Price }}
+                                                            </div>
                                                         </div>
                                                     </a>
-                                                    <div class="my-2">
-                                                        <div class="d-inline-flex align-items-center font-size-14 text-lh-1 text-primary">
-                                                            <div class=" mr-2"  style="color: rgba(6, 128, 0, 0.952); font-size:18px;">
-                                                                <small class="fas fa-star" ></small>
-                                                                <small class="fas fa-star"></small>
-                                                                <small class="fas fa-star"></small>
-                                                                <small class="fas fa-star"></small>
-                                                                <small class="fas fa-star"></small>
-                                                            </div>
-                                                            <span class="text-secondary font-size-14 mt-1 ">48 Reviews</span>
-                                                        </div>
-                                                    </div>
+                                                    
+                                               
                                                 </div>
-                                                <div class="px-4 py-3">
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <ul class="list-unstyled mb-0">
-                                                                <li class="media mb-2 text-gray-1 align-items-center">
-                                                                  
-                                                                 
-                                                                    
-                                                                    <div class="media-body font-size-1">
-                                                                        <i class="fas fa-box" style="color: rgba(6, 128, 0, 0.952); font-size:17px;"></i>   {{ $product->Stockquantity }}
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        
-                                                        <div class="col-6">
-                                                            <ul class="list-unstyled mb-0">
-                                                                <li class="media mb-2 text-gray-1 align-items-center">
-                                                                    {{-- <small class="mr-2">
-                                                                        <i class="fas fa-gem " style="color: rgba(6, 128, 0, 0.952);font-size:18px;"></i>
-                                                                    </small> --}}
-                                                                    {{-- <div class="media-body font-size-1 ">
-                                                                        <i class="fas fa-gem " style="color: rgba(6, 128, 0, 0.952);font-size:17px;"></i>            {{ $product->Brand }}
-                                                                    </div> --}}
-                                                                </li>
-                                                           
-                                                            </ul>
-                                                        </div>
-                                                        
-                                                
+                                       
+                                                <div class="w-100 ">
+                                                    <div class="d-flex mx-auto">
+                                                        <div class="w-50">
+                                                            <a href="#" class="btn btn-primary shadow-0 w-100 btn2" class="product-like-icon" data-tip="Add to cart">
+                                                                <form method="POST" action="{{ route('addcart', ['id' => $product->id]) }}">
+                                                                    @csrf <!-- CSRF token for security -->
+                                                                    <button type="submit" style="background-color: #dbdbdb00; border: none; height: 30px;" >
+                                                                        <i class="fas fa-shopping-cart" style="color: rgb(244, 248, 248)"></i><span style="color: rgb(244, 248, 248)">  Add to cart</span>
+                                                                    </button>
+                                                                </form>
+                                                            </a>
 
-                                                    </div>
-                                                </div>
-                                                {{-- <ul class="product-links">
-                                                    <li><a href="{{ route('productdetail', ['id' => $product->id]) }}" style="background-color: #dbdbdb9e;"><i class="fa fa-search" style="color: rgb(4, 91, 4);"></i></a></li>
-                                                    <li><a href="cart.html" style="background-color: #dbdbdb9e;"><i class="fas fa-shopping-cart" style="color: rgb(4, 91, 4);"></i></a></li>
-                                                    <li><a href="All-product.html" style="background-color: #dbdbdb9e;"><i class="fa fa-random" style="color: rgb(4, 91, 4);"></i></a></li>
-                                                </ul> --}}
-                                                <div class="w-100">
-                                                    <div class="d-flex justify-content-between mx-auto ">
-                                                       
-                                                        <div class="w-100">
-                                                            <a  class="btn btn-primary shadow-0 w-100 btn2 "> <i class="me-1 fa fa-shopping-basket"></i>Add to cart</a>
+                                                            {{-- <a href="#" class="btn btn-primary shadow-0 w-100 btn2"><i class="me-1 fa fa-shopping-basket"></i>Add to cart</a> --}}
+                                                        </div>
+                                                        <div class="w-50">
+                                                            <a href="{{ route('productdetail', ['id_product' => $product->id]) }}" class="btn btn-primary shadow-0 w-100 btn2"><i class="me-1 fa fa-shopping-basket"></i>More details</a>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
+                                                
                                             </div>
                                             
                                         </div>

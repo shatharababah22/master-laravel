@@ -83,23 +83,12 @@ class WishlistproductController extends Controller
          * @param  int  $id
          * @return \Illuminate\Http\Response
          */
-        public function update(Request $request,admin $admin)
+        public function update(Request $request,admin $adminprofile)
         {
     
             
          
-            
-            // dd($request->all());
-    
-            // if ($image = $request->file('main_picture')) {
-            //     $destinationPath = 'images/';
-            //     $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            //     $image->move($destinationPath, $profileImage);
-            //     $input['main_picture'] = "$profileImage";
-            // }else{
-            //     $input['main_picture']= $service->main_picture;
-    
-            // }
+   
     
            
          
@@ -109,7 +98,7 @@ class WishlistproductController extends Controller
                // Setting category_id to the default value '1'
                 'id' => $request->input('id'), // Assuming 'price' is the correct key
             ];
-            $admin->update($input);
+            $adminprofile->update($input);
           
             return redirect()->route('adminprofile.index')
                             ->with('success','Category updated successfully');
