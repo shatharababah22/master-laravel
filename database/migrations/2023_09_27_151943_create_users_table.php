@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('Phone')->nullable();
             $table->string('Image')->nullable()->default('person-transformed.jpeg');
             $table->date('Birthday')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

@@ -20,7 +20,7 @@ class CartitemController extends Controller
 if (auth()->user()) {
     $user = auth()->user();
     $dis = session()->has('dis') ? session('dis') : 0;
-
+// dd($user, $dis);
     $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
 
     // $cartCount = count($cart);

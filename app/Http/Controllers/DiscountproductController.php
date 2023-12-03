@@ -347,15 +347,15 @@ class DiscountproductController extends Controller
 
 
     public function Paymentmethod(Request $request)
-    {
+    {$cart = session()->get('cart', 'cart');
         // $selectedPaymentMethod = $request->input('PaymentType');
 
         $paymentMethod = PaymentMethod::create([
             'PaymentType' => 'Cash',
             'UserID' => auth()->user()->id,
         ]);
-
-
+        
+ 
         $lastAddress = $request->session()->get('last_address');
 
         $lastAddressCity = $lastAddress ? $lastAddress->city : null;
@@ -400,13 +400,22 @@ class DiscountproductController extends Controller
 
 
 
-        // return view('AllPages.order', compact('order', 'lastAddressCity', 'cart'));
     }
 
 
 
     public function Paymentmethod_paypal(Request $request)
     {
+        // $user = auth()->user();
+        // $cart = Cartitem::where('UserID', $user->id)->with('product')->get();
+
+        // $totalprice = 0;
+        // $shipment = 2;
+
+        // foreach ($cart as $item) {
+        //     $itemPrice = isset($item->product) ? $item->product->Price * $item->Quantity : $item['price'] * $item['quantity'];
+        //     $totalprice += $itemPrice;
+        // }
 
 
         $provider = new PayPalClient;
@@ -423,7 +432,7 @@ class DiscountproductController extends Controller
                 0 => [
                     "amount" => [
                         "currency_code" => "USD", // Use the appropriate currency code
-                        "value" => "1000.00" // Set the correct value for the transaction
+                        "value" => "900.00" // Set the correct value for the transaction
                     ]
                 ]
             ]
